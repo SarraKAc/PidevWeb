@@ -3,6 +3,9 @@
 
 use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\ErrorHandler\DebugClassLoader;
 
 if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
     throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
@@ -13,5 +16,16 @@ require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 return function (array $context) {
     $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
 
-    return new Application($kernel);
+    // Create a new Symfony Console Application
+    $application = new Application($kernel);
+
+    // Register your custom commands here
+    $application->add(new App\Command\GenerateCRUDCommand());
+    $application->add(new App\Command\GenerateSearchFilterCommandPhpCommand());
+
+    // Run the application
+    $input = new ArgvInput();
+    $application->run($input);
+
+    return $application;
 };
