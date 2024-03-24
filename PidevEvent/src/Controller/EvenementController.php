@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
@@ -22,74 +23,50 @@ class EvenementController extends AbstractController
         ]);
     }
 
-    /*#[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($evenement);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('evenement/new.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form,
-        ]);
-
-
-        
-    }*/
-    /*#[Route('/ghofrane/student-element', name: 'app_student_element')]
-    public function studentelement(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        // Création d'une nouvelle instance d'événement
-        $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
     
-        // Vérification de la soumission du formulaire et de la validité des données
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Persistance de l'événement en base de données
-            $entityManager->persist($evenement);
-            $entityManager->flush();
     
-            // Redirection vers la page d'accueil des événements après la création
-            return $this->redirectToRoute('app_evenement_index');
-        }
-    
-        // Rendu du même template que la première fonction, mais avec le formulaire créé dans cette fonction
-        return $this->render('evenement/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }*/
+  
+
+   /***********Ajout avec controle de saise sur la date****//////
     #[Route('/ghofrane/student-element', name: 'app_student_element')]
-    public function studentelement(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        // Création d'une nouvelle instance d'événement
-        $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
-    
-        // Vérification de la soumission du formulaire et de la validité des données
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Persistance de l'événement en base de données
-            $entityManager->persist($evenement);
-            $entityManager->flush();
-    
-            // Redirection vers la page d'accueil des événements après la création
-            return $this->redirectToRoute('app_evenement_index');
-        }
-    
-        // Rendu du même template que la première fonction, mais avec le formulaire créé dans cette fonction
-        return $this->render('student/student-element.html.twig', [
-            'form' => $form->createView(),
-        ]);
+public function studentelement(Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Création d'une nouvelle instance d'événement
+    $evenement = new Evenement();
+    $form = $this->createForm(EvenementType::class, $evenement);
+
+    // Récupérer la date actuelle
+    $currentDate = new \DateTime();
+
+    // Appliquer la date minimale au champ de formulaire "date"
+    $form->get('date')->getConfig()->getOptions()['attr']['min'] = $currentDate->format('Y-m-d');
+
+    $form->handleRequest($request);
+
+    // Vérification de la soumission du formulaire et de la validité des données
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Persistance de l'événement en base de données
+        $entityManager->persist($evenement);
+        $entityManager->flush();
+
+        // Redirection vers la page d'accueil des événements après la création
+        return $this->redirectToRoute('app_evenement_index');
     }
+
+    // Rendu du formulaire avec la date minimale définie
+    return $this->render('student/student-element.html.twig', [
+        'form' => $form->createView(),
+        'current_date' => $currentDate, // Passer la date actuelle au modèle Twig
+    ]);
+}
+
+
+
+
+
+
+
+
 
 
     #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
@@ -128,4 +105,41 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***********Ajout sans controle de saise sur la date****//////
+      /*#[Route('/ghofrane/student-element', name: 'app_student_element')]
+    public function studentelement(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Création d'une nouvelle instance d'événement
+        $evenement = new Evenement();
+        $form = $this->createForm(EvenementType::class, $evenement);
+        $form->handleRequest($request);
+    
+        // Vérification de la soumission du formulaire et de la validité des données
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Persistance de l'événement en base de données
+            $entityManager->persist($evenement);
+            $entityManager->flush();
+    
+            // Redirection vers la page d'accueil des événements après la création
+            return $this->redirectToRoute('app_evenement_index');
+        }
+    
+        // Rendu du même template que la première fonction, mais avec le formulaire créé dans cette fonction
+        return $this->render('student/student-element.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }*/
 }
