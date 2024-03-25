@@ -61,41 +61,75 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 }
 
 
+/********************Afficher Evenement ***************** */
+   
 
-
-
-
-
-
-
-
-    #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
-    public function show(Evenement $evenement): Response
+    #[Route('/ghofrane/add-student', name: 'app_add_student')]
+    public function addStudent(EvenementRepository $evenementRepository): Response
     {
-        return $this->render('evenement/show.html.twig', [
-            'evenement' => $evenement,
-        ]);
+    // Récupérer tous les événements depuis la base de données
+    $evenements = $evenementRepository->findAll();
+
+    // Passer les événements au template Twig pour affichage
+    return $this->render('student/add-student.html.twig', [
+        'evenements' => $evenements,
+    ]);
+}
+
+/*****************supprimer Evenement***********************/
+#[Route('/evenement/{id}', name: 'app_evenement_delete', methods: ['DELETE'])]
+public function delete(EvenementRepository $evenementRepository, EntityManagerInterface $entityManager, $id): Response
+{
+    $evenement = $evenementRepository->find($id);
+    if (!$evenement) {
+        return new Response('L\'événement n\'existe pas.', Response::HTTP_NOT_FOUND);
     }
+
+    $entityManager->remove($evenement);
+    $entityManager->flush();
+
+    return new Response('L\'événement a été supprimé avec succès.', Response::HTTP_OK);
+}
+
+
+
+   
+
+
+
 
     #[Route('/{id}/edit', name: 'app_evenement_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Evenement $evenement, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(EvenementType::class, $evenement);
-        $form->handleRequest($request);
+    public function edit(EvenementRepository $evenementRepository, $id, Request $request): Response
+{
+    // Récupérer l'événement à éditer
+    $evenement = $evenementRepository->find($id);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    // Créer le formulaire en utilisant le FormBuilder
+    $form = $this->createForm(EvenementType::class, $evenement);
 
-            return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
-        }
+    // Gérer la soumission du formulaire
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Traiter les données du formulaire et enregistrer l'événement
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($evenement);
+        $entityManager->flush();
 
-        return $this->renderForm('evenement/edit.html.twig', [
-            'evenement' => $evenement,
-            'form' => $form,
-        ]);
+        // Rediriger l'utilisateur vers une autre page par exemple
+        // return $this->redirectToRoute('http://127.0.0.1:8000/evenement/ghofrane/add-student');
     }
 
-    #[Route('/{id}', name: 'app_evenement_delete', methods: ['POST'])]
+    // Passer le formulaire à la vue Twig pour l'affichage
+    return $this->render('student/add-student.html.twig', [
+        'form' => $form->createView(),
+        'evenement' => $evenement, // Vous pouvez également passer l'événement pour initialiser les données dans les balises HTML
+    ]);
+}
+
+    
+    
+
+    /*#[Route('/{id}', name: 'app_evenement_delete', methods: ['POST'])]
     public function delete(Request $request, Evenement $evenement, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$evenement->getId(), $request->request->get('_token'))) {
@@ -104,7 +138,7 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
         }
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
-    }
+    }*/
 
 
 

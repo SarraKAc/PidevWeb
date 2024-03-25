@@ -1,0 +1,96 @@
+...
+<tbody>
+    {% for evenement in evenements %}
+    <tr id="evenement-{{ evenement.id }}">
+        <td>{{ evenement.nom }}</td>
+        <td>{{ evenement.description }}</td>
+        <td>{{ evenement.categorie }}</td>
+        <td>{{ evenement.date|date('Y-m-d') }}</td>
+        <td>{{ evenement.prix }}</td>
+        <td>{{ evenement.cheminImage }}</td>
+        <td><img src="{{ evenement.cheminImage }}" alt="Image de l'événement" style="max-width: 1000px;"></td>
+        <td>
+            <button class="btn btn-danger btn-sm delete-event-btn" data-event-id="{{ evenement.id }}">Supprimer</button>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- End of Main Content -->
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2020</span>
+        </div>
+    </div>
+</footer>
+<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="{{asset('back-office/vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('back-office/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{asset('back-office/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{asset('back-office/js/sb-admin-2.min.js')}}"></script>
+
+<!-- Custom script for event deletion -->
+<script>
+    $(document).ready(function() {
+        $('.delete-event-btn').click(function() {
+            var eventId = $(this).data('event-id');
+            if (confirm("Êtes-vous sûr de vouloir supprimer cet événement ?")) {
+                $.ajax({
+                    url: '/evenement/' + eventId,
+                    type: 'DELETE',
+                    success: function(result) {
+                        // Suppression de la ligne de tableau correspondante
+                        $('#evenement-' + eventId).remove();
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
