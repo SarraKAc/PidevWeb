@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Controller;
-
+use App\Entity\Evenement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\EvenementRepository;
 class PreviewController extends AbstractController
 {
     #[Route('/integration', name: 'app_integration')]
@@ -17,9 +18,14 @@ class PreviewController extends AbstractController
     #[Route('/events', name: 'app_events')]
     public function events(): Response
     {
-        return $this->render('event.html.twig');
+        // Récupérer les données des événements depuis la base de données
+        $events = $this->getDoctrine()->getRepository(Evenement::class)->findAll();
+
+        // Rendre le template Twig en passant les données des événements
+        return $this->render('event.html.twig', [
+            'events' => $events,
+        ]);
     }
-   
    
     #[Route('/ghofrane', name: 'app_ghofrane')]
     public function ghofrane(): Response
