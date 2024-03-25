@@ -45,4 +45,15 @@ class EvenementRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+// EvenementRepository.php
+
+public function findBySearchTerm(string $searchTerm): array
+{
+    return $this->createQueryBuilder('e')
+        ->andWhere('e.nom LIKE :searchTerm')
+        ->setParameter('searchTerm', $searchTerm . '%') // Recherche des noms commençant par le terme de recherche
+        ->getQuery()
+        ->getResult();
+}
+
 }

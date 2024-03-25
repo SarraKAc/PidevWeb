@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
@@ -90,6 +91,41 @@ public function delete(EvenementRepository $evenementRepository, EntityManagerIn
 
     return new Response('L\'événement a été supprimé avec succès.', Response::HTTP_OK);
 }
+
+/***********recherche****************/
+#[Route('/evenement/search', name: 'app_evenement_rechercher', methods: ['POST'])]
+public function search(Request $request, EvenementRepository $evenementRepository): JsonResponse
+{
+    // Récupérer le terme de recherche envoyé depuis la requête AJAX
+    $searchTerm = $request->request->get('searchTerm');
+
+    // Si le terme de recherche est vide, renvoyer tous les événements
+    if (empty($searchTerm)) {
+        $evenements = $evenementRepository->findAll();
+    } else {
+        // Sinon, effectuer une recherche filtrée sur la colonne "nom"
+        $evenements = $evenementRepository->findBySearchTerm($searchTerm);
+    }
+
+    // Convertir les résultats en un tableau JSON pour la réponse AJAX
+    $data = [];
+    foreach ($evenements as $evenement) {
+        $data[] = [
+            'id' => $evenement->getId(),
+            'nom' => $evenement->getNom(),
+            'description' => $evenement->getDescription(),
+            'categorie' => $evenement->getCategorie(),
+            'prix' => $evenement->getPrix(),
+            'date' => $evenement->getDate()->format('Y-m-d'),
+            // Ajoutez d'autres champs que vous souhaitez renvoyer
+        ];
+    }
+
+    // Renvoyer les résultats au format JSON
+    return new JsonResponse($data);
+}
+
+
 
 
 

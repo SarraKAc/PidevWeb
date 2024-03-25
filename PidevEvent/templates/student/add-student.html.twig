@@ -20,7 +20,7 @@
     <!-- Custom styles for this template-->
    <link href="{{ asset('back-office/css/sb-admin-2.min.css') }}" rel="stylesheet">
    <link href="{{ asset('back-office/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -68,7 +68,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Evenement:</h6>
-                        <a class="collapse-item" href="{{ path('app_add_student') }}">Buttons</a>
+                        <a class="collapse-item" href="{{ path('app_add_student') }}">Afficher Evenement</a>
                         <a class="collapse-item" href="{{ path('app_student_element') }}">Ajouter Evenement</a>
                     </div>
                 </div>
@@ -369,6 +369,9 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                            <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Rechercher..." id="searchInput">
+</div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -406,7 +409,27 @@
 <!-- Modal -->
 
     
-</tbody>
+</tbody></table>
+
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Rechercher..." id="searchInput">
+</div></table>
+<script>
+    $(document).ready(function() {
+        $('#searchInput').on('keyup', function() {
+            var searchText = $(this).val().toLowerCase();
+            $('#dataTable tbody tr').each(function() {
+                var nom = $(this).find('td:first').text().toLowerCase();
+                if (nom.startsWith(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+
 
 
 
@@ -421,7 +444,7 @@
 
                                        
                                     </tbody>
-                                </table>
+                                
 
 
 

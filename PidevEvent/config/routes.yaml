@@ -6,3 +6,7 @@ app_delete:
     path: /evenementdelete/{id}
     controller: App\Controller\EvenementController::delete
     methods: [DELETE]
+app_evenement_rechercher:
+    path: '/evenement/search'
+    controller: 'App\Controller\EvenementController::search'
+    methods: ['POST']
