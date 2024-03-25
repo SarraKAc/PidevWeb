@@ -491,6 +491,51 @@
 </script>
 
 
+<label for="minPrice">Prix minimum:</label>
+<input type="number" id="minPrice" placeholder="Prix minimum">
+
+<label for="maxPrice">Prix maximum:</label>
+<input type="number" id="maxPrice" placeholder="Prix maximum">
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Récupérer les références des éléments HTML
+        const minPriceInput = document.getElementById('minPrice');
+        const maxPriceInput = document.getElementById('maxPrice');
+        const eventsTable = document.getElementById('dataTable');
+        
+        // Convertir les lignes de la table en tableau
+        let rows = Array.from(eventsTable.getElementsByTagName('tr'));
+
+        // Fonction pour filtrer le tableau par prix
+        function filterTableByPrice() {
+            const minPrice = parseFloat(minPriceInput.value);
+            const maxPrice = parseFloat(maxPriceInput.value);
+
+            // Parcourir chaque ligne du tableau
+            rows.forEach(row => {
+                // Récupérer le prix dans la colonne appropriée
+                const priceCell = row.cells[4]; // Index de la colonne de prix
+                const price = parseFloat(priceCell.textContent.trim());
+
+                // Vérifier si le prix est dans la plage spécifiée
+                if ((isNaN(minPrice) || price >= minPrice) && (isNaN(maxPrice) || price <= maxPrice)) {
+                    row.style.display = ''; // Afficher la ligne si elle se situe dans la plage de prix
+                } else {
+                    row.style.display = 'none'; // Masquer la ligne sinon
+                }
+            });
+        }
+
+        // Ajouter un écouteur d'événements au changement des valeurs de prix
+        minPriceInput.addEventListener('input', filterTableByPrice);
+        maxPriceInput.addEventListener('input', filterTableByPrice);
+    });
+</script>
+
+
+
 
 
                              
