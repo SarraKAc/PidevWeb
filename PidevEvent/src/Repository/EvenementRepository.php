@@ -55,5 +55,16 @@ public function findBySearchTerm(string $searchTerm): array
         ->getQuery()
         ->getResult();
 }
+// EvenementRepository.php
+
+public function findByPrice(): array
+{
+    return $this->createQueryBuilder('e')
+        ->orderBy('e.prix', 'ASC')
+        ->getQuery()
+        ->getResult();
+}
+
+  
 
 }

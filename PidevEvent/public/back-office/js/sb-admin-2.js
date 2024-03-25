@@ -54,3 +54,27 @@
   });
 
 })(jQuery); // End of use strict
+// Tri des événements par date
+document.getElementById('sortByDateBtn').addEventListener('click', function() {
+  var sortIcon = document.querySelector('#sortByDateBtn i');
+  var sortOrder = document.getElementById('sortOrderSelect').value;
+  
+  // Changer l'icône en fonction de l'ordre de tri sélectionné
+  if (sortOrder === 'asc') {
+    sortIcon.classList.remove('fa-sort-down');
+    sortIcon.classList.add('fa-sort-up');
+  } else {
+    sortIcon.classList.remove('fa-sort-up');
+    sortIcon.classList.add('fa-sort-down');
+  }
+  
+  // Exécuter la fonction de tri en fonction de l'ordre sélectionné
+  // Vous pouvez ajouter votre logique de tri ici
+});
+
+// Récupérer les événements à trier
+var events = document.querySelectorAll('.event');
+
+// Convertir les événements en tableau pour pouvoir les trier
+var eventsArray = Array.from(events);
+
