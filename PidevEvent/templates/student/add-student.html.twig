@@ -437,12 +437,13 @@
 </script>
 
 <select id="sortOrderSelect">
-    <option value="asc">Croissant</option>
-    <option value="desc">Décroissant</option>
+    <option value="price_asc">Prix - Croissant</option>
+    <option value="price_desc">Prix - Décroissant</option>
+    <option value="date_asc">Date - Croissante</option>
+    <option value="date_desc">Date - Décroissante</option>
 </select>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const sortByPriceBtn = document.getElementById('sortByPriceBtn');
         const sortOrderSelect = document.getElementById('sortOrderSelect');
 
         function sortTable() {
@@ -454,13 +455,20 @@
             rows.shift();
             
             rows.sort((rowA, rowB) => {
-                const priceA = parseFloat(rowA.cells[4].textContent); // Index de la colonne de prix
-                const priceB = parseFloat(rowB.cells[4].textContent);
+                let valueA, valueB;
 
-                if (sortOrder === 'asc') {
-                    return priceA - priceB;
+                if (sortOrder.includes('price')) {
+                    valueA = parseFloat(rowA.cells[4].textContent); // Index de la colonne de prix
+                    valueB = parseFloat(rowB.cells[4].textContent);
+                } else if (sortOrder.includes('date')) {
+                    valueA = new Date(rowA.cells[3].textContent).getTime(); // Index de la colonne de date
+                    valueB = new Date(rowB.cells[3].textContent).getTime();
+                }
+
+                if (sortOrder.includes('asc')) {
+                    return valueA - valueB;
                 } else {
-                    return priceB - priceA;
+                    return valueB - valueA;
                 }
             });
             
@@ -475,8 +483,10 @@
             });
         }
 
-        sortByPriceBtn.addEventListener('click', sortTable);
         sortOrderSelect.addEventListener('change', sortTable);
+        
+        // Tri initial au chargement de la page
+        sortTable();
     });
 </script>
 
