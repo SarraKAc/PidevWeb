@@ -44,7 +44,7 @@
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="front-office/assets/img/logo.png" alt=""> -->
-        <h1 class="">Mentor</h1>
+        <h1 class="">STUDENTORS</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -140,6 +140,8 @@
 
 {# Dans votre template Twig #}
 
+
+
 <section id="events" class="events section">
     <div class="container" data-aos="fade-up">
         <div class="row">
@@ -153,6 +155,8 @@
                         <h5 class="card-title">{{ event.getNom() }}</h5>
                         <p class="fst-italic text-center">{{ event.getDate()|date('Y-m-d') }}</p>
                         <p class="card-text">{{ event.getDescription() }}</p>
+                        <p class="card-text">{{ event.getCategorie() }}</p>
+                        <p class="card-text">{{ event.getPrix() }}</p>
                     </div>
                 </div>
             </div>
@@ -172,7 +176,7 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="">Mentor</span>
+            <span class="">STUDENTORS</span>
           </a>
           <div class="footer-contact pt-3">
             <p>A108 Adam Street</p>
