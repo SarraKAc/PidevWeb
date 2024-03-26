@@ -248,9 +248,9 @@
     });
 </script>
 
-<div>
+<div style="height: 10cm;">
     <label for="sortOrderSelect">Trier par :</label>
-    <select id="sortOrderSelect">
+    <select id="sortOrderSelect" style="width: 50%; height: 10%;">
         <option value="">Choisir...</option>
         <option value="priceAsc">Prix croissant</option>
         <option value="priceDesc">Prix décroissant</option>
@@ -258,12 +258,10 @@
         <option value="dateDesc">Date décroissante</option>
     </select>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const sortOrderSelect = document.getElementById('sortOrderSelect');
         const eventContainer = document.querySelector('.events .container .row');
-
         function sortEvents() {
             const selectedValue = sortOrderSelect.value;
 
@@ -305,6 +303,8 @@
         }
     });
 </script>
+
+
 
 
 <section id="events" class="events section">
