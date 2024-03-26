@@ -145,6 +145,57 @@
 
 
 
+<button id="sortPriceAscBtn">Trier par prix croissant</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortPriceAscBtn = document.getElementById('sortPriceAscBtn');
+        const eventContainer = document.querySelector('.events .container .row');
+
+        sortPriceAscBtn.addEventListener('click', function () {
+            const eventCards = Array.from(document.querySelectorAll('.event-card'));
+
+            eventCards.sort((cardA, cardB) => {
+                const priceA = parseFloat(cardA.querySelector('.card-text:last-child').textContent);
+                const priceB = parseFloat(cardB.querySelector('.card-text:last-child').textContent);
+
+                return priceA - priceB; // Tri croissant
+            });
+
+            eventContainer.innerHTML = ''; // Vider les événements existants
+
+            eventCards.forEach(card => {
+                eventContainer.appendChild(card);
+            });
+        });
+    });
+</script>
+
+<button id="sortPriceDescBtn">Trier par prix décroissant</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortPriceDescBtn = document.getElementById('sortPriceDescBtn');
+        const eventContainer = document.querySelector('.events .container .row');
+
+        sortPriceDescBtn.addEventListener('click', function () {
+            const eventCards = Array.from(document.querySelectorAll('.event-card'));
+
+            eventCards.sort((cardA, cardB) => {
+                const priceA = parseFloat(cardA.querySelector('.card-text:last-child').textContent);
+                const priceB = parseFloat(cardB.querySelector('.card-text:last-child').textContent);
+
+                return priceB - priceA; // Tri décroissant
+            });
+
+            eventContainer.innerHTML = ''; // Vider les événements existants
+
+            eventCards.forEach(card => {
+                eventContainer.appendChild(card);
+            });
+        });
+    });
+</script>
 
 <button id="sortDateBtn">Trier par date</button>
 
@@ -171,6 +222,33 @@
         });
     });
 </script>
+<button id="sortDateDescBtn">Trier par date décroissante</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortDateDescBtn = document.getElementById('sortDateDescBtn');
+        const eventContainer = document.querySelector('.events .container .row');
+
+        sortDateDescBtn.addEventListener('click', function () {
+            const eventCards = Array.from(document.querySelectorAll('.event-card'));
+
+            eventCards.sort((cardA, cardB) => {
+                const dateA = new Date(cardA.querySelector('.text-center').textContent);
+                const dateB = new Date(cardB.querySelector('.text-center').textContent);
+
+                return dateB - dateA; // Tri décroissant
+            });
+
+            eventContainer.innerHTML = ''; // Vider les événements existants
+
+            eventCards.forEach(card => {
+                eventContainer.appendChild(card);
+            });
+        });
+    });
+</script>
+
+
 
 <section id="events" class="events section">
     <div class="container" data-aos="fade-up">
