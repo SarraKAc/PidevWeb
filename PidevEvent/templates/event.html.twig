@@ -142,11 +142,41 @@
 
 
 
+
+
+
+
+<button id="sortDateBtn">Trier par date</button>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortDateBtn = document.getElementById('sortDateBtn');
+        const eventContainer = document.querySelector('.events .container .row');
+
+        sortDateBtn.addEventListener('click', function () {
+            const eventCards = Array.from(document.querySelectorAll('.event-card'));
+
+            eventCards.sort((cardA, cardB) => {
+                const dateA = new Date(cardA.querySelector('.text-center').textContent);
+                const dateB = new Date(cardB.querySelector('.text-center').textContent);
+
+                return dateA - dateB;
+            });
+
+            eventContainer.innerHTML = ''; // Clear existing cards
+
+            eventCards.forEach(card => {
+                eventContainer.appendChild(card);
+            });
+        });
+    });
+</script>
+
 <section id="events" class="events section">
     <div class="container" data-aos="fade-up">
         <div class="row">
             {% for event in events %}
-            <div class="col-md-6 d-flex align-items-stretch">
+            <div class="col-md-6 d-flex align-items-stretch event-card">
                 <div class="card">
                     <div class="card-img">
                         <img src="back-office\img\card.jpg" alt="...">
@@ -164,6 +194,9 @@
         </div>
     </div>
 </section>
+
+
+
 
 
 <!-- /Events Section -->
