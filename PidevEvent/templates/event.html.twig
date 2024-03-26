@@ -248,6 +248,63 @@
     });
 </script>
 
+<div>
+    <label for="sortOrderSelect">Trier par :</label>
+    <select id="sortOrderSelect">
+        <option value="">Choisir...</option>
+        <option value="priceAsc">Prix croissant</option>
+        <option value="priceDesc">Prix décroissant</option>
+        <option value="dateAsc">Date croissante</option>
+        <option value="dateDesc">Date décroissante</option>
+    </select>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const sortOrderSelect = document.getElementById('sortOrderSelect');
+        const eventContainer = document.querySelector('.events .container .row');
+
+        function sortEvents() {
+            const selectedValue = sortOrderSelect.value;
+
+            if (selectedValue !== "") {
+                const eventCards = Array.from(document.querySelectorAll('.event-card'));
+
+                eventCards.sort((cardA, cardB) => {
+                    const valueA = getValue(cardA);
+                    const valueB = getValue(cardB);
+
+                    if (selectedValue.includes('Asc')) {
+                        return valueA - valueB;
+                    } else {
+                        return valueB - valueA;
+                    }
+                });
+
+                eventContainer.innerHTML = ''; // Vider les événements existants
+
+                eventCards.forEach(card => {
+                    eventContainer.appendChild(card);
+                });
+            }
+        }
+
+        function getValue(card) {
+            if (sortOrderSelect.value.includes('price')) {
+                return parseFloat(card.querySelector('.card-text:last-child').textContent);
+            } else {
+                return new Date(card.querySelector('.text-center').textContent);
+            }
+        }
+
+        sortOrderSelect.addEventListener('change', sortEvents);
+
+        // Si une option est déjà sélectionnée, trier les événements
+        if (sortOrderSelect.value !== "") {
+            sortEvents();
+        }
+    });
+</script>
 
 
 <section id="events" class="events section">
