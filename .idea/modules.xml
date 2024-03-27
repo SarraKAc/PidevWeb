@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/symfonyChatApp.iml" filepath="$PROJECT_DIR$/.idea/symfonyChatApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/symfonyChatContrat.iml" filepath="$PROJECT_DIR$/.idea/symfonyChatContrat.iml" />
     </modules>
   </component>
 </project>
