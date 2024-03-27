@@ -21,7 +21,6 @@ return function (array $context) {
 
     // Register your custom commands here
     $application->add(new App\Command\GenerateCRUDCommand());
-    $application->add(new App\Command\GenerateSearchFilterCommandPhpCommand());
 
     // Run the application
     $input = new ArgvInput();
