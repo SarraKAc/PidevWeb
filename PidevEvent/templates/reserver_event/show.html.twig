@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReserverEvent{% endblock %}
+
+{% block body %}
+    <h1>ReserverEvent</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdReservation</th>
+                <td>{{ reserver_event.idReservation }}</td>
+            </tr>
+            <tr>
+                <th>IdEvenement</th>
+                <td>{{ reserver_event.idEvenement }}</td>
+            </tr>
+            <tr>
+                <th>IdUser</th>
+                <td>{{ reserver_event.idUser }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ reserver_event.nom }}</td>
+            </tr>
+            <tr>
+                <th>NbrPersonne</th>
+                <td>{{ reserver_event.nbrPersonne }}</td>
+            </tr>
+            <tr>
+                <th>DateReservation</th>
+                <td>{{ reserver_event.dateReservation }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ reserver_event.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reserver_event_index') }}">back to list</a>
+
+    <a href="{{ path('app_reserver_event_edit', {'idReservation': reserver_event.idReservation}) }}">edit</a>
+
+    {{ include('reserver_event/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ReserverEvent{% endblock %}
+
+{% block body %}
+    <h1>Create new ReserverEvent</h1>
+
+    {{ include('reserver_event/_form.html.twig') }}
+
+    <a href="{{ path('app_reserver_event_index') }}">back to list</a>
+{% endblock %}

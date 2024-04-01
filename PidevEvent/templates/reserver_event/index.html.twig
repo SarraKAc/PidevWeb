@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReserverEvent index{% endblock %}
+
+{% block body %}
+    <h1>ReserverEvent index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdReservation</th>
+                <th>IdEvenement</th>
+                <th>IdUser</th>
+                <th>Nom</th>
+                <th>NbrPersonne</th>
+                <th>DateReservation</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reserver_event in reserver_events %}
+            <tr>
+                <td>{{ reserver_event.idReservation }}</td>
+                <td>{{ reserver_event.idEvenement }}</td>
+                <td>{{ reserver_event.idUser }}</td>
+                <td>{{ reserver_event.nom }}</td>
+                <td>{{ reserver_event.nbrPersonne }}</td>
+                <td>{{ reserver_event.dateReservation }}</td>
+                <td>{{ reserver_event.email }}</td>
+                <td>
+                    <a href="{{ path('app_reserver_event_show', {'idReservation': reserver_event.idReservation}) }}">show</a>
+                    <a href="{{ path('app_reserver_event_edit', {'idReservation': reserver_event.idReservation}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reserver_event_new') }}">Create new</a>
+{% endblock %}
