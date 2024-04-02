@@ -3,45 +3,46 @@
 {% block title %}Service index{% endblock %}
 
 {% block body %}
-    <h1>Service index</h1>
+    <h1 class ="blue">Liste des Services</h1>
 
     <table class="table">
         <thead>
-            <tr>
-                <th>IdService</th>
-                <th>NomService</th>
-                <th>TitreService</th>
-                <th>Prix</th>
-                <th>Tmpservice</th>
-                <th>Domaine</th>
-                <th>Img</th>
-                <th>Prixsolde</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th class="blue">Nom </th>
+            <th class="blue">Titre </th>
+            <th class="blue">Durée</th>
+            <th class="blue">Domaine</th>
+            <th class="blue">Prix</th>
+            <th class="blue">Prix Soldé</th>
+            <th></th>
+            <th class="blue">Actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for service in services %}
             <tr>
-                <td>{{ service.idService }}</td>
                 <td>{{ service.nomService }}</td>
                 <td>{{ service.titreService }}</td>
-                <td>{{ service.prix }}</td>
                 <td>{{ service.tmpservice }}</td>
                 <td>{{ service.domaine }}</td>
+                <td>{{ service.prix }} Tokens</td>
+                <td>{{ service.prixsolde }} Tokens</td>
                 <td>{{ service.img }}</td>
-                <td>{{ service.prixsolde }}</td>
                 <td>
-                    <a href="{{ path('app_service_show', {'idService': service.idService}) }}">show</a>
-                    <a href="{{ path('app_service_edit', {'idService': service.idService}) }}">edit</a>
+                    <a href="{{ path('app_service_show', {'idService': service.idService}) }}" class="btn btn-primary">Détail</a>
+                    <a href="{{ path('app_service_edit', {'idService': service.idService}) }}" class="btn btn-primary">Modifie</a>
                 </td>
+            </tr>
+            <tr class="table-separator">
+                <td colspan="8"></td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_service_new') }}">Create new</a>
+    <a href="{{ path('app_service_new') }}">Ajouter Service</a>
 {% endblock %}

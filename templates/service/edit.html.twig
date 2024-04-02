@@ -3,11 +3,11 @@
 {% block title %}Edit Service{% endblock %}
 
 {% block body %}
-    <h1>Edit Service</h1>
+    <h1 class ="blue">Modifier Service</h1>
 
-    {{ include('service/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('service/_form.html.twig', {'button_label' : 'Update'}) }}
 
-    <a href="{{ path('app_service_index') }}">back to list</a>
+    <a href="{{ path('app_service_index') }}">Retourne liste</a>
 
     {{ include('service/_delete_form.html.twig') }}
 {% endblock %}

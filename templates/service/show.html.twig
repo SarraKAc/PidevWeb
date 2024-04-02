@@ -7,38 +7,40 @@
 
     <table class="table">
         <tbody>
+{#            <tr>#}
+{#                <th>IdService</th>#}
+{#                <td>{{ service.idService }}</td>#}
+{#            </tr>#}
             <tr>
-                <th>IdService</th>
-                <td>{{ service.idService }}</td>
-            </tr>
-            <tr>
-                <th>NomService</th>
+                <th>Nom du service :</th>
                 <td>{{ service.nomService }}</td>
             </tr>
             <tr>
-                <th>TitreService</th>
+                <th>TitreService :</th>
                 <td>{{ service.titreService }}</td>
             </tr>
             <tr>
-                <th>Prix</th>
-                <td>{{ service.prix }}</td>
-            </tr>
-            <tr>
-                <th>Tmpservice</th>
+                <th>Durée :</th>
                 <td>{{ service.tmpservice }}</td>
             </tr>
             <tr>
-                <th>Domaine</th>
+                <th>Domaine :</th>
                 <td>{{ service.domaine }}</td>
             </tr>
+
+             <tr>
+    <th>Prix :</th>
+    <td>{{ service.prix }} Tokens</td>
+</tr>
             <tr>
-                <th>Img</th>
-                <td>{{ service.img }}</td>
+                <th>Prixsolde :</th>
+                <td>{{ service.prixsolde }} Tokens</td>
             </tr>
-            <tr>
-                <th>Prixsolde</th>
-                <td>{{ service.prixsolde }}</td>
-            </tr>
+<tr>
+
+    <td><img src="{{ asset('images/' ~ service.img) }}" alt="Image" style="max-width: 100px;"></td>
+
+</tr>
         </tbody>
     </table>
 
