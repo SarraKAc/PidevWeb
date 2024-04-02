@@ -182,6 +182,7 @@ class Service
     }
     public function __toString(): string
     {
+
         return $this->nomService; // Ou toute autre information pertinente à afficher sous forme de chaîne
     }
 

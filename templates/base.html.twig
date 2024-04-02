@@ -1,19 +1,157 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDENTORS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #00B2FF; /* Clear blue color */
+            color: #fff;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: width 0.3s;
+            z-index: 1000;
+        }
+        .sidebar:hover {
+            width: 280px;
+        }
+        .sidebar h1 {
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #fff;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .sidebar ul li {
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li:hover {
+            background-color: #555;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .sidebar ul li i {
+            margin-right: 10px;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            background-color: #006AFF; /* Clear blue color */
+            color: #fff; /* White text color */
+            padding: 20px;
+            text-align: center;
+        }
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+                height: auto;
+                position: fixed;
+                z-index: 1000;
+            }
+            .sidebar:hover {
+                width: 250px;
+            }
+            .sidebar ul li {
+                padding: 10px;
+                text-align: center;
+            }
+            .sidebar ul li i {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+            .content {
+                margin-left: 80px;
+            }
+        }
+        .hamburger {
+            display: none;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 1100;
+            cursor: pointer;
+        }
+        .hamburger .fa-bars,
+        .hamburger .fa-times {
+            font-size: 24px;
+            color: #fff;
+        }
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            .sidebar {
+                display: none;
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                top: 0;
+                left: -100%;
+                background-color: #333;
+                overflow-y: auto;
+            }
+            .sidebar.active {
+                display: block;
+                left: 0;
+                transition: left 0.3s ease;
+            }
+        }
+    </style>
+</head>
+<body><body>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+<div class="hamburger" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</div>
+
+<div class="sidebar" id="sidebar">
+    <h1>STUDENTOS</h1>
+    <ul>
+        <li><a href="#"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+        <li><a href="#"><i class="fas fa-users"></i>Users</a></li>
+        <li><a href="#"><i class="fas fa-shopping-cart"></i>Orders</a></li>
+        <li><a href="#"><i class="fas fa-box"></i>Gestion Service</a></li>
+        <li><a href="#"><i class="fas fa-box"></i>Gestion Topic</a></li>
+        <li><a href="#"><i class="fas fa-box"></i>Gestion Events</a></li>
+        <li><a href="#"><i class="fas fa-box"></i>Gestion Messagerie</a></li>
+        <li><a href="#"><i class="fas fa-box"></i>Gestion Ressources</a></li>
+        <li><a href="#"><i class="fas fa-cog"></i>Settings</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <div class="header">
+        <h2>Welcome to the Admin Dashboard</h2>
+    </div>
+    {% block body %}{% endblock %}
+</div>
+
+<script>
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("active");
+    }
+</script>
+
+
+</body>
