@@ -36,9 +36,12 @@
             {{ form_widget(form.img) }}
         </div>
 
+        <div style="margin-top: 20px;">
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        </div>
         {{ form_end(form) }}
 
-        <a href="{{ path('app_service_index') }}">Retourne liste</a>
+        <a href="{{ path('app_service_index') }}" class="button">Retourne liste</a>
 
         {{ include('service/_delete_form.html.twig') }}
     </div>
