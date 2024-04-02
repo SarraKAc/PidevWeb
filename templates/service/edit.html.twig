@@ -3,11 +3,43 @@
 {% block title %}Edit Service{% endblock %}
 
 {% block body %}
-    <h1 class ="blue">Modifier Service</h1>
+    <div style="text-align: center;">
+        <h1 class="blue">Modifier Service</h1>
 
-    {{ include('service/_form.html.twig', {'button_label' : 'Update'}) }}
+        {{ form_start(form) }}
+        <div style="margin-bottom: 20px;">
+            <label style="border-color: #459BFD; padding: 30px;">{{ form_label(form.nomService) }}</label>
+            {{ form_widget(form.nomService, { 'attr': {'class' : 'text-field', 'style': 'height: 30px;'}}) }}
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="border-color: #459BFD; padding: 30px;">{{ form_label(form.titreService) }}</label>
+            {{ form_widget(form.titreService, {'attr': {'class': 'text-field', 'style': 'height: 30px;'}}) }}
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="border-color: #459BFD; padding: 30px;">{{ form_label(form.tmpservice) }}</label>
+            {{ form_widget(form.tmpservice, {'attr': {'class': 'text-field', 'style': 'height: 30px;'}}) }}
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="border-color: #459BFD; padding: 30px;">{{ form_label(form.domaine) }}</label>
+            {{ form_widget(form.domaine, {'attr': {'class': 'text-field', 'style': 'height: 30px;'}}) }}
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="border-color: #459BFD; padding: 50px;">{{ form_label(form.prix) }}</label>
+            {{ form_widget(form.prix, {'attr': {'class': 'text-field', 'style': 'height: 30px;'}}) }}
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="border-color: #459BFD; padding: 30px;">{{ form_label(form.prixsolde) }}</label>
+            {{ form_widget(form.prixsolde, {'attr': {'class': 'text-field', 'style': 'height: 30px;'}}) }}
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label style="border-color: #459BFD; padding: 30px;">{{ form_label(form.img) }}</label>
+            {{ form_widget(form.img) }}
+        </div>
 
-    <a href="{{ path('app_service_index') }}">Retourne liste</a>
+        {{ form_end(form) }}
 
-    {{ include('service/_delete_form.html.twig') }}
+        <a href="{{ path('app_service_index') }}">Retourne liste</a>
+
+        {{ include('service/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
