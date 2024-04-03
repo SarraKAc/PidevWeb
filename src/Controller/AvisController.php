@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Avis;
+use App\Entity\Service;
 use App\Form\AvisType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +45,17 @@ class AvisController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/serivce', name: 'app_service_index', methods: ['GET'])]
+    public function indexS(EntityManagerInterface $entityManager): Response
+    {
+        $services = $entityManager
+            ->getRepository(Service::class)
+            ->findAll();
 
+        return $this->render('service/index.html.twig', [
+            'services' => $services,
+        ]);
+    }
     #[Route('/{idAvis}', name: 'app_avis_show', methods: ['GET'])]
     public function show(Avis $avi): Response
     {

@@ -3,15 +3,15 @@
 {% block title %}Avis index{% endblock %}
 
 {% block body %}
-    <h1>Avis index</h1>
+    <h1 class="blue">Liste des Avis </h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>  Nom Service</th>
-                <th>  Nombre Etoile</th>
-                <th>  Commentaire</th>
-                <th>  actions</th>
+                <th class="blue">  Nom Service</th>
+                <th class="blue">  Nombre Etoile</th>
+                <th class="blue">  Commentaire</th>
+                <th class="blue">  Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +32,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+    <a href="{{ path('app_service_index') }}">Liste des Services</a>
+    <a>|</a>
     <a href="{{ path('app_avis_new') }}">Donne Rating</a>
 {% endblock %}
