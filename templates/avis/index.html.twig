@@ -8,21 +8,21 @@
     <table class="table">
         <thead>
             <tr>
-                <th>IdAvis</th>
-                <th>NbrEtoile</th>
-                <th>Text</th>
-                <th>actions</th>
+                <th>  Nom Service</th>
+                <th>  Nombre Etoile</th>
+                <th>  Commentaire</th>
+                <th>  actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for avi in avis %}
+        {% for avis in avis %}
             <tr>
-                <td>{{ avi.idAvis }}</td>
-                <td>{{ avi.nbrEtoile }}</td>
-                <td>{{ avi.text }}</td>
+                <td>{{ avis.idAvis }}</td>
+                <td>{{ avis.nbrEtoile }}</td>
+                <td>{{ avis.text }}</td>
                 <td>
-                    <a href="{{ path('app_avis_show', {'idAvis': avi.idAvis}) }}">show</a>
-                    <a href="{{ path('app_avis_edit', {'idAvis': avi.idAvis}) }}">edit</a>
+                    <a href="{{ path('app_avis_show', {'idAvis': avis.idAvis}) }}">Détail</a>
+                    <a href="{{ path('app_avis_edit', {'idAvis': avis.idAvis}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_avis_new') }}">Create new</a>
+    <a href="{{ path('app_avis_new') }}">Donne Rating</a>
 {% endblock %}
