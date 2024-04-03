@@ -3,9 +3,12 @@
 {% block title %}Service index{% endblock %}
 
 {% block body %}
-    <h1 class ="blue">Liste des Services</h1>
+    <div style="text-align: center;">
+        <h1 class="blue">Liste des Services</h1>
+    </div>
 
-    <table class="table">
+
+    <table class="table"  >
         <thead>
         <tr>
             <th class="blue">Nom </th>
@@ -13,8 +16,7 @@
             <th class="blue">Durée</th>
             <th class="blue">Domaine</th>
             <th class="blue">Prix</th>
-            <th class="blue">Prix Soldé</th>
-            <th></th>
+
             <th class="blue">Actions</th>
         </tr>
         </thead>
@@ -26,8 +28,8 @@
                 <td>{{ service.tmpservice }}</td>
                 <td>{{ service.domaine }}</td>
                 <td>{{ service.prix }} Tokens</td>
-                <td>{{ service.prixsolde }} Tokens</td>
-                <td>{{ service.img }}</td>
+
+
                 <td>
                     <a href="{{ path('app_service_show', {'idService': service.idService}) }}" class="btn btn-primary">Détail</a>
                     <a href="{{ path('app_service_edit', {'idService': service.idService}) }}" class="btn btn-primary">Modifie</a>

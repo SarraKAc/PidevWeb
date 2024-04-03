@@ -38,48 +38,55 @@
 
     <div class="container">
         <div>
-            <h1> Détail Service</h1>
+            <div style="text-align: center;">
+                <h1 style="color: #007bff; font-weight: bold;">Détail Service</h1>
+            </div>
+
 
             <table class="table">
                 <tbody>
                 <tr>
-                    <td><img src="{{ asset('images/' ~ service.img) }}" alt="Image" style="max-width: 100px;"></td>
+                    <td colspan="2"><img src="{{ asset('images/' ~ service.img) }}" alt="Image" style="max-width: 500px;"></td>
                 </tr>
 
-
                 <tr>
-                    <th>Nom du service :</th>
-                    <td>{{ service.nomService }}</td>
+                    <th style="color: #007bff; text-align: left;">Nom du service :</th>
+                    <td style="font-weight: bold;">{{ service.nomService }}</td>
                 </tr>
                 <tr>
-                    <th>TitreService :</th>
-                    <td>{{ service.titreService }}</td>
+                    <th style="color: #007bff; text-align: left;">Titre Service :</th>
+                    <td style="font-weight: bold;">{{ service.titreService }}</td>
                 </tr>
                 <tr>
-                    <th>Durée :</th>
-                    <td>{{ service.tmpservice }}</td>
+                    <th style="color: #007bff; text-align: left;">Durée :</th>
+                    <td style="font-weight: bold;">{{ service.tmpservice }}</td>
                 </tr>
                 <tr>
-                    <th>Domaine :</th>
-                    <td>{{ service.domaine }}</td>
+                    <th style="color: #007bff; text-align: left;">Domaine :</th>
+                    <td style="font-weight: bold;">{{ service.domaine }}</td>
                 </tr>
                 <tr>
-                    <th>Prix :</th>
-                    <td>{{ service.prix }} Tokens</td>
+                    <th style="color: #007bff; text-align: left;">Prix :</th>
+                    <td style="font-weight: bold;">{{ service.prix }} Tokens</td>
                 </tr>
-                <tr>
-                    <th>Prixsolde :</th>
-                    <td>{{ service.prixsolde }} Tokens</td>
-                </tr>
-
+                {#<tr>#}
+                {#    <th style="color: #007bff; text-align: left;">Prix Soldé :</th>#}
+                {#    <td style="font-weight: bold;">{{ service.prixsolde }} Tokens</td>#}
+                {#</tr>#}
                 </tbody>
             </table>
 
-            <a href="{{ path('app_service_index') }}">Retourne Liste</a>
-<a>  | </a>
-            <a href="{{ path('app_service_edit', {'idService': service.idService}) }}">Modifier</a>
 
+        </div>
+    </div>
+
+    <div style="text-align: center;">
+        <a href="{{ path('app_service_index') }}" style="font-weight: bold;">Retourne Liste</a>
+        <a>|</a>
+        <a href="{{ path('app_service_edit', {'idService': service.idService}) }}" style="font-weight: bold;">Modifier</a>
+        <div class="btn btn-danger">
             {{ include('service/_delete_form.html.twig') }}
         </div>
+
     </div>
 {% endblock %}

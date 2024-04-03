@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Service;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -27,7 +28,11 @@ class ServiceType extends AbstractType
 
                 ],
             ])
-            ->add('img')
+            ->add('img', FileType::class, [
+                'label' => 'Image (JPEG, PNG, GIF)',
+                'mapped' => false, // Don't map this field to any property of the entity
+                'required' => false, // Allow the field to be empty
+            ])
 
             ->add('idUser')
         ;
