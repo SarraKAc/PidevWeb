@@ -5,9 +5,11 @@ namespace App\Form;
 use App\Entity\Service;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\Type;
 
 class ServiceType extends AbstractType
 {
@@ -16,7 +18,12 @@ class ServiceType extends AbstractType
         $builder
             ->add('nomService')
             ->add('titreService')
-            ->add('prix')
+            ->add('prix', NumberType::class, [
+                'invalid_message' => 'Le prix doit être un nombre entier.',
+                'attr' => [
+                    'placeholder' => 'Prix'
+                ],
+            ])
             ->add('tmpservice')
             ->add('domaine', ChoiceType::class, [
                 'choices' => [

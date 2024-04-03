@@ -8,20 +8,25 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="blue">  Nom Service</th>
+
                 <th class="blue">  Nombre Etoile</th>
+                <th></th>
                 <th class="blue">  Commentaire</th>
+                <th></th>
                 <th class="blue">  Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for avis in avis %}
             <tr>
-                <td>{{ avis.idAvis }}</td>
+
                 <td>{{ avis.nbrEtoile }}</td>
+                <td></td>
                 <td>{{ avis.text }}</td>
+                <td></td>
                 <td>
                     <a href="{{ path('app_avis_show', {'idAvis': avis.idAvis}) }}">Détail</a>
+                    <a>|</a>
                     <a href="{{ path('app_avis_edit', {'idAvis': avis.idAvis}) }}">Modifier</a>
                 </td>
             </tr>

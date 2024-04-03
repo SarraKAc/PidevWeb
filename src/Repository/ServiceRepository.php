@@ -56,7 +56,14 @@ public function showAllServicesOrderByNom()
             ->getResult()
         ;
     }
-
+    public function searchByKeyword(string $keyword): ?array
+    {
+        return $this->createQueryBuilder('s')
+            ->where('s.nomService LIKE :keyword')
+            ->setParameter('keyword', '%' . $keyword . '%')
+            ->getQuery()
+            ->getResult();
+    }
 //DQL Question 3
 //public function SearchAuthorDQL($min,$max){
 //    $em=$this->getEntityManager();

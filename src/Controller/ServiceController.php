@@ -25,6 +25,7 @@ class ServiceController extends AbstractController
             'services' => $services,
         ]);
     }
+
     #[Route('/newA', name: 'app_avis_new', methods: ['GET', 'POST'])]
     public function newA(Request $request, EntityManagerInterface $entityManager): Response
     {
