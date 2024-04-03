@@ -6,6 +6,7 @@ use App\Entity\Service;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ServiceType extends AbstractType
 {
@@ -16,9 +17,18 @@ class ServiceType extends AbstractType
             ->add('titreService')
             ->add('prix')
             ->add('tmpservice')
-            ->add('domaine')
+            ->add('domaine', ChoiceType::class, [
+                'choices' => [
+                    'Programmation' => 'Programmation',
+                    'Réseau' => 'Réseau',
+                    'Langue' => 'Langue',
+                    'Commerce' => 'Commerce',
+                    'Programme BAC' => 'Programme BAC',
+
+                ],
+            ])
             ->add('img')
-            ->add('prixsolde')
+
             ->add('idUser')
         ;
     }

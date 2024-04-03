@@ -3,9 +3,146 @@
 {% block title %}New Service{% endblock %}
 
 {% block body %}
-    <h1>Create new Service</h1>
 
-    {{ include('service/_form.html.twig') }}
+    <style>
+        .container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px; /* Reduced padding */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px; /* Reduced margin */
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Reduced margin */
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px; /* Reduced padding */
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #66afe9;
+        }
+
+        .form-group .radio-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group .radio-group label {
+            margin-right: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .footer {
+            margin-top: 15px; /* Reduced margin */
+            text-align: center;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="container-wrapper">
+        <div class="container">
+            <h2>Ajouter Service</h2>
+            {{ form_start(form) }}
+
+            <div class="form-group">
+                <label for="nom">Nom Service:</label>
+                {{ form_widget(form.nomService, {'attr': {'placeholder':'nom service'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="prenom">Titre Service:</label>
+                {{ form_widget(form.titreService, {'attr': {'placeholder':'Titre service'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="duree">Durée :</label>
+                {{ form_widget(form.tmpservice, {'attr': {'placeholder':'Durée service'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="duree">Prix :</label>
+                {{ form_widget(form.prix, {'attr': {'placeholder':'Prix'}}) }}
+            </div>
+
+            <div class="form-group">
+                <label for="duree">domaine :</label>
+                {{ form_widget(form.domaine, {'attr': {'placeholder':'Domaine'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="duree">User :</label>
+                {{ form_widget(form.idUser, {'attr': {'placeholder':'Nom Prenom '}}) }}
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn" id="submitBtn">Ajouter</button>
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+    </div>
 
     <a href="{{ path('app_service_index') }}">Retourne liste</a>
 {% endblock %}
