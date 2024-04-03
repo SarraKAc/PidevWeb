@@ -137,7 +137,7 @@ public function search(Request $request, EvenementRepository $evenementRepositor
    
 
     #[Route('/{id}/edit', name: 'app_evenement_edit', methods: ['GET', 'POST'])]
-    public function edit(Evenement $evenement, Request $request): Response
+    public function edit(Evenement $evenement, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Créer le formulaire en utilisant le FormBuilder
         $form = $this->createForm(EvenementType::class, $evenement);
@@ -146,16 +146,17 @@ public function search(Request $request, EvenementRepository $evenementRepositor
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Enregistrer l'événement
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
+            
 
             // Rediriger l'utilisateur vers la page d'accueil des événements
             return $this->redirectToRoute('app_evenement_index');
         }
 
         // Passer le formulaire à la vue Twig pour l'affichage
-        return $this->render('student/add-student.html.twig', [
+        return $this->render('student/student-element.html.twig', [
             'form' => $form->createView(),
-            'evenement' => $evenement,
+            'evenements' => $evenement,
         ]);
     }
     

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EvenementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,8 +14,10 @@ class Evenement
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(name: "id_evenement", type: "integer")]
+    
+
+    private ?int $id_evenement = null;
 
     
     #[Assert\NotBlank(message:"Ce champ ne peut pas être vide")]
@@ -41,9 +45,11 @@ class Evenement
     #[ORM\Column(length: 255)]
     private ?string $CheminImage = null;
 
+  
+
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->id_evenement;
     }
 
     public function getNom(): ?string
@@ -117,4 +123,5 @@ class Evenement
 
         return $this;
     }
+
 }

@@ -65,6 +65,4 @@ public function findByPrice(): array
         ->getResult();
 }
 
-  
-
 }

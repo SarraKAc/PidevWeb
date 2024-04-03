@@ -95,4 +95,4 @@ sortDescBtn.addEventListener('click', function () {
         eventsTable.appendChild(row);
     });
 });
-
+s

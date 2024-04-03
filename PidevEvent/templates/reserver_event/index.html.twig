@@ -8,12 +8,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>IdReservation</th>
-                <th>IdEvenement</th>
-                <th>IdUser</th>
+                <th>Id_reservation</th>
                 <th>Nom</th>
-                <th>NbrPersonne</th>
-                <th>DateReservation</th>
+                <th>Nbr_personne</th>
+                <th>Date_reservation</th>
                 <th>Email</th>
                 <th>actions</th>
             </tr>
@@ -22,20 +20,18 @@
         {% for reserver_event in reserver_events %}
             <tr>
                 <td>{{ reserver_event.idReservation }}</td>
-                <td>{{ reserver_event.idEvenement }}</td>
-                <td>{{ reserver_event.idUser }}</td>
                 <td>{{ reserver_event.nom }}</td>
                 <td>{{ reserver_event.nbrPersonne }}</td>
-                <td>{{ reserver_event.dateReservation }}</td>
+                <td>{{ reserver_event.dateReservation ? reserver_event.dateReservation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ reserver_event.email }}</td>
                 <td>
-                    <a href="{{ path('app_reserver_event_show', {'idReservation': reserver_event.idReservation}) }}">show</a>
-                    <a href="{{ path('app_reserver_event_edit', {'idReservation': reserver_event.idReservation}) }}">edit</a>
+                    <a href="{{ path('app_reserver_event_show', {'id_reservation': reserver_event.id_reservation}) }}">show</a>
+                    <a href="{{ path('app_reserver_event_edit', {'id_reservation': reserver_event.id_reservation}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="6">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

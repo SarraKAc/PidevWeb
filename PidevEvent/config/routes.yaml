@@ -10,3 +10,7 @@ app_evenement_rechercher:
     path: '/evenement/search'
     controller: 'App\Controller\EvenementController::search'
     methods: ['POST']
+app_afficher_reservation:
+    path: /afficher/reservation
+    controller: 'App\Controller\ReserverEventController::show'
+    methods: ['GET']

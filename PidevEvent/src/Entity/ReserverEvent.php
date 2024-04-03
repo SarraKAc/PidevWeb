@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReserverEventRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReserverEventRepository::class)]
@@ -10,62 +11,54 @@ class ReserverEvent
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: 'id_reservation')]
-    private ?int $idReservation = null;
+    #[ORM\Column (name: "id_reservation")]
+    private ?int $id_reservation = null;
 
-    #[ORM\Column(name: 'id_evenement')]
-    private ?int $idEvenement = null;
+    #[ORM\ManyToOne(targetEntity: "Evenement")]
+    #[ORM\JoinColumn(name: "id_evenement", nullable: false, referencedColumnName:"id_evenement")]
+    private ?Evenement $evenement;
 
-    #[ORM\Column(name: 'id_user')]
-    private ?int $idUser = null;
-
-    #[ORM\Column]
+    #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(name: 'nbr_personne')]
-    private ?int $nbrPersonne = null;
-
-    #[ORM\Column(name: 'date_reservation')]
-    private ?\DateTimeInterface $dateReservation = null;
-
     #[ORM\Column]
+    private ?int $nbr_personne = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_reservation = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    public function getIdReservation(): ?int
+    public function getId(): ?int
     {
-        return $this->idReservation;
+        return $this->id_reservation;
     }
 
-    public function getIdEvenement(): ?int
+    public function getEvenement(): ?Evenement
     {
-        return $this->idEvenement;
+        return $this->evenement;
     }
 
-    public function setIdEvenement(?int $idEvenement): self
+    public function setEvenement(?Evenement $evenement): static
     {
-        $this->idEvenement = $idEvenement;
+        $this->evenement = $evenement;
 
         return $this;
     }
 
-    public function getIdUser(): ?int
-    {
-        return $this->idUser;
-    }
 
-    public function setIdUser(?int $idUser): self
-    {
-        $this->idUser = $idUser;
 
-        return $this;
-    }
+
+
+
 
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(?string $nom): self
+    public function setNom(string $nom): static
     {
         $this->nom = $nom;
 
@@ -74,24 +67,24 @@ class ReserverEvent
 
     public function getNbrPersonne(): ?int
     {
-        return $this->nbrPersonne;
+        return $this->nbr_personne;
     }
 
-    public function setNbrPersonne(?int $nbrPersonne): self
+    public function setNbrPersonne(int $nbr_personne): static
     {
-        $this->nbrPersonne = $nbrPersonne;
+        $this->nbr_personne = $nbr_personne;
 
         return $this;
     }
 
     public function getDateReservation(): ?\DateTimeInterface
     {
-        return $this->dateReservation;
+        return $this->date_reservation;
     }
 
-    public function setDateReservation(?\DateTimeInterface $dateReservation): self
+    public function setDateReservation(\DateTimeInterface $date_reservation): static
     {
-        $this->dateReservation = $dateReservation;
+        $this->date_reservation = $date_reservation;
 
         return $this;
     }
@@ -101,7 +94,7 @@ class ReserverEvent
         return $this->email;
     }
 
-    public function setEmail(?string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 

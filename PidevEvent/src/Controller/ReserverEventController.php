@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 #[Route('/reserver/event')]
 class ReserverEventController extends AbstractController
@@ -36,21 +38,25 @@ class ReserverEventController extends AbstractController
             return $this->redirectToRoute('app_reserver_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('reserver_event/new.html.twig', [
+        return $this->renderForm('student/reserver-event.html.twig', [
             'reserver_event' => $reserverEvent,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{idReservation}', name: 'app_reserver_event_show', methods: ['GET'])]
+    #[Route('/{id_reservation}', name: 'app_reserver_event_show', methods: ['GET'])]
     public function show(ReserverEvent $reserverEvent): Response
     {
-        return $this->render('reserver_event/show.html.twig', [
+        return $this->render('student/afficher-reservation.html.twig', [
             'reserver_event' => $reserverEvent,
         ]);
     }
 
-    #[Route('/{idReservation}/edit', name: 'app_reserver_event_edit', methods: ['GET', 'POST'])]
+
+
+ 
+
+    #[Route('/{id_reservation}/edit', name: 'app_reserver_event_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ReserverEvent $reserverEvent, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ReserverEventType::class, $reserverEvent);
@@ -68,10 +74,10 @@ class ReserverEventController extends AbstractController
         ]);
     }
 
-    #[Route('/{idReservation}', name: 'app_reserver_event_delete', methods: ['POST'])]
+    #[Route('/{id_reservation}', name: 'app_reserver_event_delete', methods: ['POST'])]
     public function delete(Request $request, ReserverEvent $reserverEvent, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$reserverEvent->getIdReservation(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$reserverEvent->getId_reservation(), $request->request->get('_token'))) {
             $entityManager->remove($reserverEvent);
             $entityManager->flush();
         }
