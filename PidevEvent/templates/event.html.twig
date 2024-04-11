@@ -319,6 +319,35 @@
                         <p class="card-text">{{ event.getDescription() }}</p>
                         <p class="card-text">{{ event.getCategorie() }}</p>
                         <p class="card-text">{{ event.getPrix() }}</p>
+                        <!-- Bouton pour ouvrir le popup -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal{{ event.id }}">
+                            Ajouter une réservation
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Popup pour la réservation -->
+            <div class="modal fade" id="reservationModal{{ event.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ event.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reservationModalLabel{{ event.id }}">Ajouter une réservation pour {{ event.getNom() }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Formulaire pour la réservation -->
+                            <form action="{{ path('app_reserver_event_new') }}" method="post">
+                                <!-- Ajoutez ici les champs du formulaire pour la réservation -->
+                                <div class="mb-3">
+                                    <label for="inputNom{{ event.id }}">Nom</label>
+                                    <input type="text" class="form-control" id="inputNom{{ event.id }}" name="nom">
+                                </div>
+                                <!-- Ajoutez d'autres champs selon vos besoins -->
+
+                                <!-- Bouton de soumission -->
+                                <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

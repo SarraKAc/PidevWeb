@@ -20,12 +20,6 @@ class ReserverEventType extends AbstractType
             ->add('date_reservation')
             ->add('email')
             
-            /*->add('evenement', EntityType::class, [
-                'class' => ReserverEvent::class,
-                'choice_label' => 'nom' // Assuming 'id' is a meaningful property of Etablissement
-                
-        
-                ])*/
                 ->add('evenement', EntityType::class, [
                     'class' => Evenement::class,
                     'choice_label' => 'nom', // Assuming 'nom' is the property you want to display in the dropdown

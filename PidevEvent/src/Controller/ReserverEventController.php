@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
+
 #[Route('/reserver/event')]
 class ReserverEventController extends AbstractController
 {
@@ -44,17 +45,36 @@ class ReserverEventController extends AbstractController
         ]);
     }
 
-    #[Route('/{id_reservation}', name: 'app_reserver_event_show', methods: ['GET'])]
+
+
+
+
+
+
+
+    #[Route('/{id_reservation}', name: 'app_afficher_reservation', methods: ['GET'])]
     public function show(ReserverEvent $reserverEvent): Response
     {
         return $this->render('student/afficher-reservation.html.twig', [
             'reserver_event' => $reserverEvent,
         ]);
     }
+   
 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
 
     #[Route('/{id_reservation}/edit', name: 'app_reserver_event_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ReserverEvent $reserverEvent, EntityManagerInterface $entityManager): Response
