@@ -551,7 +551,7 @@
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
         <thead>
             <tr>
-                <th>Id_reservation</th>
+                <th>Nom de l'événement</th>
                 <th>Nom</th>
                 <th>Nbr_personne</th>
                 <th>Date_reservation</th>
@@ -562,13 +562,14 @@
         <tbody>
             {% for reservation in reservations %}
                 <tr>
-                    <td>{{ reservation.getId() }}</td>
+                    <td>{{ reservation.getEvenement().getNom() }}</td>
                     <td>{{ reservation.getNom() }}</td>
                     <td>{{ reservation.getNbrPersonne() }}</td>
                     <td>{{ reservation.getDateReservation() ? reservation.getDateReservation()|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ reservation.getEmail() }}</td>
-                    <!-- Ajoutez ici les colonnes pour les actions si nécessaire -->
-                    
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm">Supprimer</button>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -576,6 +577,8 @@
 {% else %}
     <p>Aucune réservation n'est disponible pour le moment.</p>
 {% endif %}
+
+
 
     
 </tbody></table>
