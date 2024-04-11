@@ -128,7 +128,7 @@ class ReserverEventController extends AbstractController
 
 
     
-    
+    /**********************ajouter reservation front **********************/
     #[Route('/reservations/new', name: 'reservation_new', methods: ['POST'])]
     public function create(Request $request): Response
     {
@@ -184,6 +184,8 @@ class ReserverEventController extends AbstractController
     //         'reserver_event' => $reserverEvent,
     //     ]);
     // }
+
+    /****************************************afficher dans tabl */
     #[Route('/afficher', name: 'app_afficher_reservation', methods: ['GET'])]
     public function show(): Response
     {
@@ -244,14 +246,26 @@ class ReserverEventController extends AbstractController
         ]);
     }
 
-    #[Route('/{id_reservation}', name: 'app_reserver_event_delete', methods: ['POST'])]
-    public function delete(Request $request, ReserverEvent $reserverEvent, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$reserverEvent->getId_reservation(), $request->request->get('_token'))) {
-            $entityManager->remove($reserverEvent);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('app_reserver_event_index', [], Response::HTTP_SEE_OTHER);
+
+
+
+
+
+
+
+
+    /***********************supprimerrrrr */
+    #[Route('/{id_reservation}', name: 'app_reserver_event_delete', methods: ['POST'])]
+    public function delete(ReserverEvent $reserverEvent, EntityManagerInterface $entityManager): Response
+{
+    if (!$reserverEvent) {
+        return new Response('La réservation n\'existe pas.', Response::HTTP_NOT_FOUND);
     }
+
+    $entityManager->remove($reserverEvent);
+    $entityManager->flush();
+
+    return new Response('La réservation a été supprimée avec succès.', Response::HTTP_OK);
+}
 }

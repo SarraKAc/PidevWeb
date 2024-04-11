@@ -568,8 +568,11 @@
                     <td>{{ reservation.getDateReservation() ? reservation.getDateReservation()|date('Y-m-d H:i:s') : '' }}</td>
                     <td>{{ reservation.getEmail() }}</td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-sm">Supprimer</button>
-                    </td>
+            <form action="{{ path('app_reserver_event_delete', {'id_reservation': reservation.getId()}) }}" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.getId()) }}">
+                <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+            </form>
+        </td>
                 </tr>
             {% endfor %}
         </tbody>
