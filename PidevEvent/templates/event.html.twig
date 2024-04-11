@@ -319,7 +319,7 @@
                         <p class="card-text">{{ event.getCategorie() }}</p>
                         <p class="card-text">{{ event.getPrix() }}</p>
                         <!-- Bouton pour ouvrir le popup -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal{{ event.id }}">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal{{ event.id }}" data-event-id="{{ event.id }}">
                             Ajouter une réservation
                         </button>
                     </div>
@@ -335,26 +335,29 @@
                         </div>
                         <div class="modal-body">
                             <!-- Formulaire pour la réservation -->
-                            <form action="{{ path('app_reserver_event_new') }}" method="post">
+                            <form action="{{ path('reservation_new') }}" method="post">
+                                <!-- Champ caché pour l'ID de l'événement -->
+                                <input type="hidden" name="id_evenement" value="{{ event.id }}">
+                                
                                 <!-- Champ pour le nom -->
                                 <div class="mb-3">
-                                    <label for="inputNom{{ event.id }}">Nom</label>
-                                    <input type="text" class="form-control" id="inputNom{{ event.id }}" name="nom">
+                                    <label for="inputNom">Nom</label>
+                                    <input type="text" class="form-control" id="inputNom" name="nom">
                                 </div>
                                 <!-- Champ pour le nombre de personnes -->
                                 <div class="mb-3">
-                                    <label for="inputNombre{{ event.id }}">Nombre de personnes</label>
-                                    <input type="number" class="form-control" id="inputNombre{{ event.id }}" name="nbr_personne">
+                                    <label for="inputNombre">Nombre de personnes</label>
+                                    <input type="number" class="form-control" id="inputNombre" name="nbr_personne">
                                 </div>
                                 <!-- Champ pour la date -->
                                 <div class="mb-3">
-                                    <label for="inputDate{{ event.id }}">Date</label>
-                                    <input type="date" class="form-control" id="inputDate{{ event.id }}" name="date_reservation">
+                                    <label for="inputDate">Date</label>
+                                    <input type="date" class="form-control" id="inputDate" name="date_reservation">
                                 </div>
                                 <!-- Champ pour l'e-mail -->
                                 <div class="mb-3">
-                                    <label for="inputEmail{{ event.id }}">E-mail</label>
-                                    <input type="email" class="form-control" id="inputEmail{{ event.id }}" name="email">
+                                    <label for="inputEmail">E-mail</label>
+                                    <input type="email" class="form-control" id="inputEmail" name="email">
                                 </div>
                                 <!-- Bouton de soumission -->
                                 <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
@@ -367,6 +370,8 @@
         </div>
     </div>
 </section>
+
+
 
 
 

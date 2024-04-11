@@ -24,8 +24,12 @@ class ReserverEvent
     #[ORM\Column]
     private ?int $nbr_personne = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    /*#[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date_reservation = null;*/
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_reservation = null;
+
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
