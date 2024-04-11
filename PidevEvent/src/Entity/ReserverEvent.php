@@ -34,6 +34,12 @@ class ReserverEvent
     {
         return $this->id_reservation;
     }
+    public function setIdReservation(int $id_reservation): static
+    {
+        $this->id_reservation = $id_reservation;
+
+        return $this;
+    }
 
     public function getEvenement(): ?Evenement
     {

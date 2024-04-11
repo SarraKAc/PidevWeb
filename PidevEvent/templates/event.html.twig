@@ -303,7 +303,6 @@
         }
     });
 </script>
-
 <section id="events" class="events section" style="margin-top: 10px;">
     <div class="container" data-aos="fade-up">
         <div class="row">
@@ -337,13 +336,26 @@
                         <div class="modal-body">
                             <!-- Formulaire pour la réservation -->
                             <form action="{{ path('app_reserver_event_new') }}" method="post">
-                                <!-- Ajoutez ici les champs du formulaire pour la réservation -->
+                                <!-- Champ pour le nom -->
                                 <div class="mb-3">
                                     <label for="inputNom{{ event.id }}">Nom</label>
                                     <input type="text" class="form-control" id="inputNom{{ event.id }}" name="nom">
                                 </div>
-                                <!-- Ajoutez d'autres champs selon vos besoins -->
-
+                                <!-- Champ pour le nombre de personnes -->
+                                <div class="mb-3">
+                                    <label for="inputNombre{{ event.id }}">Nombre de personnes</label>
+                                    <input type="number" class="form-control" id="inputNombre{{ event.id }}" name="nbr_personne">
+                                </div>
+                                <!-- Champ pour la date -->
+                                <div class="mb-3">
+                                    <label for="inputDate{{ event.id }}">Date</label>
+                                    <input type="date" class="form-control" id="inputDate{{ event.id }}" name="date_reservation">
+                                </div>
+                                <!-- Champ pour l'e-mail -->
+                                <div class="mb-3">
+                                    <label for="inputEmail{{ event.id }}">E-mail</label>
+                                    <input type="email" class="form-control" id="inputEmail{{ event.id }}" name="email">
+                                </div>
                                 <!-- Bouton de soumission -->
                                 <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
                             </form>
