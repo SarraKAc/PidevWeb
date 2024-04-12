@@ -381,19 +381,18 @@
                              
 
 <select id="sortOrderSelect">
-     <option value="none">Prix - Croissant</option>
-    <option value="price_asc">Prix - Croissant</option>
-    <option value="price_desc">Prix - Décroissant</option>
-    <option value="date_asc">Date - Croissante</option>
-    <option value="date_desc">Date - Décroissante</option>
+    <option value="none">Choix</option>
+    <option value="date_asc">Date de réservation - Croissante</option>
+    <option value="date_desc">Date de réservation - Décroissante</option>
 </select>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const sortOrderSelect = document.getElementById('sortOrderSelect');
 
         function sortTable() {
-            const sortOrder = sortOrderSelect.value;
-            const eventsTable = document.getElementById('dataTable');
+            const sortOrder = sortOrderSelect.value.toLowerCase(); // Convertir en minuscules
+            const eventsTable = document.getElementById('sortOrderSelect');
             const rows = Array.from(eventsTable.getElementsByTagName('tr'));
             
             // Supprimer la première ligne (en-têtes)
@@ -402,17 +401,17 @@
             rows.sort((rowA, rowB) => {
                 let valueA, valueB;
 
-                if (sortOrder.includes('price')) {
-                    valueA = parseFloat(rowA.cells[4].textContent); // Index de la colonne de prix
-                    valueB = parseFloat(rowB.cells[4].textContent);
-                } else if (sortOrder.includes('date')) {
-                    valueA = new Date(rowA.cells[3].textContent).getTime(); // Index de la colonne de date
+                if (sortOrder === 'date_asc' || sortOrder === 'date_desc') {
+                    valueA = new Date(rowA.cells[3].textContent).getTime(); // Index de la colonne de date de réservation
                     valueB = new Date(rowB.cells[3].textContent).getTime();
+                } else {
+                    // Autres cas non pris en charge (ou 'none')
+                    return 0;
                 }
 
-                if (sortOrder.includes('asc')) {
+                if (sortOrder === 'date_asc') {
                     return valueA - valueB;
-                } else {
+                } else if (sortOrder === 'date_desc') {
                     return valueB - valueA;
                 }
             });
@@ -434,7 +433,38 @@
         sortTable();
     });
 </script>
+<button id="sortByDateBtn">Trier par date de réservation</button>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sortByDateBtn = document.getElementById('sortByDateBtn');
+            const reservationsTable = document.getElementById('reservationsTable');
+            
+            sortByDateBtn.addEventListener('click', function () {
+                const rows = Array.from(reservationsTable.getElementsByTagName('tr'));
+                
+                // Supprimer la première ligne (en-têtes)
+                rows.shift();
+                
+                rows.sort((rowA, rowB) => {
+                    const dateA = new Date(rowA.cells[3].textContent); // Index de la colonne de date de réservation
+                    const dateB = new Date(rowB.cells[3].textContent);
+    
+                    return dateA - dateB;
+                });
+                
+                // Vider le tableau
+                while (reservationsTable.rows.length > 1) {
+                    reservationsTable.deleteRow(1);
+                }
+                
+                // Réinsérer les lignes triées
+                rows.forEach(row => {
+                    reservationsTable.appendChild(row);
+                });
+            });
+        });
+    </script>
 
 <label for="minPrice">Prix minimum:</label>
 <input type="number" id="minPrice" placeholder="Prix minimum">
