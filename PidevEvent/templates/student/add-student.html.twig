@@ -379,37 +379,6 @@
                             </div>
                              <h1>Liste des événements </h1>
                              
-<button id="sortDescBtn">Trier par prix décroissant</button>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const sortDescBtn = document.getElementById('sortDescBtn');
-        const eventsTable = document.getElementById('dataTable');
-        
-        sortDescBtn.addEventListener('click', function () {
-            const rows = Array.from(eventsTable.getElementsByTagName('tr'));
-            
-            // Supprimer la première ligne (en-têtes)
-            rows.shift();
-            
-            rows.sort((rowA, rowB) => {
-                const priceA = parseFloat(rowA.cells[4].textContent); // Index de la colonne de prix
-                const priceB = parseFloat(rowB.cells[4].textContent);
-
-                return priceB - priceA; // Tri décroissant
-            });
-            
-            // Vider le tableau
-            while (eventsTable.rows.length > 1) {
-                eventsTable.deleteRow(1);
-            }
-            
-            // Réinsérer les lignes triées
-            rows.forEach(row => {
-                eventsTable.appendChild(row);
-            });
-        });
-    });
-</script>
 
 <select id="sortOrderSelect">
      <option value="none">Choix de tri</option>
