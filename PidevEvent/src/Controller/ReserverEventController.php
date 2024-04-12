@@ -266,6 +266,7 @@ class ReserverEventController extends AbstractController
     $entityManager->remove($reserverEvent);
     $entityManager->flush();
 
-    return new Response('La réservation a été supprimée avec succès.', Response::HTTP_OK);
+    
+    return $this->redirectToRoute('app_afficher_reservation');
 }
 }
