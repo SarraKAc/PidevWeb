@@ -29,29 +29,11 @@ class ReserverEventController extends AbstractController
         ]);
     }
 
-    /*#[Route('/new', name: 'app_reserver_event_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $reserverEvent = new ReserverEvent();
-        $form = $this->createForm(ReserverEventType::class, $reserverEvent);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($reserverEvent);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_reserver_event_new', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('student/reserver-event.html.twig', [
-            'reserver_event' => $reserverEvent,
-            'form' => $form,
-        ]);
-    }*/
+    
 
 
    
-    
+    /***********************ajout du back */
         #[Route('/new', name: 'app_reserver_event_new', methods: ['GET', 'POST'])]
         public function new(Request $request, EntityManagerInterface $entityManager): Response
         {
@@ -89,23 +71,6 @@ class ReserverEventController extends AbstractController
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    
-    
-   
 
 
 
@@ -157,7 +122,7 @@ class ReserverEventController extends AbstractController
 
     
     /**********************ajouter reservation front **********************/
-    #[Route('/reservations/new', name: 'reservation_new', methods: ['POST'])]
+    /*#[Route('/reservations/new', name: 'reservation_new', methods: ['POST'])]
     public function create(Request $request): Response
     {
         // Récupérer les données du formulaire
@@ -197,9 +162,81 @@ class ReserverEventController extends AbstractController
     
         // Rediriger vers la page d'affichage des événements
         return $this->redirectToRoute('app_events');
+    }*/
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #[Route('/reservations/new', name: 'reservation_new', methods: ['POST'])]
+    public function create(Request $request): Response
+    {
+        // Récupérer les données du formulaire
+        $nom = $request->request->get('nom');
+        $nbr_personne = $request->request->get('nbr_personne');
+        
+        // Créer une nouvelle instance de DateTime pour la date et l'heure actuelles
+        $date_reservation = new \DateTime();
+        
+        // Récupérer l'heure actuelle au format heure:minute
+        $heure_minute = $date_reservation->format('H:i');
+    
+        // Mettre à jour la date de réservation avec l'heure et les minutes actuelles
+        $date_reservation->setTime(date('H'), date('i'));
+        
+        $email = $request->request->get('email');
+        $id_evenement = $request->request->get('id_evenement'); // Assurez-vous de récupérer l'identifiant de l'événement
+    
+        // Vérifier si l'identifiant de l'événement est présent
+        if (!$id_evenement) {
+            // Gérer le cas où l'identifiant de l'événement est manquant
+            return new Response('L\'identifiant de l\'événement est manquant.', Response::HTTP_BAD_REQUEST);
+        }
+    
+        // Récupérer l'événement associé à l'identifiant
+        $evenement = $this->getDoctrine()->getRepository(Evenement::class)->find($id_evenement);
+    
+        // Vérifier si l'événement existe
+        if (!$evenement) {
+            // Gérer le cas où l'événement n'existe pas
+            return new Response('L\'événement associé à l\'identifiant n\'existe pas.', Response::HTTP_NOT_FOUND);
+        }
+    
+        // Créer une nouvelle instance de ReserverEvent
+        $reserverEvent = new ReserverEvent();
+        $reserverEvent->setNom($nom);
+        $reserverEvent->setNbrPersonne($nbr_personne);
+        $reserverEvent->setDateReservation($date_reservation); // Utiliser la date, l'heure et les minutes actuelles
+        $reserverEvent->setEmail($email);
+        $reserverEvent->setEvenement($evenement); // Définir l'événement associé à la réservation
+    
+        // Enregistrer la nouvelle réservation
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($reserverEvent);
+        $entityManager->flush();
+    
+        // Rediriger vers la page d'affichage des événements
+        return $this->redirectToRoute('app_events');
     }
-    
-    
     
 
 
