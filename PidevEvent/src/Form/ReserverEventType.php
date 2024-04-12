@@ -17,7 +17,7 @@ class ReserverEventType extends AbstractType
         $builder
             ->add('nom')
             ->add('nbr_personne')
-            ->add('date_reservation')
+            
             ->add('email')
             
                 ->add('evenement', EntityType::class, [

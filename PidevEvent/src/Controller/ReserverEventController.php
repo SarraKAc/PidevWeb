@@ -29,7 +29,7 @@ class ReserverEventController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_reserver_event_new', methods: ['GET', 'POST'])]
+    /*#[Route('/new', name: 'app_reserver_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $reserverEvent = new ReserverEvent();
@@ -40,41 +40,69 @@ class ReserverEventController extends AbstractController
             $entityManager->persist($reserverEvent);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_reserver_event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_reserver_event_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('student/reserver-event.html.twig', [
             'reserver_event' => $reserverEvent,
             'form' => $form,
         ]);
-    }
+    }*/
 
 
-    // #[Route('/new', name: 'app_reserver_event_new', methods: ['POST'])]
-    // public function new(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     // Récupérez les événements depuis la base de données
-    //     $events = $this->getDoctrine()->getRepository(Evenement::class)->findAll();
+   
     
-    //     $reserverEvent = new ReserverEvent();
-    //     $form = $this->createForm(ReserverEventType::class, $reserverEvent);
-    //     $form->handleRequest($request);
+        #[Route('/new', name: 'app_reserver_event_new', methods: ['GET', 'POST'])]
+        public function new(Request $request, EntityManagerInterface $entityManager): Response
+        {
+            $reserverEvent = new ReserverEvent();
+            // Obtention de la date et de l'heure actuelles
+            $now = new \DateTime();
+            $reserverEvent->setDateReservation($now);
     
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $reserverEvent = $form->getData();
+            $form = $this->createForm(ReserverEventType::class, $reserverEvent);
+            $form->handleRequest($request);
     
-    //         $entityManager->persist($reserverEvent);
-    //         $entityManager->flush();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->persist($reserverEvent);
+                $entityManager->flush();
     
-    //         return $this->redirectToRoute('app_reserver_event_index');
-    //     }
+                return $this->redirectToRoute('app_reserver_event_new', [], Response::HTTP_SEE_OTHER);
+            }
     
-    //     return $this->render('event.html.twig', [
-    //         'reserver_event' => $reserverEvent,
-    //         'events' => $events, // Passer les événements à la vue Twig
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
+            return $this->renderForm('student/reserver-event.html.twig', [
+                'reserver_event' => $reserverEvent,
+                'form' => $form,
+            ]);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
     
     
    
