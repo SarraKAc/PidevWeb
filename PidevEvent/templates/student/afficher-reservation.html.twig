@@ -433,38 +433,6 @@
         sortTable();
     });
 </script>
-<button id="sortByDateBtn">Trier par date de réservation</button>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const sortByDateBtn = document.getElementById('sortByDateBtn');
-            const reservationsTable = document.getElementById('reservationsTable');
-            
-            sortByDateBtn.addEventListener('click', function () {
-                const rows = Array.from(reservationsTable.getElementsByTagName('tr'));
-                
-                // Supprimer la première ligne (en-têtes)
-                rows.shift();
-                
-                rows.sort((rowA, rowB) => {
-                    const dateA = new Date(rowA.cells[3].textContent); // Index de la colonne de date de réservation
-                    const dateB = new Date(rowB.cells[3].textContent);
-    
-                    return dateA - dateB;
-                });
-                
-                // Vider le tableau
-                while (reservationsTable.rows.length > 1) {
-                    reservationsTable.deleteRow(1);
-                }
-                
-                // Réinsérer les lignes triées
-                rows.forEach(row => {
-                    reservationsTable.appendChild(row);
-                });
-            });
-        });
-    </script>
 
 
 
