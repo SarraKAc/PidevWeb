@@ -380,59 +380,6 @@
                              <h1>Liste des reservations</h1>
                              
 
-<select id="sortOrderSelect">
-    <option value="none">Choix</option>
-    <option value="date_asc">Date de réservation - Croissante</option>
-    <option value="date_desc">Date de réservation - Décroissante</option>
-</select>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const sortOrderSelect = document.getElementById('sortOrderSelect');
-
-        function sortTable() {
-            const sortOrder = sortOrderSelect.value.toLowerCase(); // Convertir en minuscules
-            const eventsTable = document.getElementById('sortOrderSelect');
-            const rows = Array.from(eventsTable.getElementsByTagName('tr'));
-            
-            // Supprimer la première ligne (en-têtes)
-            rows.shift();
-            
-            rows.sort((rowA, rowB) => {
-                let valueA, valueB;
-
-                if (sortOrder === 'date_asc' || sortOrder === 'date_desc') {
-                    valueA = new Date(rowA.cells[3].textContent).getTime(); // Index de la colonne de date de réservation
-                    valueB = new Date(rowB.cells[3].textContent).getTime();
-                } else {
-                    // Autres cas non pris en charge (ou 'none')
-                    return 0;
-                }
-
-                if (sortOrder === 'date_asc') {
-                    return valueA - valueB;
-                } else if (sortOrder === 'date_desc') {
-                    return valueB - valueA;
-                }
-            });
-            
-            // Vider le tableau
-            while (eventsTable.rows.length > 1) {
-                eventsTable.deleteRow(1);
-            }
-            
-            // Réinsérer les lignes triées
-            rows.forEach(row => {
-                eventsTable.appendChild(row);
-            });
-        }
-
-        sortOrderSelect.addEventListener('change', sortTable);
-        
-        // Tri initial au chargement de la page
-        sortTable();
-    });
-</script>
 
 
 
