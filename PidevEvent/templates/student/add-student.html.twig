@@ -512,38 +512,42 @@
         <td>
            <button class="btn btn-danger btn-sm delete-event-btn" data-event-id="{{ evenement.id }}">Supprimer</button>
           <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}" class="btn btn-primary">Modifier</a>
+          
+
 
         
-        <!-- Modal de réservation pour cet événement -->
-        <div class="modal fade" id="reservationModal{{ evenement.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ evenement.id }}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="reservationModalLabel{{ evenement.id }}">Réserver cet événement</h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        <button class="btn btn-success btn-sm reserve-event-btn" data-toggle="modal" data-target="#reservationModal{{ evenement.id }}">Réserver</button>
+
+<!-- Modal de réservation pour cet événement -->
+<div class="modal fade" id="reservationModal{{ evenement.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ evenement.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservationModalLabel{{ evenement.id }}">Réserver cet événement</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulaire de réservation -->
+                <form>
+                    <div class="mb-3">
+                        <label for="nom">Nom</label>
+                        <input type="text" class="form-control" id="nom">
                     </div>
-                    <div class="modal-body">
-                        <!-- Formulaire de réservation -->
-                        <form>
-                            <div class="mb-3">
-                                <label for="nom">Nom</label>
-                                <input type="text" class="form-control" id="nom">
-                            </div>
-                            <div class="mb-3">
-                                <label for="nbrPersonnes">Nombre de personnes</label>
-                                <input type="number" class="form-control" id="nbrPersonnes">
-                            </div>
-                            <div class="mb-3">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
-                        </form>
+                    <div class="mb-3">
+                        <label for="nbrPersonnes">Nombre de personnes</label>
+                        <input type="number" class="form-control" id="nbrPersonnes">
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                </form>
             </div>
         </div>
-        
+    </div>
+</div>
+
           
         </td>
     </tr>{% endfor %}
