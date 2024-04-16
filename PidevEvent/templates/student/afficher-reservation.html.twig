@@ -413,6 +413,8 @@
             <form action="{{ path('app_reserver_event_delete', {'id_reservation': reservation.getId()}) }}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.getId()) }}">
                 <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+               
+
             </form>
         </td>
                 </tr>
@@ -487,6 +489,9 @@
     });
 });
 </script>
+
+
+
 
 
                 <!-- Begin Page Content -->

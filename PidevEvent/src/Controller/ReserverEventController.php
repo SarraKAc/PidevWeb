@@ -293,7 +293,7 @@ class ReserverEventController extends AbstractController
 
 
 
-    #[Route('/{id_reservation}/edit', name: 'app_reserver_event_edit', methods: ['GET', 'POST'])]
+    /*#[Route('/{id_reservation}/edit', name: 'app_reserver_event_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ReserverEvent $reserverEvent, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ReserverEventType::class, $reserverEvent);
@@ -309,7 +309,31 @@ class ReserverEventController extends AbstractController
             'reserver_event' => $reserverEvent,
             'form' => $form,
         ]);
+    }*/
+
+
+// Votre contrôleur
+
+// Votre contrôleur
+
+#[Route('/{id_reservation}/edit', name: 'app_reserver_event_edit', methods: ['GET', 'POST'])]
+// Votre contrôleur
+public function edit(Request $request, ReserverEvent $reserverEvent, EntityManagerInterface $entityManager): Response
+{
+    $form = $this->createForm(ReserverEventType::class, $reserverEvent);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_reserver_event_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->render('reserver_event/edit.html.twig', [
+        'reserver_event' => $reserverEvent,
+        'form' => $form->createView(), // Créez une vue pour le formulaire
+    ]);
+}
 
 
 
