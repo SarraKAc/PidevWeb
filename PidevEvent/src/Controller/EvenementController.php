@@ -54,6 +54,7 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 
     // Vérification de la soumission du formulaire et de la validité des données
     if ($form->isSubmitted() && $form->isValid()) {
+       
         // Persistance de l'événement en base de données
         $entityManager->persist($evenement);
         $entityManager->flush();

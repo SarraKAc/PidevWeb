@@ -522,13 +522,43 @@
                 {{ form_label(form.prix, 'Prix') }}
                 {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
             </div>
-            <div class="form-group">
-    {{ form_label(form.CheminImage, 'CheminImage') }}
-    <input type="file" id="imageInput" accept="image/*" style="display: none;">
-    
-    <label for="imageInput" class="btn btn-danger">Sélectionner une image</label>
-    {{ form_widget(form.CheminImage, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}  
-</div>
+
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <label class="block text-sm">
+            <span class="text-gray-700 dark:text-gray-400">Image</span>
+            <div class="relative flex items-center">
+                <button
+                    type="button"
+                    class="px-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                    onclick="document.getElementById('fileInput').click();"
+                >
+                    Import
+                </button>
+                {{ form_widget(form.CheminImage, {'id': 'fileNameInput', 'attr': {'class': 'w-full pl-2 py-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input'}}) }}
+                <input
+                    type="file"
+                    id="fileInput"
+                    class="hidden"
+                    onchange="updateFileName(event)"
+                />
+               
+                <script>
+                    function updateFileName(event) {
+                        const input = document.getElementById('fileNameInput');
+                        input.value = event.target.files[0].name;
+                        input.placeholder = '';
+                    }
+                </script>
+                
+            </div>
+              <span id="imageError" class="text-xs text-red-600 dark:text-red-400"></span>
+        </label>
+       
+    </div>
+
+            
+
+       
 
 <script>
     document.getElementById('imageInput').addEventListener('change', function() {
@@ -537,6 +567,8 @@
         document.getElementById('{{ form.CheminImage.vars.id }}').value = fileName; // Met à jour le champ CheminImage avec le nom du fichier
     });
 </script>
+   
+    
 
             <!-- Ajoutez ici les autres champs du formulaire -->
             <button type="submit" class="btn btn-primary">AJOUTER</button>

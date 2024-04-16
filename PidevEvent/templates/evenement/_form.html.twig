@@ -1,17 +1,5 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
-$builder
-    ->add('categorie', ChoiceType::class, [
-        'choices' => [
-            'Concerts' => 'Concerts',
-            'Conférences' => 'Conférences',
-            'Ateliers' => 'Ateliers',
-            'Spectacles' => 'Spectacles',
-        ],
-        'attr' => ['class' => 'form-control'],
-    ]);
-
+    
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -45,8 +45,6 @@ class Evenement
     #[ORM\Column(length: 255)]
     private ?string $CheminImage = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $imgurl = null;
 
   
 
@@ -127,17 +125,7 @@ class Evenement
         return $this;
     }
 
-    public function getImgurl(): ?string
-    {
-        return $this->imgurl;
-    }
-
-    public function setImgurl(string $imgurl): static
-    {
-        $this->imgurl = $imgurl;
-
-        return $this;
-    }
+   
     
 
 }
