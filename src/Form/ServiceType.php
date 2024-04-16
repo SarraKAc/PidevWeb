@@ -23,6 +23,8 @@ class ServiceType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Prix'
                 ],
+
+
             ])
             ->add('tmpservice')
             ->add('domaine', ChoiceType::class, [
