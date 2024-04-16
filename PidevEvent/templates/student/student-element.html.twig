@@ -518,18 +518,26 @@
     {{ form_errors(form.date) }}
 </div>
 
-
-
             <div class="form-group">
                 {{ form_label(form.prix, 'Prix') }}
                 {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div class="form-group">
-                {{ form_label(form.CheminImage, 'CheminImage') }}
-                {{ form_widget(form.CheminImage, {'attr': {'class': 'form-control'}}) }}
-                
-                
-            </div>
+    {{ form_label(form.CheminImage, 'CheminImage') }}
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    
+    <label for="imageInput" class="btn btn-danger">Sélectionner une image</label>
+    {{ form_widget(form.CheminImage, {'attr': {'class': 'form-control', 'readonly': 'readonly'}}) }}  
+</div>
+
+<script>
+    document.getElementById('imageInput').addEventListener('change', function() {
+        var fullPath = document.getElementById('imageInput').value;
+        var fileName = fullPath.split('\\').pop().split('/').pop(); // Récupère uniquement le nom du fichier sans le chemin complet
+        document.getElementById('{{ form.CheminImage.vars.id }}').value = fileName; // Met à jour le champ CheminImage avec le nom du fichier
+    });
+</script>
+
             <!-- Ajoutez ici les autres champs du formulaire -->
             <button type="submit" class="btn btn-primary">AJOUTER</button>
             {{ form_end(form) }}
