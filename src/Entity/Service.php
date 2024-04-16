@@ -1,7 +1,15 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * @Assert\NotBlank(message="Le nom du service ne peut pas être vide.")
+ * @Assert\Regex(
+ *     pattern="/^\D{5,}$/",
+ *     message="Le nom du service doit contenir au moins 5 lettres et aucun chiffre."
+ * )
+ */
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +26,7 @@ class Service
      * @ORM\Column(name="id_service", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     *
      */
     private $idService;
 
@@ -25,13 +34,18 @@ class Service
      * @var string
      *
      * @ORM\Column(name="nom_service", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="Le nom du service ne peut pas être vide.")
+     * @Assert\Regex(
+     *     pattern="/^\D{5,}$/",
+     *     message="Le nom du service doit contenir au moins 5 lettres et aucun chiffre."
+     * )
      */
     private $nomService;
-
     /**
      * @var string
      *
      * @ORM\Column(name="titre_service", type="string", length=255, nullable=false)
+     *
      */
     private $titreService;
 

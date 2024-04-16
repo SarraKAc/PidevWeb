@@ -64,6 +64,14 @@ public function showAllServicesOrderByNom()
             ->getQuery()
             ->getResult();
     }
+    public function findBySearchTerm(string $searchTerm): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.nom_service LIKE :searchTerm')
+            ->setParameter('searchTerm', $searchTerm . '%') // Recherche des noms commençant par le terme de recherche
+            ->getQuery()
+            ->getResult();
+    }
 //DQL Question 3
 //public function SearchAuthorDQL($min,$max){
 //    $em=$this->getEntityManager();

@@ -5,8 +5,10 @@ use App\Entity\Avis;
 use App\Form\AvisType;
 use App\Entity\Service;
 use App\Form\ServiceType;
+use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,6 +27,37 @@ class ServiceController extends AbstractController
             'services' => $services,
         ]);
     }
+//    #[Route('/service/search', name: 'app_service_rechercher', methods: ['POST'])]
+//    public function search(Request $request, ServiceRepository $serviceRepository): JsonResponse
+//    {
+//        // Récupérer le terme de recherche envoyé depuis la requête AJAX
+//        $searchTerm = $request->request->get('searchTerm');
+//
+//        // Si le terme de recherche est vide, renvoyer tous les événements
+//        if (empty($searchTerm)) {
+//            $services = $serviceRepository->findAll();
+//        } else {
+//            // Sinon, effectuer une recherche filtrée sur la colonne "nom"
+//            $services = $serviceRepository->findBySearchTerm($searchTerm);
+//        }
+
+//        // Convertir les résultats en un tableau JSON pour la réponse AJAX
+//        $data = [];
+//        foreach ($services as $service) {
+//            $data[] = [
+//
+//                'nom' => $service->getNomService(),
+//                'Titre' => $service->getTitreService(),
+//                'Domaine' => $service->getDomaine(),
+//                'prix' => $service->getPrix(),
+//                'duree' => $service->getDomaine(),
+//                // Ajoutez d'autres champs que vous souhaitez renvoyer
+//            ];
+//        }
+//
+//        // Renvoyer les résultats au format JSON
+//        return new JsonResponse($data);
+//    }
 
     #[Route('/newA', name: 'app_avis_new', methods: ['GET', 'POST'])]
     public function newA(Request $request, EntityManagerInterface $entityManager): Response
@@ -110,4 +143,6 @@ class ServiceController extends AbstractController
 
         return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }
