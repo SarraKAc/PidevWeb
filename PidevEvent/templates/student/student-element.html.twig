@@ -498,7 +498,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="my-4">
-        <form action="{{ path('app_student_element') }}" method="post" style="width: 900%;"> <!-- Largeur approximative de 10 cm -->
+        <form action="{{ path('app_student_element') }}" method="post" style="width: 2500%; max-width: 20cm;">
             {{ form_start(form) }}
             <div class="form-group">
                 {{ form_label(form.nom, 'Nom') }}
@@ -513,64 +513,43 @@
                 {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div class="form-group">
-    <label for="date">Date</label>
-    {{ form_widget(form.date, {'attr': {'class': 'form-control', 'type': 'date', 'autocomplete': 'off'}}) }}
-    {{ form_errors(form.date) }}
-</div>
-
+                <label for="date">Date</label>
+                {{ form_widget(form.date, {'attr': {'class': 'form-control', 'type': 'date', 'autocomplete': 'off'}}) }}
+                {{ form_errors(form.date) }}
+            </div>
             <div class="form-group">
                 {{ form_label(form.prix, 'Prix') }}
                 {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
             </div>
-
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <label class="block text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Image</span>
-            <div class="relative flex items-center">
-                <button
-                    type="button"
-                    class="px-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                    onclick="document.getElementById('fileInput').click();"
-                >
-                    Import
-                </button>
-                {{ form_widget(form.CheminImage, {'id': 'fileNameInput', 'attr': {'class': 'w-full pl-2 py-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input'}}) }}
-                <input
-                    type="file"
-                    id="fileInput"
-                    class="hidden"
-                    onchange="updateFileName(event)"
-                />
-               
-                <script>
-                    function updateFileName(event) {
-                        const input = document.getElementById('fileNameInput');
-                        input.value = event.target.files[0].name;
-                        input.placeholder = '';
-                    }
-                </script>
-                
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Image</span>
+                    <div class="relative flex items-center">
+                        <button
+                            type="button"
+                            class="px-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            onclick="document.getElementById('fileInput').click();"
+                        >
+                            Import
+                        </button>
+                        {{ form_widget(form.CheminImage, {'id': 'fileNameInput', 'attr': {'class': 'w-full pl-2 py-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input'}}) }}
+                        <input
+                            type="file"
+                            id="fileInput"
+                            class="hidden"
+                            onchange="updateFileName(event)"
+                        />
+                        <script>
+                            function updateFileName(event) {
+                                const input = document.getElementById('fileNameInput');
+                                input.value = event.target.files[0].name;
+                                input.placeholder = '';
+                            }
+                        </script>
+                    </div>
+                    <span id="imageError" class="text-xs text-red-600 dark:text-red-400"></span>
+                </label>
             </div>
-              <span id="imageError" class="text-xs text-red-600 dark:text-red-400"></span>
-        </label>
-       
-    </div>
-
-            
-
-       
-
-<script>
-    document.getElementById('imageInput').addEventListener('change', function() {
-        var fullPath = document.getElementById('imageInput').value;
-        var fileName = fullPath.split('\\').pop().split('/').pop(); // Récupère uniquement le nom du fichier sans le chemin complet
-        document.getElementById('{{ form.CheminImage.vars.id }}').value = fileName; // Met à jour le champ CheminImage avec le nom du fichier
-    });
-</script>
-   
-    
-
-            <!-- Ajoutez ici les autres champs du formulaire -->
             <button type="submit" class="btn btn-primary">AJOUTER</button>
             {{ form_end(form) }}
         </form>
