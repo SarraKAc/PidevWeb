@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studentors-like User Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+        }
+        .navbar {
+            background-color: #4b7bec; /* Lighter shade of blue */
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar h1 {
+            font-size: 24px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+        .navbar h1 img {
+            width: 40px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .navbar h1 span {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        .navbar li {
+            margin-right: 20px;
+        }
+        .navbar li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+        .navbar li a:hover {
+            color: #a5b1c2; /* Lighter shade of blue on hover */
+        }
+        .search-bar {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+        .search-bar input {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            width: 500px;
+            box-sizing: border-box;
+        }
+        .search-bar input:focus {
+            outline: none;
+            border-color: #4b7bec; /* Lighter shade of blue */
+        }
+        .search-button {
+            background-color: #4b7bec; /* Lighter shade of blue */
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+        .search-button:hover {
+            background-color: #6f9cec; /* Slightly darker shade of blue on hover */
+        }
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        .user-info h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #333;
+        }
+        .user-info p {
+            margin: 0;
+            color: #666;
+        }
+        .post {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .post:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .post img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        .post-content {
+            display: flex;
+            align-items: flex-start;
+        }
+        .post-content p {
+            margin: 0;
+            color: #333;
+        }
+        .post-content .post-text {
+            flex-grow: 1;
+        }
+        .post-meta {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+        .post-meta button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+        .post-meta button:hover {
+            color: #4b7bec; /* Lighter shade of blue on hover */
+        }
+        .post-meta button i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h1>
+        <img src="{{ asset('Images/logo.png') }}" alt="Studentors Logo">
+        <span>STUDENTORS</span>
+    </h1>
+    <div class="search-bar">
+        <input type="text" placeholder="Search for users...">
+        <button class="search-button"><i class="fas fa-search"></i></button>
+    </div>
+    <ul>
+        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#"><i class="fas fa-comment"></i> Messages</a></li>
+        <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+        <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <div class="user-info">
+        <img src="https://via.placeholder.com/150" alt="User Avatar">
+        <div>
+            <h2>John Doe</h2>
+            <p>View your profile</p>
+        </div>
+    </div>
+
+    <div class="posts">
+        <div class="post">
+            <div class="post-content">
+                <img src="https://via.placeholder.com/150" alt="User Avatar">
+                <div class="post-text">
+                    <p><strong>John Doe</strong> is offering tutoring services in Math and Science for high school students. Contact me for more details.</p>
+                </div>
+            </div>
+            <div class="post-meta">
+                <button><i class="far fa-thumbs-up"></i> 10 Likes</button>
+                <button><i class="far fa-comments"></i> 5 Comments</button>
+                <button><i class="fas fa-star"></i> 4.5 Reviews</button>
+            </div>
+        </div>
+        <div class="post">
+            <div class="post-content">
+                <img src="https://via.placeholder.com/150" alt="User Avatar">
+                <div class="post-text">
+                    <p><strong>Jane Smith</strong> is looking for a graphic designer to create a logo for her new business. Please send your portfolio if interested.</p>
+                </div>
+            </div>
+            <div class="post-meta">
+                <button><i class="far fa-thumbs-up"></i> 15 Likes</button>
+                <button><i class="far fa-comments"></i> 8 Comments</button>
+                <button><i class="fas fa-star"></i> 4.7 Reviews</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

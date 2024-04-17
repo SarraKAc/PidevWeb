@@ -1,0 +1,39 @@
+{% extends 'Admin.html.twig' %}
+
+{% block title %}CodePromos index{% endblock %}
+
+{% block body %}
+    <h1>CodePromos index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateExpiration</th>
+                <th>Active</th>
+                <th>Value</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for code_promo in code_promos %}
+            <tr>
+                <td>{{ code_promo.id }}</td>
+                <td>{{ code_promo.dateExpiration ? code_promo.dateExpiration|date('Y-m-d') : '' }}</td>
+                <td>{{ code_promo.active ? 'Yes' : 'No' }}</td>
+                <td>{{ code_promo.value }}</td>
+                <td>
+                    <a href="{{ path('app_code_promos_show', {'id': code_promo.id}) }}">show</a>
+                    <a href="{{ path('app_code_promos_edit', {'id': code_promo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_code_promos_new') }}">Create new</a>
+{% endblock %}
