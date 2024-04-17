@@ -39,7 +39,7 @@ $commentaire->setIdUser(12);
             $entityManager->persist($commentaire);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('commentaire/new.html.twig', [
