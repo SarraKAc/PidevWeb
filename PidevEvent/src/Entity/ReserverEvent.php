@@ -37,6 +37,7 @@ class ReserverEvent
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
     #[Assert\Email(message: "L'adresse e-mail '{{ value }}' n'est pas valide.")]
+    #[Assert\Callback(callbacks: ["validateEmail"])]
     private ?string $email = null;
 
     public function getId(): ?int
@@ -115,4 +116,6 @@ class ReserverEvent
 
         return $this;
     }
+
+   
 }

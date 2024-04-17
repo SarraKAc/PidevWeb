@@ -146,16 +146,17 @@
 
 
 
-<div style="margin-bottom: 20px;">
-    <label for="sortOrderSelect">Trier par :</label>
-    <select id="sortOrderSelect" style="width: 50%;">
-        <option value="">Choisir...</option>
-        <option value="priceAsc">Prix croissant</option>
-        <option value="priceDesc">Prix décroissant</option>
-        <option value="dateAsc">Date croissante</option>
-        <option value="dateDesc">Date décroissante</option>
+<div style="margin-bottom: 20px; display: flex; align-items: center;">
+    <label for="sortOrderSelect" style="margin-right: 10px;">Trier par :</label>
+    <select id="sortOrderSelect" style="width: 50%; padding: 5px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; outline: none; transition: border-color 0.3s ease; background-color: #f8f9fa; color: #495057;">
+        <option value="" style="color: #495057;">Choisir...</option>
+        <option value="priceAsc" style="color: #495057;">Prix croissant</option>
+        <option value="priceDesc" style="color: #495057;">Prix décroissant</option>
+        <option value="dateAsc" style="color: #495057;">Date croissante</option>
+        <option value="dateDesc" style="color: #495057;">Date décroissante</option>
     </select>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const sortOrderSelect = document.getElementById('sortOrderSelect');
@@ -205,69 +206,71 @@
     <div class="container" data-aos="fade-up">
         <div class="row">
             {% for event in events %}
-<div class="col-md-6 d-flex align-items-stretch event-card">
-    <div class="card">
-        <!-- Card image -->
-        <div class="position-relative overflow-hidden">
-            <img class="img-fluid w-100" src="{{ asset('images/' ~ event.getCheminImage()) }}" alt="">
-        </div>
-        <!-- Card body -->
-        <div class="card-body">
-            <h5 class="card-title">{{ event.getNom() }}</h5>
-            <p class="fst-italic text-center">{{ event.getDate()|date('Y-m-d') }}</p>
-            <p class="card-text">{{ event.getDescription() }}</p>
-            <p class="card-text">{{ event.getCategorie() }}</p>
-            <p class="card-text">{{ event.getPrix() }}</p>
-        </div>
-        <!-- Card footer -->
-        <div class="card-footer">
-            <!-- Button to open the reservation modal -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal{{ event.id }}" data-event-id="{{ event.id }}">
-                Ajouter une réservation
-            </button>
-        </div>
-    </div>
-</div>
-                </div>
-            </div>
-            <!-- Reservation Modal -->
-            <div class="modal fade" id="reservationModal{{ event.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ event.id }}" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="reservationModalLabel{{ event.id }}">Ajouter une réservation pour {{ event.getNom() }}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="col-md-6 d-flex align-items-stretch event-card">
+                    <div class="card">
+                        <!-- Card image -->
+                        <div class="position-relative overflow-hidden">
+                            <img class="card-img-top" src="{{ asset('images/' ~ event.getCheminImage()) }}" alt="">
                         </div>
-                        <div class="modal-body">
-                            <!-- Reservation form -->
-                            <form action="{{ path('reservation_new') }}" method="post">
-                                <!-- Hidden input for event ID -->
-                                <input type="hidden" name="id_evenement" value="{{ event.id }}">
-                                <!-- Name field -->
-                                <div class="mb-3">
-                                    <label for="inputNom">Nom</label>
-                                    <input type="text" class="form-control" id="inputNom" name="nom">
-                                </div>
-                                <!-- Number of people field -->
-                                <div class="mb-3">
-                                    <label for="inputNombre">Nombre de personnes</label>
-                                    <input type="number" class="form-control" id="inputNombre" name="nbr_personne">
-                                </div>
-                                <!-- Email field -->
-                                <div class="mb-3">
-                                    <label for="inputEmail">E-mail</label>
-                                    <input type="email" class="form-control" id="inputEmail" name="email">
-                                </div>
-                                <!-- Submission button -->
-                                <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
-                            </form>
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.getNom() }}</h5>
+                            <p class="fst-italic text-center">{{ event.getDate()|date('Y-m-d') }}</p>
+                            <p class="card-text">{{ event.getDescription() }}</p>
+                            <p class="card-text">{{ event.getCategorie() }}</p>
+                            <p class="card-text">{{ event.getPrix() }}</p>
+                        </div>
+                        <!-- Card footer -->
+                        <div class="card-footer">
+                            <!-- Button to open the reservation modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal{{ event.id }}" data-event-id="{{ event.id }}">
+                                Ajouter une réservation
+                            </button>
                         </div>
                     </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
     </div>
+</section>
+
+<!-- Reservation Modal -->
+{% for event in events %}
+<div class="modal fade" id="reservationModal{{ event.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ event.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservationModalLabel{{ event.id }}">Ajouter une réservation pour {{ event.getNom() }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Reservation form -->
+                <form action="{{ path('reservation_new') }}" method="post">
+                    <!-- Hidden input for event ID -->
+                    <input type="hidden" name="id_evenement" value="{{ event.id }}">
+                    <!-- Name field -->
+                    <div class="mb-3">
+                        <label for="inputNom{{ event.id }}">Nom</label>
+                        <input type="text" class="form-control" id="inputNom{{ event.id }}" name="nom">
+                    </div>
+                    <!-- Number of people field -->
+                    <div class="mb-3">
+                        <label for="inputNombre{{ event.id }}">Nombre de personnes</label>
+                        <input type="number" class="form-control" id="inputNombre{{ event.id }}" name="nbr_personne">
+                    </div>
+                    <!-- Email field -->
+                    <div class="mb-3">
+                        <label for="inputEmail{{ event.id }}">E-mail</label>
+                        <input type="email" class="form-control" id="inputEmail{{ event.id }}" name="email">
+                    </div>
+                    <!-- Submission button -->
+                    <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
 </section>
 
 
