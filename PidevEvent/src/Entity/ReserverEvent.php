@@ -117,5 +117,15 @@ class ReserverEvent
         return $this;
     }
 
+    public function validateEmail(ExecutionContextInterface $context, $payload)
+    {
+        // Vérifier si l'email contient un point et un '@'
+        if (!strpos($this->email, '.') || !strpos($this->email, '@')) {
+            $context->buildViolation("L'email doit contenir un point (.) et un symbole '@'")
+                ->atPath('email')
+                ->addViolation();
+        }
+    }
+
    
 }

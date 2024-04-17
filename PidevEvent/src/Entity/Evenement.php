@@ -46,7 +46,20 @@ class Evenement
     private ?string $CheminImage = null;
 
 
-  
+    private $reservations;
+
+    public function __construct()
+    {
+        $this->reservations = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|ReserverEvent[]
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
 
     public function getId(): ?int
     {

@@ -100,7 +100,6 @@ public function delete(EvenementRepository $evenementRepository, EntityManagerIn
 
     return new Response('L\'événement a été supprimé avec succès.', Response::HTTP_OK);
 }
-
 /***********recherche****************/
 #[Route('/evenement/search', name: 'app_evenement_rechercher', methods: ['POST'])]
 public function search(Request $request, EvenementRepository $evenementRepository): JsonResponse
@@ -160,6 +159,7 @@ public function search(Request $request, EvenementRepository $evenementRepositor
             'evenements' => $evenement,
         ]);
     }
+
     
    
 }
