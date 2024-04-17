@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Avis;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -27,7 +28,13 @@ class AvisType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('text')
+            ->add('text', TextType::class, [
+                'label' => 'Nombre d\'étoiles',
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir un commentaire']),
+
+                ]
+            ])
             ->add('idService')
         ;
     }
@@ -35,7 +42,8 @@ class AvisType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Avis::class,
+            'data_class' => Avis::class,'attr' => ['novalidate' => 'novalidate'], // Add this line to disable browser validation for every form
+
         ]);
     }
 }

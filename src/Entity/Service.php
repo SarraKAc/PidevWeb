@@ -38,6 +38,7 @@ class Service
      *     pattern="/^[^0-9]{4,}$/",
      *     message="Le nom du service doit contenir au moins 4 lettres et aucun chiffre."
      * )
+     * @Assert\NotBlank(message="Le nom ne peut pas être vide.")
      */
     private $nomService;
     /**
@@ -48,6 +49,7 @@ class Service
      *      max = 40,
      *      maxMessage = "Le titre du service ne peut pas dépasser {{ limit }} caractères."
      * )
+     * @Assert\NotBlank(message="Le titre ne peut pas être vide.")
      */
     private $titreService;
 
@@ -63,6 +65,7 @@ class Service
      *     value = 0,
      *     message = "Le prix doit être un nombre positif ou nul."
      * )
+     * @Assert\NotBlank(message="La prix ne peut pas être vide.")
      */
     private $prix;
 
@@ -78,6 +81,7 @@ class Service
      * @var string
      *
      * @ORM\Column(name="domaine", type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="La durée ne peut pas être vide.")
      */
     private $domaine;
 

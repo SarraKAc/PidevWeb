@@ -50,7 +50,7 @@ class ServiceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Service::class,
+            'data_class' => Service::class,'attr' => ['novalidate' => 'novalidate'], // Add this line to disable browser validation for every form
         ]);
     }
 }

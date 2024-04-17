@@ -102,6 +102,10 @@
         .footer a:hover {
             text-decoration: underline;
         }
+        .text-danger {
+            color: red;
+        }
+
     </style>
 
     <div class="container-wrapper">
@@ -113,27 +117,34 @@
             <div class="form-group">
                 <label for="nom">Nom Service:</label>
                 {{ form_widget(form.nomService, {'attr': {'placeholder':'nom service'}}) }}
+                {{ form_errors(form.nomService, { 'attr': {class: 'text-danger'} }) }}
+
             </div>
             <div class="form-group">
                 <label for="prenom">Titre Service:</label>
                 {{ form_widget(form.titreService, {'attr': {'placeholder':'Titre service'}}) }}
+                {{ form_errors(form.titreService,{ 'attr': {class: 'text-danger'} }) }}
             </div>
             <div class="form-group">
-                <label for="duree">Durée :</label>
+                <label for="duree">Duree :</label>
                 {{ form_widget(form.tmpservice, {'attr': {'placeholder':'Durée service'}}) }}
+                {{ form_errors(form.tmpservice,{ 'attr': {class: 'text-danger'} }) }}
             </div>
             <div class="form-group">
                 <label for="duree">Prix :</label>
                 {{ form_widget(form.prix, {'attr': {'placeholder':'Prix'}}) }}
+                {{ form_errors(form.prix,{ 'attr': {class: 'text-danger'} }) }}
             </div>
 
             <div class="form-group">
                 <label for="duree">domaine :</label>
                 {{ form_widget(form.domaine, {'attr': {'placeholder':'Domaine'}}) }}
+                {{ form_errors(form.domaine,{ 'attr': {class: 'text-danger'} }) }}
             </div>
             <div class="form-group">
                 <label for="duree">User :</label>
                 {{ form_widget(form.idUser, {'attr': {'placeholder':'Nom Prenom '}}) }}
+                {{ form_errors(form.idUser,{ 'attr': {class: 'text-danger'} }) }}
             </div>
             <div class="form-group">
                 <label for="duree">Image :</label>

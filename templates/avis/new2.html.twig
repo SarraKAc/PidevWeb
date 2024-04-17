@@ -1,6 +1,6 @@
 {% extends 'back-office.html.twig' %}
 
-{% block title %}Edit Service{% endblock %}
+{% block title %}New Avis{% endblock %}
 
 {% block body %}
     <style>
@@ -102,50 +102,29 @@
             text-decoration: underline;
         }
     </style>
-
     <div class="container-wrapper">
         <div class="container">
-            <h2>Modifier Service</h2>
+            <h2>Ajouter Avis</h2>
             {{ form_start(form) }}
 
             <div class="form-group">
-                <label for="nom">Nom Service:</label>
-                {{ form_widget(form.nomService, {'attr': {'placeholder':'nom service'}}) }}
-                {{ form_errors(form.nomService, { 'attr': {class: 'text-danger'} }) }}
-            </div>
-            <div class="form-group">
-                <label for="prenom">Titre Service:</label>
-                {{ form_widget(form.titreService, {'attr': {'placeholder':'Titre service'}}) }}
-                {{ form_errors(form.titreService,{ 'attr': {class: 'text-danger'} }) }}
-            </div>
-            <div class="form-group">
-                <label for="duree">Durée :</label>
-                {{ form_widget(form.tmpservice, {'attr': {'placeholder':'Durée service'}}) }}
-                {{ form_errors(form.tmpservice,{ 'attr': {class: 'text-danger'} }) }}
-            </div>
-            <div class="form-group">
-                <label for="duree">Prix :</label>
-                {{ form_widget(form.prix, {'attr': {'placeholder':'Prix'}}) }}
-                {{ form_errors(form.prix,{ 'attr': {class: 'text-danger'} }) }}
+                <label for="nom">Nbr Etoile:</label>
+                {{ form_widget(form.nbrEtoile, {'attr': {'placeholder':'nbr Etoile', 'min': '1', 'max': '5'}}) }}
+                {{ form_errors(form.nbrEtoile,{ 'attr': {class: 'text-danger'} }) }}
             </div>
 
             <div class="form-group">
-                <label for="duree">domaine :</label>
-                {{ form_widget(form.domaine, {'attr': {'placeholder':'Domaine'}}) }}
-                {{ form_errors(form.domaine,{ 'attr': {class: 'text-danger'} }) }}
+                <label for="prenom">Commentaire:</label>
+                {{ form_widget(form.text, {'attr': {'placeholder':'Commentaire'}}) }}
+                {{ form_errors(form.text,{ 'attr': {class: 'text-danger'} }) }}
+            </div>
+{#            <div class="form-group">#}
+{#                <label for="duree">Nom Service :</label>#}
+{#                {{ form_widget(form.idService, {'attr': {'placeholder':'Nom Service'}}) }}#}
+{#            </div>#}
 
-            </div>
             <div class="form-group">
-                <label for="duree">User :</label>
-                {{ form_widget(form.idUser, {'attr': {'placeholder':'Nom Prenom '}}) }}
-                {{ form_errors(form.idUser,{ 'attr': {class: 'text-danger'} }) }}
-            </div>
-            <div class="form-group">
-                <label for="duree">Image :</label>
-                {{ form_widget(form.img, {'attr': {'placeholder':'Nom Prenom '}}) }}
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn" id="submitBtn">Modifier</button>
+                <button type="submit" class="btn" id="submitBtn">Ajouter</button>
             </div>
 
             {{ form_end(form) }}
@@ -153,13 +132,9 @@
         </div>
     </div>
 
-    {{ form_end(form) }}
 
-    <div style="text-align: center;">
-        <a href="{{ path('app_service_index') }}" style="font-size: 16px; font-weight: bold;">Retourner à la liste</a>
-        <div>_</div>
-    </div>
 
-        {{ include('service/_delete_form.html.twig') }}
-    </div>
+
+    <a href="{{ path('app_avis_index') }}" style="font-weight: bold;">back to list</a>
+
 {% endblock %}

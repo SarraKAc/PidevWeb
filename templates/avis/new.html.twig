@@ -110,15 +110,20 @@
             <div class="form-group">
                 <label for="nom">Nbr Etoile:</label>
                 {{ form_widget(form.nbrEtoile, {'attr': {'placeholder':'nbr Etoile', 'min': '1', 'max': '5'}}) }}
+                {{ form_errors(form.nbrEtoile,{ 'attr': {class: 'text-danger'} }) }}
             </div>
 
             <div class="form-group">
                 <label for="prenom">Commentaire:</label>
                 {{ form_widget(form.text, {'attr': {'placeholder':'Commentaire'}}) }}
+                {{ form_errors(form.text,{ 'attr': {class: 'text-danger'} }) }}
             </div>
             <div class="form-group">
                 <label for="duree">Nom Service :</label>
                 {{ form_widget(form.idService, {'attr': {'placeholder':'Nom Service'}}) }}
+                {{ form_errors(form.idService,{ 'attr': {class: 'text-danger'} }) }}
+
+
             </div>
 
             <div class="form-group">
