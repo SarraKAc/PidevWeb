@@ -26,6 +26,13 @@ class Avis
      * @var int
      *
      * @ORM\Column(name="nbr_etoile", type="integer", nullable=false)
+     * @Assert\NotBlank(message="Veuillez fournir un nombre d'étoiles.")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 5,
+     *      minMessage = "Le nombre d'étoiles doit être au moins {{ limit }}.",
+     *      maxMessage = "Le nombre d'étoiles ne peut pas dépasser {{ limit }}."
+     * )
      */
     private $nbrEtoile;
 
@@ -33,9 +40,9 @@ class Avis
      * @var string
      *
      * @ORM\Column(name="text", type="string", length=250, nullable=false)
+     * @Assert\NotBlank(message="Veuillez fournir un texte.")
      */
     private $text;
-
     /**
      * @var \Service
      *
