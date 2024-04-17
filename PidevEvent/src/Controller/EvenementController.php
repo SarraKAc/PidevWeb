@@ -60,7 +60,7 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
         $entityManager->flush();
 
         // Redirection vers la page d'accueil des événements après la création
-        return $this->redirectToRoute('app_evenement_index');
+        return $this->redirectToRoute('app_student_element');
     }
 
     // Rendu du formulaire avec la date minimale définie
