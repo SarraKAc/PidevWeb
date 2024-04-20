@@ -147,6 +147,7 @@ public function showAllServicesOrderByNom()
             throw new \RuntimeException($e->getMessage());
         }
     }
+
     public function desactivePromo(Connection $connection) {
         $sqlDropColumn = "ALTER TABLE service DROP COLUMN PrixSolde;";
         $sqlAddColumn = "ALTER TABLE service ADD COLUMN PrixSolde FLOAT NULL;";
