@@ -90,5 +90,71 @@ public function showAllServicesOrderByNom()
 //    ->getResult();
 //}
 
+    public function calculerPromo()
+    {
+        $connection = $this->entityManager->getConnection();
+        $sql = "SELECT s.id_service, " .
+            "s.prix, " .
+            "SUM(a.nbr_etoile) / COUNT(*) as avg_rating_per_service, " .
+            "s.PrixSolde " .
+            "FROM service s " .
+            "JOIN avis a ON s.id_service = a.id_service " .
+            "GROUP BY s.id_service, s.prix, s.PrixSolde";
 
+        try {
+            $statement = $connection->prepare($sql);
+            $statement->execute();
+            $results = $statement->fetchAll();
+
+            foreach ($results as $result) {
+                $id = $result['id_service'];
+                $prix = $result['prix'];
+                $rating = $result['avg_rating_per_service'];
+
+                if ($rating < 5) {
+                    if ($rating > 0 && $rating <= 2) {
+                        // Réduction de 30%
+                        $prixReduit = $prix * (1 - 0.3);
+                    } elseif ($rating > 2 && $rating <= 3) {
+                        // Réduction de 25%
+                        $prixReduit = $prix * (1 - 0.25);
+                    } elseif ($rating > 3 && $rating <= 4) {
+                        // Réduction de 20%
+                        $prixReduit = $prix * (1 - 0.2);
+                    }
+                    $this->updatePrixSolde($id, $prixReduit);
+                } else {
+                    // Supprimer la promotion
+                    $this->updatePrixSolde($id, null);
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage());
+        }
+    }
+
+    private function updatePrixSolde($id, $prixReduit)
+    {
+        $connection = $this->entityManager->getConnection();
+        $req = "UPDATE service SET PrixSolde = :prixReduit WHERE id_service = :id";
+
+        try {
+            $statement = $connection->prepare($req);
+            $statement->bindValue('prixReduit', $prixReduit);
+            $statement->bindValue('id', $id);
+            $statement->execute();
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage());
+        }
+    }
+    public function desactivePromo(Connection $connection) {
+        $sqlDropColumn = "ALTER TABLE service DROP COLUMN PrixSolde;";
+        $sqlAddColumn = "ALTER TABLE service ADD COLUMN PrixSolde FLOAT NULL;";
+        try {
+            $connection->executeUpdate($sqlDropColumn);
+            $connection->executeUpdate($sqlAddColumn);
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
 }

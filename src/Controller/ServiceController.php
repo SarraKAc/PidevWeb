@@ -163,6 +163,11 @@ class ServiceController extends AbstractController
 
         return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
     }
+    public function CalculerPromo(ServiceRepository $serviceRepository)
+    {
+        $serviceRepository->calculerPromo();
 
+        // Tu peux retourner une réponse JSON ou rediriger vers une autre page si nécessaire
+    }
 
 }

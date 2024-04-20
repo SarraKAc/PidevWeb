@@ -3,13 +3,21 @@
 {% block title %}Service index{% endblock %}
 
 {% block body %}
-    <div style="text-align: center;">
-        <h1 class="blue">Liste des Services</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="blue">Liste des Services</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                <button type="button" class="btn btn-primary">Promo</button>
+            </div>
+        </div>
     </div>
-{#    <form action="{{ path('app_service_rechercher#}
 
 
-
+    {#    <form action="{{ path('app_service_rechercher#}
 
 
 
@@ -37,6 +45,7 @@
             <th class="blue">Durée</th>
             <th class="blue">Domaine</th>
             <th class="blue">Prix</th>
+            <th class="blue">PrixSoldé</th>
 
             <th class="blue">Actions</th>
         </tr>
@@ -49,6 +58,7 @@
                 <td>{{ service.tmpservice }}</td>
                 <td>{{ service.domaine }}</td>
                 <td>{{ service.prix }} Tokens</td>
+                <td>{{ service.prixSolde }} Tokens</td>
 
 
                 <td>
@@ -72,4 +82,23 @@
     </table>
 
     <a href="{{ path('app_service_new') }}">Ajouter Service</a>
+    <script>
+        document.getElementById('btnCalculerPromo').addEventListener('click', function() {
+            // Fais une requête AJAX vers ton contrôleur Symfony
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '{{ path('app_calculer_promo') }}', true);
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    // Succès de la requête
+                    alert('Promo calculée avec succès!');
+                    // Actualise la page ou effectue d'autres actions si nécessaire
+                    location.reload();
+                } else {
+                    // Erreur lors de la requête
+                    alert('Une erreur est survenue lors du calcul de la promo.');
+                }
+            };
+            xhr.send();
+        });
+    </script>
 {% endblock %}

@@ -7,3 +7,6 @@ app_service_search:
   path: '/search'
   controller: 'App\Controller\ServiceController::search'
   methods: ['GET']
+app_calculer_promo:
+  path: '/calculer-promo'
+  controller: 'App\Controller\ServiceController::CalculerPromo'
