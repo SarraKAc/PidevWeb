@@ -20,8 +20,11 @@ class Evenement
     private ?int $id_evenement = null;
 
     
-    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide")]
-    #[Assert\Length(min:3, minMessage: 'Minimum 3 caractères')]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
+    #[Assert\Length(
+        min: 3,
+        minMessage: 'Le nom doit contenir au moins {{ limit }} caractères'
+    )]
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
