@@ -204,6 +204,7 @@
         }
     });
 </script>
+
 <section id="events" class="events section" style="margin-top: 10px;">
     <div class="container" data-aos="fade-up">
         <div class="row">
@@ -229,7 +230,7 @@
                                 Ajouter une réservation
                             </button>
                             <!-- Button for translation -->
-                            <button type="button" class="btn btn-secondary" onclick="translate('{{ event.getNom() }}')">Traduire</button>
+                            <button type="button" class="btn btn-secondary translate-btn" data-event-name="{{ event.getNom() }}" onclick="translateEvent('{{ event.getNom()|escape('js') }}')">Traduire</button>
                         </div>
                     </div>
                 </div>
@@ -237,6 +238,15 @@
         </div>
     </div>
 </section>
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+
+    <script src="{{ asset('front-office/assets/js/translate.js') }}"></script>
+{% endblock %}
+
 
 <!-- Reservation Modal -->
 {% for event in events %}
@@ -283,8 +293,6 @@
         alert("Traduction de : " + nom); // Remplacez cette alerte par l'appel à votre fonction de traduction
     }
 </script>
-
-
 
 
 

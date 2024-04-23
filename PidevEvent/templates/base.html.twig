@@ -9,9 +9,17 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+       {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {# Supprimez ou déplacez cette ligne si le fichier translate.js est déjà inclus #}
+    <script src="{{ asset('front-office/assets/js/translate.js') }}"></script>
+<script src="{{ asset('front-office/assets/js/translate.js') }}"></script>
+
+{% endblock %}
+
+
+
+        
     </head>
     <body>
         {% block body %}{% endblock %}

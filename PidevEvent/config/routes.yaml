@@ -1,18 +1,23 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-# routes.yaml or any routing file
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
 app_delete:
     path: /evenementdelete/{id}
     controller: App\Controller\EvenementController::delete
     methods: [DELETE]
+
 app_evenement_rechercher:
     path: '/evenement/search'
     controller: 'App\Controller\EvenementController::search'
     methods: ['POST']
+
 app_afficher_reservation:
     path: /afficher/reservation
     controller: 'App\Controller\ReserverEventController::show'
     methods: ['GET']
 
-   
+translate_event:
+    path: /translate-event # Assurez-vous que cette clé est unique
+    controller: 'App\Controller\EvenementController::translateEvent'
+    methods: ['POST']

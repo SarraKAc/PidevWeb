@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
@@ -159,7 +163,94 @@ public function search(Request $request, EvenementRepository $evenementRepositor
             'evenements' => $evenement,
         ]);
     }
+ // Contrôleur Symfony pour gérer la traduction des événements
 
-    
+
+
+
+ /*#[Route('/translate-event', name: 'translate_event', methods: ['POST'])]
+ public function translateEvent(Request $request, HttpClientInterface $httpClient): JsonResponse
+ {
+     // Récupérer le nom de l'événement à traduire depuis la requête AJAX
+     $eventName = $request->request->get('eventName');
+ 
+     // Traduire le nom de l'événement en utilisant l'API de Google Translate
+     $translatedName = $this->translateWithGoogleTranslate($eventName, $httpClient);
+ 
+     // Retourner la réponse JSON avec le contenu traduit
+     return new JsonResponse(['translatedContent' => $translatedName]);
+ }*/
+
+
+ public function translateEvent(Request $request, HttpClientInterface $httpClient): JsonResponse
+{
+    // Récupérer les données de l'événement à traduire depuis la requête AJAX
+    $eventName = $request->request->get('eventName');
+    $eventDescription = $request->request->get('eventDescription');
+    $eventCategory = $request->request->get('eventCategory');
+    $eventDate = $request->request->get('eventDate');
+
+    // Traduire chaque champ en utilisant l'API de Google Translate
+    $translatedName = $this->translateWithGoogleTranslate($eventName, $httpClient);
+    $translatedDescription = $this->translateWithGoogleTranslate($eventDescription, $httpClient);
+    $translatedCategory = $this->translateWithGoogleTranslate($eventCategory, $httpClient);
+    $translatedDate = $this->translateWithGoogleTranslate($eventDate, $httpClient);
+
+    // Retourner la réponse JSON avec les champs traduits
+    return new JsonResponse([
+        'translatedName' => $translatedName,
+        'translatedDescription' => $translatedDescription,
+        'translatedCategory' => $translatedCategory,
+        'translatedDate' => $translatedDate,
+    ]);
+}
+ /*private function translateWithGoogleTranslate(string $text, HttpClientInterface $httpClient): string
+{
+    // Appel à l'API Google Translate pour obtenir la traduction en anglais
+    $response = $httpClient->request('GET', 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=' . urlencode($text));
+
+    // Vérifier si la requête a réussi et si la réponse est valide
+    if ($response->getStatusCode() === 200) {
+        $content = $response->getContent();
+        $translatedText = json_decode($content, true)[0][0][0] ?? '';
+
+        return $translatedText;
+    } else {
+        // En cas d'erreur de requête ou de réponse invalide, retourner une chaîne vide
+        return '';
+    }
+}*/
+
+private function translateWithGoogleTranslate(string $text, HttpClientInterface $httpClient): string
+{
+    try {
+        // Appel à l'API Google Translate pour obtenir la traduction en anglais
+        $response = $httpClient->request('GET', 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=' . urlencode($text));
+
+        // Vérifier si la requête a réussi
+        if ($response->getStatusCode() === 200) {
+            $content = $response->getContent();
+            $translatedText = json_decode($content, true)[0][0][0] ?? '';
+
+            return $translatedText;
+        } else {
+            // En cas de réponse invalide, retourner une chaîne vide
+            return '';
+        }
+    } catch (TransportExceptionInterface $e) {
+        // En cas d'erreur de requête, logguer l'erreur et retourner une chaîne vide
+        $this->logger->error('Erreur lors de la requête vers l\'API Google Translate : ' . $e->getMessage());
+        return '';
+    } catch (Exception $e) {
+        // En cas d'erreur inattendue, logguer l'erreur et retourner une chaîne vide
+        $this->logger->error('Erreur inattendue lors de la traduction : ' . $e->getMessage());
+        return '';
+    }
+}
+
+
+
+ 
+
    
 }

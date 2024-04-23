@@ -1,0 +1,20 @@
+
+{
+  "name": "pidev_event",
+  "version": "1.0.0",
+  "description": "Description de votre projet",
+  "main": "index.js",
+  "scripts": {
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production"
+  },
+  "dependencies": {
+    "jquery": "^3.7.1"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^1.1.2",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0"
+  }
+}
