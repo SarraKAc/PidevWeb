@@ -28,3 +28,8 @@ services:
 
 # Add more service definitions when explicit configuration is needed
 # Please note that last definitions always *replace* previous ones
+    App\Service\SmsService:
+        arguments:
+            $sid: '%env(TWILIO_SID)%'
+            $token: '%env(TWILIO_TOKEN)%'
+            $from: '%env(TWILIO_FROM)%'

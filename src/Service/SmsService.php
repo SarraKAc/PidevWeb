@@ -6,20 +6,22 @@ use Twilio\Rest\Client;
 
 class SmsService
 {
-    private $twilioClient;
+    private $client;
+    private $from;
 
-    public function __construct(string $accountSid, string $authToken)
+    public function __construct(string $sid, string $token, string $from)
     {
-        $this->twilioClient = new Client($accountSid, $authToken);
+        $this->client = new Client($sid, $token);
+        $this->from = $from;
     }
 
-    public function sendSms(string $to, string $message, string $from)
+    public function sendSms($to, $message): \Twilio\Rest\Api\V2010\Account\MessageInstance
     {
-        $this->twilioClient->messages->create(
+        return $this->client->messages->create(
             $to,
             [
-                'from' => $from,
-                'body' => $message,
+                'from' => $this->from,
+                'body' => $message
             ]
         );
     }

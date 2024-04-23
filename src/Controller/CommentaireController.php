@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\SmsService;
 
 #[Route('/commentaire')]
 class CommentaireController extends AbstractController
@@ -32,7 +33,7 @@ class CommentaireController extends AbstractController
     }
 
     #[Route('/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, TopicRepository $topicRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TopicRepository $topicRepository,SmsService $smsService): Response
     {
         $idTopic = $request->query->get('id_topic');
         $topic = $topicRepository->find($idTopic);
@@ -47,6 +48,7 @@ class CommentaireController extends AbstractController
                 // Gérer le cas où des mots interdits sont trouvés
                 // Par exemple, afficher un message d'erreur
                 $this->addFlash('error', 'Votre commentaire contient des mots interdits.');
+                $smsService->sendSms('+21652115745', 'Alerte : un commentaire inapproprié a été posté.');
                 return $this->redirectToRoute('app_topic_index');
             }
 
