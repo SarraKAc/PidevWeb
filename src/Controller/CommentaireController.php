@@ -6,6 +6,7 @@ use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 use App\Repository\CommentaireRepository;
 use App\Repository\TopicRepository;
+use App\Service\BadWordFilterService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,17 +24,34 @@ class CommentaireController extends AbstractController
         ]);
     }
 
+    private $badWordFilterService;
+
+    public function __construct(BadWordFilterService $badWordFilterService)
+    {
+        $this->badWordFilterService = $badWordFilterService;
+    }
+
     #[Route('/new', name: 'app_commentaire_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,TopicRepository $topicRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, TopicRepository $topicRepository): Response
     {
         $idTopic = $request->query->get('id_topic');
-        $topic =$topicRepository->find($idTopic);
+        $topic = $topicRepository->find($idTopic);
         $commentaire = new Commentaire();
         $form = $this->createForm(CommentaireType::class, $commentaire);
         $form->handleRequest($request);
-$commentaire->setIdUser(12);
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $commentContent = $commentaire->getText();
+            // Vérifie si le commentaire contient des mots interdits
+            if ($this->badWordFilterService->containsBadWords($commentContent)) {
+                // Gérer le cas où des mots interdits sont trouvés
+                // Par exemple, afficher un message d'erreur
+                $this->addFlash('error', 'Votre commentaire contient des mots interdits.');
+                return $this->redirectToRoute('app_topic_index');
+            }
+
             $currentlydate = new \DateTime('now');
+            $commentaire->setIdUser(12);
             $commentaire->setIdTopic($topic);
             $commentaire->setDateCom($currentlydate);
             $entityManager->persist($commentaire);
@@ -47,6 +65,7 @@ $commentaire->setIdUser(12);
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{id_com}', name: 'app_commentaire_show', methods: ['GET'])]
     public function show(Commentaire $commentaire): Response
