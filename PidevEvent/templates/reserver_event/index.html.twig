@@ -5,6 +5,11 @@
 {% block body %}
     <h1>ReserverEvent index</h1>
 
+    <!-- Afficher un message d'alerte si l'e-mail ne contient pas '@' -->
+    {% if emailError is defined and emailError %}
+        <div class="alert alert-danger">{{ emailError }}</div>
+    {% endif %}
+
     <table class="table">
         <thead>
             <tr>

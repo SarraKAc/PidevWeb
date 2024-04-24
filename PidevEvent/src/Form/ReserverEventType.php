@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class ReserverEventType extends AbstractType
@@ -18,7 +19,18 @@ class ReserverEventType extends AbstractType
             ->add('nom')
             ->add('nbr_personne')
             
-            ->add('email')
+            //->add('email')
+
+            ->add('email', null, [
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'L\'email ne peut pas être vide.',
+                    ]),
+                    new Assert\Email([
+                        'message' => 'L\'email "{{ value }}" n\'est pas valide, il manque des caractères spéciaux.',
+                    ]),
+                ],
+            ])
             
                 ->add('evenement', EntityType::class, [
                     'class' => Evenement::class,

@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+
 
 
 
@@ -42,7 +45,7 @@ class EvenementController extends AbstractController
 
   
 /***********Ajout avec controle de saise sur la date****//////
-    #[Route('/ghofrane/student-element', name: 'app_student_element')]
+   #[Route('/ghofrane/student-element', name: 'app_student_element')]
 public function studentelement(Request $request, EntityManagerInterface $entityManager): Response
 {
     // Création d'une nouvelle instance d'événement
@@ -74,6 +77,26 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
         'current_date' => $currentDate, // Passer la date actuelle au modèle Twig
     ]);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /********************Afficher Evenement ***************** */

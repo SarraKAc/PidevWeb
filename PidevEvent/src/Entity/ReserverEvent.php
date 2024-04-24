@@ -31,13 +31,15 @@ class ReserverEvent
     private ?\DateTimeInterface $date_reservation = null;
 
 
-    /*#[ORM\Column(length: 255)]
-    private ?string $email = null;*/
+    // #[ORM\Column(length: 255)]
+    // private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide")]
-    #[Assert\Email(message: "L'adresse e-mail '{{ value }}' n'est pas valide.")]
-    #[Assert\Callback(callbacks: ["validateEmail"])]
+    #[Assert\NotBlank(message: "L'email ne peut pas être vide.")]
+    #[Assert\Regex(
+        pattern: '/@/',
+        message: "L'email doit contenir le symbole '@'."
+    )]
     private ?string $email = null;
 
     public function getId(): ?int

@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
-
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 
 
@@ -61,7 +61,9 @@ class ReserverEventController extends AbstractController
 
 
 
+        
 
+        
 
 
 
