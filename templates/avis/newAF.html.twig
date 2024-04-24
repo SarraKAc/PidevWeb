@@ -243,48 +243,28 @@
 
     <div class="container-wrapper">
         <div class="container">
-            <h2 style="color: #459BFD; font-weight: bold;">Ajouter Service</h2>
-
-
-
+            <h2 style="color: #459BFD; font-weight: bold;">Ajouter Avis</h2>
             {{ form_start(form) }}
 
             <div class="form-group">
-                <label for="nom">Nom Service:</label>
-                {{ form_widget(form.nomService, {'attr': {'placeholder':'nom service'}}) }}
-                {{ form_errors(form.nomService, { 'attr': {class: 'text-danger'} }) }}
-
-            </div>
-            <div class="form-group">
-                <label for="prenom">Titre Service:</label>
-                {{ form_widget(form.titreService, {'attr': {'placeholder':'Titre service'}}) }}
-                {{ form_errors(form.titreService,{ 'attr': {class: 'text-danger'} }) }}
-            </div>
-            <div class="form-group">
-                <label for="duree">Duree :</label>
-                {{ form_widget(form.tmpservice, {'attr': {'placeholder':'Durée service'}}) }}
-                {{ form_errors(form.tmpservice,{ 'attr': {class: 'text-danger'} }) }}
-            </div>
-            <div class="form-group">
-                <label for="duree">Prix :</label>
-                {{ form_widget(form.prix, {'attr': {'placeholder':'Prix'}}) }}
-                {{ form_errors(form.prix,{ 'attr': {class: 'text-danger'} }) }}
+                <label for="nom">Nbr Etoile:</label>
+                {{ form_widget(form.nbrEtoile, {'attr': {'placeholder':'nbr Etoile', 'min': '1', 'max': '5'}}) }}
+                {{ form_errors(form.nbrEtoile,{ 'attr': {class: 'text-danger'} }) }}
             </div>
 
             <div class="form-group">
-                <label for="duree">domaine :</label>
-                {{ form_widget(form.domaine, {'attr': {'placeholder':'Domaine'}}) }}
-                {{ form_errors(form.domaine,{ 'attr': {class: 'text-danger'} }) }}
+                <label for="prenom">Commentaire:</label>
+                {{ form_widget(form.text, {'attr': {'placeholder':'Commentaire'}}) }}
+                {{ form_errors(form.text,{ 'attr': {class: 'text-danger'} }) }}
             </div>
             <div class="form-group">
-                <label for="duree">User :</label>
-                {{ form_widget(form.idUser, {'attr': {'placeholder':'Nom Prenom '}}) }}
-                {{ form_errors(form.idUser,{ 'attr': {class: 'text-danger'} }) }}
+                <label for="duree">Nom Service :</label>
+                {{ form_widget(form.idService, {'attr': {'placeholder':'Nom Service'}}) }}
+                {{ form_errors(form.idService,{ 'attr': {class: 'text-danger'} }) }}
+
+
             </div>
-            <div class="form-group">
-                <label for="duree">Image :</label>
-                {{ form_widget(form.img, {'attr': {'placeholder':'Nom Prenom '}}) }}
-            </div>
+
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" id="submitBtn">Ajouter</button>
             </div>
@@ -292,12 +272,18 @@
             {{ form_end(form) }}
 
         </div>
-
     </div>
-
     <div style="text-align: center;">
-        <a href="{{ path('app_services') }}" style="font-size: 20px;">Retourne à la liste</a>
+        <a href="{{ path('app_services') }}" style="font-size: 30px;">Retourne à la liste</a>
     </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -311,12 +297,9 @@
     <div class="container footer-top">
         <div class="row gy-4">
             <div class="col-lg-4 col-md-6 footer-about">
-                <div style="text-align: center;">
-                    <a href="{{ path('app_service_index') }}" style="font-size: 16px;">
-                        <span class="">STUDENTORS</span>
-                    </a>
-                </div>
-
+                <a href="index.html" class="logo d-flex align-items-center">
+                    <span class="">STUDENTORS</span>
+                </a>
                 <div class="footer-contact pt-3">
                     <p>A108 Adam Street</p>
                     <p>New York, NY 535022</p>

@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Avis;
 use App\Entity\Evenement;
 use App\Entity\Service;
+use App\Form\AvisType;
 use App\Form\ServiceType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,6 +57,54 @@ class PreviewController extends AbstractController
     {
         return $this->render('statistique.html.twig');
     }
+    #[Route('/newAF', name: 'app_avisF_new', methods: ['GET', 'POST'])]
+    public function newAF(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $avis = new Avis();
+        $form = $this->createForm(AvisType::class, $avis);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($avis);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_services', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('avis/newAF.html.twig', [
+            'avis' => $avis,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/newSF', name: 'app_serviceF_new', methods: ['GET', 'POST'])]
+    public function newSF(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $service = new Service();
+        $form = $this->createForm(ServiceType::class, $service);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('img')->getData();
+            if ($file) {
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move(
+                    $this->getParameter('upload_directory'),
+                    $fileName
+                );
+                $service->setImg($fileName);
+            }
+            $entityManager->persist($service);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_services', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('service/newFront.html.twig', [
+            'service' => $service,
+            'form' => $form,
+        ]);
+    }
+
 //    #[Route('services/newFront', name: 'app_serviceF_new', methods: ['GET', 'POST'])]
 //    public function newFront(Request $request, EntityManagerInterface $entityManager): Response
 //    {
@@ -84,12 +133,7 @@ class PreviewController extends AbstractController
 //            'form' => $form,
 //        ]);
 //    }
-    #[Route('/services/newF', name: 'app_serviceF_new')]
-    public function newF(): Response
-    {
-        // Votre logique pour la page add-student, par exemple, rendu d'un modèle Twig
-        return $this->render('newFront.html.twig');
-    }
+
 
     /*#[Route('/ghofrane/student-element', name: 'app_student_element')]
     public function studentelement(): Response
