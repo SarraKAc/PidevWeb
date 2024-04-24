@@ -4,8 +4,12 @@
 namespace App\Controller;
 
 use App\Entity\Avis;
+use App\Entity\Evenement;
 use App\Entity\Service;
+use App\Form\ServiceType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -47,12 +51,45 @@ class PreviewController extends AbstractController
     {
         return $this->render('back-office.html.twig');
     }
-    /*#[Route('/ghofrane/add-student', name: 'app_add_student')]
-    public function addStudent(): Response
+    #[Route('/stat', name: 'app_service_Statistique', methods: ['GET'])]
+    public function statique(): Response
+    {
+        return $this->render('statistique.html.twig');
+    }
+//    #[Route('services/newFront', name: 'app_serviceF_new', methods: ['GET', 'POST'])]
+//    public function newFront(Request $request, EntityManagerInterface $entityManager): Response
+//    {
+//        $service = new Service();
+//        $form = $this->createForm(ServiceType::class, $service);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $file = $form->get('img')->getData();
+//            if ($file) {
+//                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+//                $file->move(
+//                    $this->getParameter('upload_directory'),
+//                    $fileName
+//                );
+//                $service->setImg($fileName);
+//            }
+//            $entityManager->persist($service);
+//            $entityManager->flush();
+//
+//            return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
+//        }
+//
+//        return $this->renderForm('service/newFront.html.twig', [
+//            'service' => $service,
+//            'form' => $form,
+//        ]);
+//    }
+    #[Route('/services/newF', name: 'app_serviceF_new')]
+    public function newF(): Response
     {
         // Votre logique pour la page add-student, par exemple, rendu d'un modèle Twig
-        return $this->render('student/add-student.html.twig');
-    }*/
+        return $this->render('newFront.html.twig');
+    }
 
     /*#[Route('/ghofrane/student-element', name: 'app_student_element')]
     public function studentelement(): Response

@@ -11,9 +11,18 @@
         </div>
         <div class="row">
             <div class="col text-right">
-                <button type="button" class="btn btn-primary">Promo</button>
+                <button id="btnDesactivéPromo" {{ sr.desactivePromo() }} type="button" class="btn btn-primary">Dés Promo</button>
+            </div>
+            <div class="row">
+                <div class="col text-right">
+                    <button id="btnCalculerPromo" {{ sr.calculerPromo() }} type="button" class="btn btn-primary">Act Promo</button>
+
+                </div>
+
+
             </div>
         </div>
+
     </div>
 
 
@@ -24,14 +33,6 @@
 
 
 
-
-{#') }}" method="GET" style="text-align: right;">#}
-{#        <label>#}
-{#            <input type="text" name="keyword" class="text-field" placeholder="  Recherche..." style="width: 200px; height: 30px;">#}
-{#        </label>#}
-
-{#        <button type="submit" class="button white-text" style="font-size: 15px; padding: 8px 15px;">Recherche</button>#}
-{#    </form>#}
 
 
 
@@ -82,23 +83,5 @@
     </table>
 
     <a href="{{ path('app_service_new') }}">Ajouter Service</a>
-    <script>
-        document.getElementById('btnCalculerPromo').addEventListener('click', function() {
-            // Fais une requête AJAX vers ton contrôleur Symfony
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '{{ path('app_calculer_promo') }}', true);
-            xhr.onload = function() {
-                if (xhr.status >= 200 && xhr.status < 300) {
-                    // Succès de la requête
-                    alert('Promo calculée avec succès!');
-                    // Actualise la page ou effectue d'autres actions si nécessaire
-                    location.reload();
-                } else {
-                    // Erreur lors de la requête
-                    alert('Une erreur est survenue lors du calcul de la promo.');
-                }
-            };
-            xhr.send();
-        });
-    </script>
+
 {% endblock %}

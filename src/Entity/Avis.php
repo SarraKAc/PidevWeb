@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert; // Importation de l'annotation Assert
 
 /**
  * Avis
@@ -10,9 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="avis", indexes={@ORM\Index(name="id_service", columns={"id_service"})})
  * @ORM\Entity
  */
-class Avis
-{
-
+class Avis{
     /**
      * @var int
      *
@@ -34,7 +33,7 @@ class Avis
      *      maxMessage = "Le nombre d'étoiles ne peut pas dépasser {{ limit }}."
      * )
      */
-    private $nbrEtoile;
+    private $nbrEtoile; // Assurez-vous que cette propriété est correctement déclarée
 
     /**
      * @var string
@@ -43,6 +42,7 @@ class Avis
      * @Assert\NotBlank(message="Veuillez fournir un texte.")
      */
     private $text;
+
     /**
      * @var \Service
      *
@@ -52,6 +52,7 @@ class Avis
      * })
      */
     private $idService;
+
 
     public function getIdAvis(): ?int
     {
@@ -63,19 +64,20 @@ class Avis
         return $this->nbrEtoile;
     }
 
-    public function setNbrEtoile(int $nbrEtoile): static
+    public function setNbrEtoile(int $nbrEtoile): self
     {
         $this->nbrEtoile = $nbrEtoile;
 
         return $this;
     }
 
+
     public function getText(): ?string
     {
         return $this->text;
     }
 
-    public function setText(string $text): static
+    public function setText(string $text): self
     {
         $this->text = $text;
 
@@ -87,12 +89,10 @@ class Avis
         return $this->idService;
     }
 
-    public function setIdService(?Service $idService): static
+    public function setIdService(?Service $idService): self
     {
         $this->idService = $idService;
 
         return $this;
     }
-
-
 }

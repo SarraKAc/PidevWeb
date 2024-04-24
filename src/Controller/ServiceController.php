@@ -16,9 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/service')]
 class ServiceController extends AbstractController
-{
+{ public ServiceRepository $ServiceRepository;
+    public $entityManager;
+
+    public function __construct(ServiceRepository $ServiceRepository)
+    {
+        $this->ServiceRepository = $ServiceRepository;
+    }
+
+
+
     #[Route('/', name: 'app_service_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager,ServiceRepository $sr): Response
     {
         $services = $entityManager
             ->getRepository(Service::class)
@@ -26,6 +35,7 @@ class ServiceController extends AbstractController
 
         return $this->render('service/index.html.twig', [
             'services' => $services,
+            'sr'=> $sr
         ]);
     }
 //    #[Route('/service/search', name: 'app_service_rechercher', methods: ['POST'])]
@@ -79,6 +89,7 @@ class ServiceController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[Route('/{idService}/newA2', name: 'app_avis_new2', methods: ['GET', 'POST'])]
     public function newA2(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -127,6 +138,7 @@ class ServiceController extends AbstractController
         ]);
     }
 
+
     #[Route('/{idService}', name: 'app_service_show', methods: ['GET'])]
     public function show(Service $service): Response
     {
@@ -163,11 +175,10 @@ class ServiceController extends AbstractController
 
         return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
     }
-    public function CalculerPromo(ServiceRepository $serviceRepository)
-    {
-        $serviceRepository->calculerPromo();
 
-        // Tu peux retourner une réponse JSON ou rediriger vers une autre page si nécessaire
-    }
+
+
+
+
 
 }

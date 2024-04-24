@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -109,6 +111,23 @@ class Service
      * @Assert\NotBlank(message="Veuillez choisir un utilisateur.")
      */
     private $idUser;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Avis", mappedBy="service")
+     */
+    private $avis;
+
+    public function __construct()
+    {
+        $this->avis = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
 
     public function getIdService(): ?int
     {
@@ -216,5 +235,9 @@ class Service
         return $this->nomService; // Ou toute autre information pertinente à afficher sous forme de chaîne
     }
 
+    public function _toString(): string
+    {
 
+        return $this->avis; // Ou toute autre information pertinente à afficher sous forme de chaîne
+    }
 }
