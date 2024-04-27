@@ -17,6 +17,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use ReCaptcha\ReCaptcha;
 
 
 
@@ -81,6 +82,75 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 
 
 
+/*#[Route('/ghofrane/student-element', name: 'app_student_element')]
+// Dans votre contrôleur Symfony
+public function ajouterEvenement(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $evenement = new Evenement();
+    $form = $this->createForm(EvenementType::class, $evenement);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Vérification du captcha
+        $captchaResponse = $request->request->get('g-recaptcha-response');
+        $recaptcha = new ReCaptcha($this->getParameter('recaptcha.secret_key'));
+        $response = $recaptcha->verify($captchaResponse);
+        
+        if (!$response->isSuccess()) {
+            // Captcha invalide, afficher un message d'erreur
+            $this->addFlash('error', 'Veuillez compléter le captcha correctement.');
+            return $this->redirectToRoute('votre_route_d_ajout');
+        }
+        
+        // Le captcha est valide, ajouter l'événement
+        $entityManager->persist($evenement);
+        $entityManager->flush();
+
+        // Redirection vers une autre page après l'ajout
+        return $this->redirectToRoute('votre_route_de_redirection');
+    }
+
+    return $this->render('student/student-element.html.twig', [
+                'form' => $form->createView(),
+               
+            ]);
+}*/
+
+
+
+/*#[Route('/ghofrane/student-element', name: 'app_student_element')]
+public function ajouterEvenement(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $evenement = new Evenement();
+    $form = $this->createForm(EvenementType::class, $evenement);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Vérification du captcha
+        $captchaResponse = $request->request->get('g-recaptcha-response');
+        $recaptcha = new ReCaptcha('votre_clé_secrète_hcaptcha');
+        $response = $recaptcha->verify($captchaResponse);
+        
+        if (!$response->isSuccess()) {
+            // Captcha invalide, afficher un message d'erreur
+            $this->addFlash('error', 'Veuillez compléter le captcha correctement.');
+            return $this->redirectToRoute('app_student_element');
+        }
+        
+        // Le captcha est valide, ajouter l'événement
+        $entityManager->persist($evenement);
+        $entityManager->flush();
+
+        // Redirection vers une autre page après l'ajout
+        return $this->redirectToRoute('nom_de_votre_route_de_redirection');
+    }
+
+    return $this->render('student/student-element.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}*/
 
 
 
@@ -102,11 +172,34 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 /********************Afficher Evenement ***************** */
    
 
-    #[Route('/ghofrane/add-student', name: 'app_add_student')]
+   /* #[Route('/ghofrane/add-student', name: 'app_add_student')]
     public function addStudent(EvenementRepository $evenementRepository): Response
     {
     // Récupérer tous les événements depuis la base de données
     $evenements = $evenementRepository->findAll();
+
+    // Passer les événements au template Twig pour affichage
+    return $this->render('student/add-student.html.twig', [
+        'evenements' => $evenements,
+    ]);
+}*/
+
+#[Route('/ghofrane/add-student', name: 'app_add_student')]
+public function addStudentPage(EvenementRepository $evenementRepository): Response
+{
+    // Récupérer tous les événements depuis la base de données
+    $evenements = $evenementRepository->findAll();
+
+    // Calculer le temps restant pour chaque événement
+    foreach ($evenements as $evenement) {
+        $diff = $evenement->getDate()->diff(new \DateTime());
+        $tempsRestant = [
+            'jours' => $diff->format('%a'),
+            'heures' => $diff->format('%h'),
+            'minutes' => $diff->format('%i'),
+        ];
+        $evenement->setTempsRestant($tempsRestant);
+    }
 
     // Passer les événements au template Twig pour affichage
     return $this->render('student/add-student.html.twig', [
@@ -276,4 +369,11 @@ public function search(Request $request, EvenementRepository $evenementRepositor
         return '';
     }
 }
+
+
+
+
+
+
+
 }

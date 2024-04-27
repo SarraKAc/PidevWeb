@@ -222,6 +222,15 @@
                             <p class="card-text">{{ event.getDescription() }}</p>
                             <p class="card-text">{{ event.getCategorie() }}</p>
                             <p class="card-text">{{ event.getPrix() }} DT</p>
+                            {% if event.getTempsRestant() is not null %}
+                                <p class="card-text">
+                                    Temps restant : {{ event.getTempsRestant()['jours'] }} jours, 
+                                    {{ event.getTempsRestant()['heures'] }} heures, 
+                                    {{ event.getTempsRestant()['minutes'] }} minutes
+                                </p>
+                            {% else %}
+                                <p class="card-text">Cet événement est terminé.</p>
+                            {% endif %}
                         </div>
                         <!-- Card footer -->
                         <div class="card-footer">
@@ -239,11 +248,11 @@
     </div>
 </section>
 
+
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    
-
+  
     <script src="{{ asset('front-office/assets/js/translate.js') }}"></script>
 {% endblock %}
 
@@ -285,14 +294,27 @@
     </div>
 </div>
 {% endfor %}
-
-<script>
+ 
+{# <script>
     // Fonction pour traduire le nom de l'événement
     function translate(nom) {
         // Appeler ici la fonction de traduction avec le nom de l'événement
         alert("Traduction de : " + nom); // Remplacez cette alerte par l'appel à votre fonction de traduction
     }
-</script>
+</script>  #}
+
+ <script>
+        // Fonction pour traduire le nom de l'événement
+        function translate(nom) {
+            // Appeler ici la fonction de traduction avec le nom de l'événement
+            // Remplacez cette alerte par l'appel à votre fonction de traduction
+            // Votre fonction de traduction doit être définie dans translate.js
+            // Par exemple : translateEvent(nom);
+            alert("Traduction de : " + nom);
+        }
+    </script>
+
+
 
 
 

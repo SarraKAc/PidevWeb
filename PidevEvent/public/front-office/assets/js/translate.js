@@ -1,4 +1,4 @@
-
+/*
 function translate(eventName) {
     
     // Envoie d'une requête AJAX au serveur pour traduire l'événement
@@ -18,10 +18,10 @@ function translate(eventName) {
 
 
     alert("Traduction de : " + nom);
-}
+}*/
 translate.js
 
-function translateEvent(eventName) {
+/*function translateEvent(eventName) {
     // Envoie d'une requête AJAX au serveur pour traduire l'événement
     $.ajax({
         url: '/translate-event', // Endpoint Symfony pour la traduction
@@ -34,37 +34,26 @@ function translateEvent(eventName) {
             console.error('Erreur lors de la traduction de l\'événement : ' + error);
         }
     });
+}*/
+
+
+
+function translateEvent(nom, description) {
+    // Envoie d'une requête AJAX au serveur pour traduire le nom et la description de l'événement
+    $.ajax({
+        url: '/translate-event', // Endpoint Symfony pour la traduction
+        method: 'POST',
+        data: {
+            eventName: nom,
+            eventDescription: description // Inclure la description dans les données de la requête
+        },
+        success: function(response) {
+            alert("Traduction du nom : " + response.translatedName);
+            alert("Traduction de la description : " + response.translatedDescription); // Afficher la traduction de la description dans une alerte
+        },
+        error: function(xhr, status, error) {
+            console.error('Erreur lors de la traduction de l\'événement : ' + error);
+        }
+    });
 }
-
-// translate.js
-
-// function translateEvent(eventName, eventDescription, eventCategory, eventDate) {
-//     // Envoie d'une requête AJAX au serveur pour traduire l'événement
-//     $.ajax({
-//         url: '/translate-event', // Endpoint Symfony pour la traduction
-//         method: 'POST',
-//         data: { 
-//             eventName: eventName,
-//             eventDescription: eventDescription,
-//             eventCategory: eventCategory,
-//             eventDate: eventDate
-//         },
-//         success: function(response) {
-//             // Vérifier si les champs traduits sont définis dans la réponse
-//             if (response.translatedName && response.translatedDescription && response.translatedCategory && response.translatedDate) {
-//                 // Afficher la traduction des différents champs de l'événement
-//                 alert("Traduction du nom : " + response.translatedName);
-//                 alert("Traduction de la description : " + response.translatedDescription);
-//                 alert("Traduction de la catégorie : " + response.translatedCategory);
-//                 alert("Traduction de la date : " + response.translatedDate);
-//             } else {
-//                 console.error('Erreur : Les champs traduits sont manquants dans la réponse.');
-//             }
-//         },
-//         error: function(xhr, status, error) {
-//             console.error('Erreur lors de la traduction de l\'événement : ' + error);
-//         }
-//     });
-// }
-
 

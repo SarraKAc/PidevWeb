@@ -47,6 +47,7 @@ class Evenement
 
     #[ORM\Column(length: 255)]
     private ?string $CheminImage = null;
+    
 
 
     private $reservations;
@@ -140,8 +141,30 @@ class Evenement
 
         return $this;
     }
+    
 
    
-    
+    // Dans votre entité Evenement
+
+
+// Dans votre entité Evenement
+
+public function getTempsRestant(): ?array
+{
+    // Vérifier si la date de l'événement est dans le passé
+    if ($this->date < new \DateTime()) {
+        // L'événement est passé, retourner null ou un message indiquant qu'il est terminé
+        return null; // Ou retourner un tableau vide ou un message spécifique
+    }
+
+    // Calculer la différence entre la date actuelle et la date de l'événement
+    $diff = $this->date->diff(new \DateTime());
+    return [
+        'jours' => $diff->format('%a'),
+        'heures' => $diff->format('%h'),
+        'minutes' => $diff->format('%i'),
+    ];
+}
+
 
 }

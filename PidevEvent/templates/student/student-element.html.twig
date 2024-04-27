@@ -494,24 +494,32 @@
 
 
 
-                <!-- Begin Page Content -->
+<!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="my-4">
-        <form action="{{ path('app_student_element') }}" method="post" style="width: 2500%; max-width: 20cm;">
+        <form action="{{ path('app_student_element') }}" method="post" style="width: 100%; max-width: 20cm;">
             {{ form_start(form) }}
             <div class="form-group">
                 {{ form_label(form.nom, 'Nom') }}
                 {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
             </div>
 
-            
+            <!-- Intégration du champ de captcha -->
+           <!-- Intégration du champ de hCaptcha -->
+<div class="form-group">
+    <label for="h-captcha">hCaptcha</label>
+    <div class="h-captcha" data-sitekey="c6390b2a-0758-43ab-9b0a-eb71a36c2348"></div>
+</div>
+
+
+
             <div class="form-group">
                 {{ form_label(form.description, 'Description') }}
                 {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div class="form-group">
-                {{ form_label(form.categorie, 'Categorie') }}
+                {{ form_label(form.categorie, 'Catégorie') }}
                 {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div class="form-group">
@@ -552,12 +560,18 @@
                     <span id="imageError" class="text-xs text-red-600 dark:text-red-400"></span>
                 </label>
             </div>
+            <!-- Bouton de soumission -->
             <button type="submit" class="btn btn-primary">AJOUTER</button>
             {{ form_end(form) }}
         </form>
     </div>
 </div>
-<!-- End of Page Content --> 
+
+<!-- Script pour charger le hCaptcha -->
+<script src="https://hcaptcha.com/1/api.js" async defer></script>
+
+<!-- Fin du contenu de la page -->
+
 
 
 
