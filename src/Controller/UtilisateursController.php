@@ -6,6 +6,7 @@ use App\Entity\Utilisateurs;
 use App\Form\UtilisateursType;
 use App\Repository\UtilisateursRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UtilisateursController extends AbstractController
 {
     #[Route('/', name: 'app_utilisateurs_index', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function index(UtilisateursRepository $utilisateursRepository): Response
     {
         return $this->render('utilisateurs/index.html.twig', [
@@ -23,6 +25,7 @@ class UtilisateursController extends AbstractController
     }
 
     #[Route('/new', name: 'app_utilisateurs_new', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $utilisateur = new Utilisateurs();
@@ -46,6 +49,13 @@ class UtilisateursController extends AbstractController
     public function show(Utilisateurs $utilisateur): Response
     {
         return $this->render('utilisateurs/show.html.twig', [
+            'utilisateur' => $utilisateur,
+        ]);
+    }
+    #[Route('/profile/{id}', name: 'app_utilisateurs_showmyprofile', methods: ['GET'])]
+    public function showmp(Utilisateurs $utilisateur): Response
+    {
+        return $this->render('utilisateurs/show_profile.html.twig', [
             'utilisateur' => $utilisateur,
         ]);
     }
@@ -79,6 +89,7 @@ class UtilisateursController extends AbstractController
         return $this->redirectToRoute('app_utilisateurs_index', [], Response::HTTP_SEE_OTHER);
     }
     #[Route("/utilisateurs/{id}/editRole", name: "app_utilisateurs_edit_role", methods: ["GET", "POST"])]
+    #[IsGranted("ROLE_ADMIN")]
     public function editRole(Request $request, Utilisateurs $utilisateur): Response
     {
         // Check if the user exists
@@ -90,18 +101,18 @@ class UtilisateursController extends AbstractController
         $roles = $utilisateur->getRoles();
 
         // Check if the user has ROLE_USER and ROLE_ADMIN roles
-        $hasUserRole = in_array('ROLE_USER', $roles);
+        //$hasUserRole = in_array('ROLE_USER', $roles);
         $hasAdminRole = in_array('ROLE_ADMIN', $roles);
 
         // Logic to update user's role based on the current roles
-        if ($hasUserRole && $hasAdminRole) {
+        if ($hasAdminRole) {
             // User has both ROLE_USER and ROLE_ADMIN roles
             // Update user's role to ROLE_USER only
             $utilisateur->setRoles(['ROLE_USER']);
         } else {
             // User has only ROLE_USER role
             // Update user's role to ROLE_ADMIN
-            $utilisateur->setRoles(['ROLE_USER','ROLE_ADMIN']);
+            $utilisateur->setRoles(['ROLE_ADMIN']);
         }
 
         // Persist the changes to the database

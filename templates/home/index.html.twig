@@ -1,20 +1,22 @@
 {% extends 'UserI.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block dropMenu %}
+    {% if app.user %}
+        {% set utilisateur = app.user %}
+        {# Now you can access properties of the current user #}
+        <li><a href="{{ url('app_utilisateurs_showmyprofile', {'id': utilisateur.id}) }}">Profile</a></li>
+        <li class="dropdown has-dropdown"><a href="#"><span>Account settings</span> <i class="bi bi-chevron-down"></i></a>
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/ElearningFinal/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/ElearningFinal/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <ul>
+                <li><a href="{{ path('app_utilisateurs_edit', {'id': utilisateur.id}) }}">edit profile</a></li>
+                <li><a href="{{ path('app_utilisateurs_delete', {'id': utilisateur.id}) }}">delete profile</a></li>
+            </ul>
+        </li>
+        <li><a href="{{ url('app_logout') }}">logout</a></li>
+    {% else %}
+        {# Handle the case when the user is not logged in #}
+        <p>You are not logged in.</p>
+    {% endif %}
+{% endblock %}
+{% block MegaMenu %}
 {% endblock %}

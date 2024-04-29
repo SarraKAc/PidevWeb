@@ -10,9 +10,9 @@
             {% set hasAdminRole = true %}
         {% endif %}
     {% endfor %}
-    {% if hasUserRole and hasAdminRole %}
+    {% if hasAdminRole %}
         {# User has both ROLE_USER and ROLE_ADMIN roles #}
-        <button class="btn btn-primary" >UpdateToUserOnly</button>
+        <button class="btn btn-primary" >UpdateToUser</button>
     {% else %}
         {# User has only ROLE_USER role #}
         <button class="btn btn-primary" >UpdateToAdmin</button>

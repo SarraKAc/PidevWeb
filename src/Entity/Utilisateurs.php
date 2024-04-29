@@ -20,6 +20,8 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    #[ORM\Column]
+    private ?int $count = 0;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]

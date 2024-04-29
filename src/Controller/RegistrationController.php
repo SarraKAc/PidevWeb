@@ -67,30 +67,35 @@ class RegistrationController extends AbstractController
             $user->setRoles($roles);
             $entityManager->persist($user);
             $entityManager->flush();
-           /* $email = (new TemplatedEmail())
-                ->from(new Address('anouar.jebri@gmail.com', 'studentors'))
-                ->to($user->getEmail())
-                ->subject('Please Confirm your Email');*/
+            /* $email = (new TemplatedEmail())
+                 ->from(new Address('anouar.jebri@gmail.com', 'studentors'))
+                 ->to($user->getEmail())
+                 ->subject('Please Confirm your Email');*/
             /*$expirationData = [
                 'days' => '7',
                 'hours' => '12'
             ];*/
             // generate a signed url and email it to the user
-           $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user);//,$email);
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user);//,$email);
             //$this->emailVerifier->sendConfirmationEmail($user->getEmail(),$this->generateVerificationLink($user),'email_verification.expiration',json_encode($expirationData));
             // do anything else you need here, like send an email
             $this->addFlash('success', 'An email confirmation has been sent. Please check your email.');
-           /* $mailer->send((new Email())
-                ->from('anouar.jebri@gmail.com')
-                ->to($user->getEmail())
-                ->subject('Hello from Studentors')
-                ->text('Hello, you have been successfully subscribed.')
-            );*/
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            /* $mailer->send((new Email())
+                 ->from('anouar.jebri@gmail.com')
+                 ->to($user->getEmail())
+                 ->subject('Hello from Studentors')
+                 ->text('Hello, you have been successfully subscribed.')
+             );*/
+            if($user->isVerified()){
+                return $userAuthenticator->authenticateUser(
+                    $user,
+                    $authenticator,
+                    $request
+                );
+            }
+            else{
+                echo "<script>alert(\"Please check you email to verify your account!\");</script>";
+            }
         }
 
         return $this->render('registration/register.html.twig', [
@@ -109,7 +114,7 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_login');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates

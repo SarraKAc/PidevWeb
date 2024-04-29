@@ -20,12 +20,7 @@ class CodePromos
     private ?\DateTimeInterface $dateExpiration = null;
 
     #[ORM\Column]
-    private ?bool $active = null;
-
-    #[ORM\Column]
-    private ?float $value = null;
-
-
+    private ?string $code = null;
 
     #[ORM\ManyToOne(inversedBy: 'id_cp')]
     private ?Utilisateurs $utilisateurs = null;
@@ -47,30 +42,17 @@ class CodePromos
         return $this;
     }
 
-    public function isActive(): ?bool
+    public function getCode(): ?string
     {
-        return $this->active;
+        return $this->code;
     }
 
-    public function setActive(bool $active): static
+    public function setCode(string $code): static
     {
-        $this->active = $active;
+        $this->code = $code;
 
         return $this;
     }
-
-    public function getValue(): ?float
-    {
-        return $this->value;
-    }
-
-    public function setValue(float $value): static
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
     public function getUtilisateurs(): ?Utilisateurs
     {
         return $this->utilisateurs;

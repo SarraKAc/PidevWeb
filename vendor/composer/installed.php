@@ -1283,6 +1283,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'symfonycasts/reset-password-bundle' => array(
+            'pretty_version' => 'v1.21.0',
+            'version' => '1.21.0.0',
+            'reference' => '598fc74acf0652abf495ac8db1c16234f5d59ded',
+            'type' => 'symfony-bundle',
+            'install_path' => __DIR__ . '/../symfonycasts/reset-password-bundle',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'symfonycasts/verify-email-bundle' => array(
             'pretty_version' => 'v1.17.0',
             'version' => '1.17.0.0',
