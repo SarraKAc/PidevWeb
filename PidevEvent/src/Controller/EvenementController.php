@@ -214,7 +214,7 @@ public function search(Request $request, EvenementRepository $evenementRepositor
 
 
 
- #[Route('/translate-event', name: 'translate_event', methods: ['POST'])]
+ /*#[Route('/translate-event', name: 'translate_event', methods: ['POST'])]
  public function translateEvent(Request $request, HttpClientInterface $httpClient): JsonResponse
  {
      // Récupérer le nom de l'événement à traduire depuis la requête AJAX
@@ -225,7 +225,10 @@ public function search(Request $request, EvenementRepository $evenementRepositor
  
      // Retourner la réponse JSON avec le contenu traduit
      return new JsonResponse(['translatedContent' => $translatedName]);
- }
+ }*/
+
+
+
 
 /************************************************* */
 //  public function translateEvent(Request $request, HttpClientInterface $httpClient): JsonResponse
@@ -281,23 +284,40 @@ public function search(Request $request, EvenementRepository $evenementRepositor
 /**////////////////////////////////////// */
 
  
-
-    private function translateWithGoogleTranslate(string $text, HttpClientInterface $httpClient): string
+#[Route('/translate-event', name: 'translate_event', methods: ['POST'])]
+public function translateEvent(Request $request, TranslatorInterface $translator): JsonResponse
 {
-    // Appel à l'API Google Translate pour obtenir la traduction en anglais
-    $response = $httpClient->request('GET', 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=' . urlencode($text));
+    // Récupérer le nom de l'événement à traduire depuis la requête AJAX
+    $eventName = $request->request->get('eventName');
 
-    // Vérifier si la requête a réussi et si la réponse est valide
-    if ($response->getStatusCode() === 200) {
-        $content = $response->getContent();
-        $translatedText = json_decode($content, true)[0][0][0] ?? '';
+    // Traduire le nom de l'événement vers l'anglais
+    $translatedName = $translator->trans($eventName, [], 'messages', 'en');
 
-        return $translatedText;
-    } else {
-        // En cas d'erreur de requête ou de réponse invalide, retourner une chaîne vide
+    // Retourner la réponse JSON avec le contenu traduit
+    return new JsonResponse(['translatedContent' => $translatedName]);
+}
+
+private function translateWithGoogleTranslate(string $text, HttpClientInterface $httpClient): string
+{
+    try {
+        // Appel à l'API Google Translate pour obtenir la traduction en anglais
+        $response = $httpClient->request('GET', 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl=en&dt=t&q=' . urlencode($text));
+
+        // Vérifier si la requête a réussi et si la réponse est valide
+        if ($response->getStatusCode() === 200) {
+            $content = $response->getContent();
+            $translatedText = json_decode($content, true)[0][0][0] ?? '';
+            return $translatedText;
+        } else {
+            // En cas de réponse invalide, retourner une chaîne vide
+            return '';
+        }
+    } catch (TransportExceptionInterface $e) {
+        // En cas d'erreur de transport (par exemple, problème de connexion), retourner une chaîne vide
         return '';
     }
 }
+
 
 
 

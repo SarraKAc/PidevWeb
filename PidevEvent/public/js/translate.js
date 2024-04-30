@@ -1,15 +1,29 @@
-function translateEvent(nom, description) {
-    // Envoie d'une requête AJAX au serveur pour traduire le nom et la description de l'événement
+// // translate.js
+
+// function translateEvent(eventName) {
+//     // Envoie d'une requête AJAX au serveur pour traduire l'événement
+//     $.ajax({
+//         url: '/translate-event', // Endpoint Symfony pour la traduction
+//         method: 'POST',
+//         data: { eventName: eventName },
+//         success: function(response) {
+//             alert("Traduction : " + response.translatedContent); // Afficher la traduction
+//         },
+//         error: function(xhr, status, error) {
+//             console.error('Erreur lors de la traduction de l\'événement : ' + error);
+//         }
+//     });
+// }
+
+// Fonction pour traduire le nom de l'événement
+function translateEvent(eventName) {
+    // Envoie d'une requête AJAX au serveur pour traduire l'événement
     $.ajax({
         url: '/translate-event', // Endpoint Symfony pour la traduction
         method: 'POST',
-        data: {
-            eventName: nom,
-            eventDescription: description // Inclure la description dans les données de la requête
-        },
+        data: { eventName: eventName },
         success: function(response) {
-            alert("Traduction du nom : " + response.translatedName);
-            alert("Traduction de la description : " + response.translatedDescription); // Afficher la traduction de la description dans une alerte
+            alert("Traduction : " + response.translatedContent); // Afficher la traduction
         },
         error: function(xhr, status, error) {
             console.error('Erreur lors de la traduction de l\'événement : ' + error);

@@ -248,11 +248,9 @@
     </div>
 </section>
 
-
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  
     <script src="{{ asset('front-office/assets/js/translate.js') }}"></script>
 {% endblock %}
 
@@ -295,24 +293,31 @@
 </div>
 {% endfor %}
  
-{# <script>
+ {# <script>
     // Fonction pour traduire le nom de l'événement
     function translate(nom) {
         // Appeler ici la fonction de traduction avec le nom de l'événement
         alert("Traduction de : " + nom); // Remplacez cette alerte par l'appel à votre fonction de traduction
     }
-</script>  #}
+</script>   #}
 
- <script>
-        // Fonction pour traduire le nom de l'événement
-        function translate(nom) {
-            // Appeler ici la fonction de traduction avec le nom de l'événement
-            // Remplacez cette alerte par l'appel à votre fonction de traduction
-            // Votre fonction de traduction doit être définie dans translate.js
-            // Par exemple : translateEvent(nom);
-            alert("Traduction de : " + nom);
-        }
-    </script>
+<script>
+    // Fonction pour traduire le nom de l'événement
+    function translateEvent(eventName) {
+        // Envoie d'une requête AJAX au serveur pour traduire l'événement
+        $.ajax({
+            url: '/translate-event', // Endpoint Symfony pour la traduction
+            method: 'POST',
+            data: { eventName: eventName },
+            success: function(response) {
+                alert("Traduction de : " + response.translatedContent); // Afficher la traduction
+            },
+            error: function(xhr, status, error) {
+                console.error('Erreur lors de la traduction de l\'événement : ' + error);
+            }
+        });
+    }
+</script>
 
 
 
