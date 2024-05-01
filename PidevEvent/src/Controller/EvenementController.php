@@ -18,6 +18,13 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use ReCaptcha\ReCaptcha;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use HCaptcha\HCaptcha;
+
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 
 
 
@@ -46,7 +53,46 @@ class EvenementController extends AbstractController
 
   
 /***********Ajout avec controle de saise sur la date****//////
-   #[Route('/ghofrane/student-element', name: 'app_student_element')]
+//    #[Route('/ghofrane/student-element', name: 'app_student_element')]
+// public function studentelement(Request $request, EntityManagerInterface $entityManager): Response
+// {
+//     // Création d'une nouvelle instance d'événement
+//     $evenement = new Evenement();
+//     $form = $this->createForm(EvenementType::class, $evenement);
+
+//     // Récupérer la date actuelle
+//     $currentDate = new \DateTime();
+
+//     // Appliquer la date minimale au champ de formulaire "date"
+//     $form->get('date')->getConfig()->getOptions()['attr']['min'] = $currentDate->format('Y-m-d');
+
+//     $form->handleRequest($request);
+
+//     // Vérification de la soumission du formulaire et de la validité des données
+//     if ($form->isSubmitted() && $form->isValid()) {
+       
+//         // Persistance de l'événement en base de données
+//         $entityManager->persist($evenement);
+//         $entityManager->flush();
+
+//         // Redirection vers la page d'accueil des événements après la création
+//         return $this->redirectToRoute('app_student_element');
+//     }
+
+//     // Rendu du formulaire avec la date minimale définie
+//     return $this->render('student/student-element.html.twig', [
+//         'form' => $form->createView(),
+//         'current_date' => $currentDate, // Passer la date actuelle au modèle Twig
+//     ]);
+// }
+
+
+
+
+
+
+
+#[Route('/ghofrane/student-element', name: 'app_student_element')]
 public function studentelement(Request $request, EntityManagerInterface $entityManager): Response
 {
     // Création d'une nouvelle instance d'événement
@@ -63,7 +109,14 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 
     // Vérification de la soumission du formulaire et de la validité des données
     if ($form->isSubmitted() && $form->isValid()) {
-       
+        // Vérifier si le captcha a été rempli
+        $captchaResponse = $request->request->get('h-captcha-response');
+        if (!$captchaResponse) {
+            // Redirection avec un message d'erreur si le captcha n'a pas été rempli
+            $this->addFlash('error', 'Veuillez cocher le captcha.');
+            return $this->redirectToRoute('app_student_element');
+        }
+
         // Persistance de l'événement en base de données
         $entityManager->persist($evenement);
         $entityManager->flush();
@@ -80,6 +133,7 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 }
 
 
+
 /********************Afficher Evenement ***************** */
    
 
@@ -88,14 +142,33 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 //     {
 //     // Récupérer tous les événements depuis la base de données
 //     $evenements = $evenementRepository->findAll();
+//     $statistiques = [];
+//         foreach ($evenements as $evenement) {
+//             $categorie = $evenement->getCategorie();
+//             if (!isset($statistiques[$categorie])) {
+//                 $statistiques[$categorie] = 0;
+//             }
+//             $statistiques[$categorie]++;
+//         }
+    
 
 //     // Passer les événements au template Twig pour affichage
 //     return $this->render('student/add-student.html.twig', [
 //         'evenements' => $evenements,
+//         'statistiques' => $statistiques,
 //     ]);
 // }
 
-
+// #[Route('/ghofrane/add-student', name: 'app_add_student')]
+// public function addStudent(EvenementRepository $evenementRepository): Response
+// {
+// // Récupérer tous les événements depuis la base de données
+// $evenements = $evenementRepository->findAll();
+// // Passer les événements au template Twig pour affichage
+// return $this->render('student/add-student.html.twig', [
+//     'evenements' => $evenements,
+// ]);
+// }
 
 
 #[Route('/ghofrane/add-student', name: 'app_add_student')]
@@ -145,6 +218,10 @@ public function addStudentPage(EvenementRepository $evenementRepository): Respon
 }*/
 
 /*****************supprimer Evenement***********************/
+
+
+
+
 #[Route('/evenement/{id}', name: 'app_evenement_delete', methods: ['DELETE'])]
 public function delete(EvenementRepository $evenementRepository, EntityManagerInterface $entityManager, $id): Response
 {
@@ -158,6 +235,19 @@ public function delete(EvenementRepository $evenementRepository, EntityManagerIn
 
     return new Response('L\'événement a été supprimé avec succès.', Response::HTTP_OK);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 /***********recherche****************/
 #[Route('/evenement/search', name: 'app_evenement_rechercher', methods: ['POST'])]
 public function search(Request $request, EvenementRepository $evenementRepository): JsonResponse

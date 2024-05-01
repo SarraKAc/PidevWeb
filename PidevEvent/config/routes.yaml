@@ -30,3 +30,5 @@ app_evenement_statistiques:
     path: /evenement/statistiques
     controller: 'App\Controller\EvenementController::statistiques'
     methods: ['GET']
+# config/routes.yaml
+

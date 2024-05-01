@@ -494,7 +494,7 @@
 
 
 
- <!-- Begin Page Content -->
+{# <!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="my-4">
@@ -505,14 +505,97 @@
                 {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
             </div>
 
-            <!-- Intégration du champ de captcha -->
-           <!-- Intégration du champ de hCaptcha -->
-<div class="form-group">
-    <label for="h-captcha">hCaptcha</label>
-    <div class="h-captcha" data-sitekey="c6390b2a-0758-43ab-9b0a-eb71a36c2348"></div>
+            <!-- Intégration du champ de hCaptcha -->
+            <div class="form-group">
+                <label for="h-captcha">hCaptcha</label>
+                <div class="h-captcha" data-sitekey="c6390b2a-0758-43ab-9b0a-eb71a36c2348"></div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.description, 'Description') }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.categorie, 'Catégorie') }}
+                {{ form_widget(form.categorie, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                {{ form_widget(form.date, {'attr': {'class': 'form-control', 'type': 'date', 'autocomplete': 'off'}}) }}
+                {{ form_errors(form.date) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.prix, 'Prix') }}
+                {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Image</span>
+                    <div class="relative flex items-center">
+                        <button
+                            type="button"
+                            class="px-4 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-l-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            onclick="document.getElementById('fileInput').click();"
+                        >
+                            Import
+                        </button>
+                        {{ form_widget(form.CheminImage, {'id': 'fileNameInput', 'attr': {'class': 'w-full pl-2 py-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input'}}) }}
+                        <input
+                            type="file"
+                            id="fileInput"
+                            class="hidden"
+                            onchange="updateFileName(event)"
+                        />
+                        <script>
+                            function updateFileName(event) {
+                                const input = document.getElementById('fileNameInput');
+                                input.value = event.target.files[0].name;
+                                input.placeholder = '';
+                            }
+                        </script>
+                    </div>
+                    <span id="imageError" class="text-xs text-red-600 dark:text-red-400"></span>
+                </label>
+            </div>
+            <!-- Bouton de soumission -->
+            <button type="submit" class="btn btn-primary" onclick="return validateCaptcha()">AJOUTER</button>
+            {{ form_end(form) }}
+        </form>
+    </div>
 </div>
 
+<!-- Script pour valider le captcha avant la soumission du formulaire -->
+<script>
+    function validateCaptcha() {
+        var captchaResponse = document.querySelector('.h-captcha-response').value;
+        if (!captchaResponse) {
+            alert("Veuillez cocher le captcha.");
+            return false;
+        }
+        return true;
+    }
+</script> #}
 
+
+
+
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="my-4">
+        <form action="{{ path('app_student_element') }}" method="post" style="width: 100%; max-width: 20cm;" onsubmit="return validateCaptcha()">
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_label(form.nom, 'Nom') }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+            <!-- Intégration du champ de hCaptcha -->
+            <div class="form-group">
+                <label for="h-captcha">hCaptcha</label>
+                <div class="h-captcha" data-sitekey="c6390b2a-0758-43ab-9b0a-eb71a36c2348"></div>
+            </div>
 
             <div class="form-group">
                 {{ form_label(form.description, 'Description') }}
@@ -565,13 +648,19 @@
             {{ form_end(form) }}
         </form>
     </div>
-</div> 
+</div>
 
-
-
-
-
-
+<!-- Script pour valider le captcha avant la soumission du formulaire -->
+<script>
+    function validateCaptcha() {
+        var captchaResponse = document.querySelector('.h-captcha-response').value;
+        if (!captchaResponse) {
+            alert("Veuillez cocher le captcha.");
+            return false;
+        }
+        return true;
+    }
+</script>
 
 
 
