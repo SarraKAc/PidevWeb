@@ -1,0 +1,15 @@
+{# templates/topic/sorted_by_comments.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Topics triés par nombre de commentaires{% endblock %}
+
+{% block body %}
+    <h1>Topics triés par nombre de commentaires</h1>
+    <ul>
+        {% for topic in topics %}
+            <li>{{ topic.title }} - Nombre de commentaires : {{ topic.commentsCount }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{{ path('app_topic_index') }}" class="btn btn-primary">Retour à la liste des topics</a>
+{% endblock %}
