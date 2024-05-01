@@ -80,36 +80,44 @@ public function studentelement(Request $request, EntityManagerInterface $entityM
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /********************Afficher Evenement ***************** */
    
 
-    #[Route('/ghofrane/add-student', name: 'app_add_student')]
-    public function addStudent(EvenementRepository $evenementRepository): Response
-    {
+//     #[Route('/ghofrane/add-student', name: 'app_add_student')]
+//     public function addStudent(EvenementRepository $evenementRepository): Response
+//     {
+//     // Récupérer tous les événements depuis la base de données
+//     $evenements = $evenementRepository->findAll();
+
+//     // Passer les événements au template Twig pour affichage
+//     return $this->render('student/add-student.html.twig', [
+//         'evenements' => $evenements,
+//     ]);
+// }
+
+
+
+
+#[Route('/ghofrane/add-student', name: 'app_add_student')]
+public function addStudent(EvenementRepository $evenementRepository): Response
+{
     // Récupérer tous les événements depuis la base de données
     $evenements = $evenementRepository->findAll();
+    
+    // Calcul des statistiques à partir des événements
+    $statistiques = [];
+    foreach ($evenements as $evenement) {
+        $categorie = $evenement->getCategorie();
+        if (!isset($statistiques[$categorie])) {
+            $statistiques[$categorie] = 0;
+        }
+        $statistiques[$categorie]++;
+    }
 
-    // Passer les événements au template Twig pour affichage
+    // Passer les événements et les statistiques au template Twig pour affichage
     return $this->render('student/add-student.html.twig', [
         'evenements' => $evenements,
+        'statistiques' => $statistiques,
     ]);
 }
 
@@ -317,6 +325,60 @@ private function translateWithGoogleTranslate(string $text, HttpClientInterface 
         return '';
     }
 }
+
+
+
+
+
+
+
+
+
+
+// #[Route('/evenement/statistiques', name: 'app_evenement_statistiques', methods: ['GET'])]
+// public function statistiques(EvenementRepository $evenementRepository): Response
+// {
+//     $statistiques = $evenementRepository->getStatistiques();
+
+//     return $this->render('student/add-student.html.twig', [
+//         'evenements' => $evenements,
+//         'statistiques' => $statistiques, // Assurez-vous que cette ligne est présente
+//     ]);
+// }
+
+// #[Route('/evenement/statistiques', name: 'app_evenement_statistiques', methods: ['GET'])]
+// public function statistiques(EvenementRepository $evenementRepository): Response
+// {
+//     $evenements = $evenementRepository->findAll();
+    
+//     // Calcul des statistiques à partir des événements
+//     $statistiques = [];
+//     foreach ($evenements as $evenement) {
+//         $categorie = $evenement->getCategorie();
+//         if (!isset($statistiques[$categorie])) {
+//             $statistiques[$categorie] = 0;
+//         }
+//         $statistiques[$categorie]++;
+//     }
+
+//     return $this->render('student/add-student.html.twig', [
+//         'statistiques' => json_encode($statistiques), // Convertit les statistiques en JSON
+//     ]);
+// }
+
+// Dans votre contrôleur Symfony
+#[Route('/evenement/statistiques', name: 'app_evenement_statistiques', methods: ['GET'])]
+// Controller
+public function statistiques(EvenementRepository $evenementRepository): Response
+{
+    // Récupérer les statistiques des catégories des événements
+    $statistiques = $evenementRepository->getStatistiques(); // Assurez-vous d'implémenter cette méthode dans votre repository
+
+    return $this->render('student/add-student.html.twig', [
+        'statistiques' => $statistiques,
+    ]);
+}
+
 
 
 

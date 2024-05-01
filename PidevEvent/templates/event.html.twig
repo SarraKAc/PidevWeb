@@ -254,7 +254,7 @@
     <script src="{{ asset('front-office/assets/js/translate.js') }}"></script>
 {% endblock %}
 
-
+{# 
 <!-- Reservation Modal -->
 {% for event in events %}
 <div class="modal fade" id="reservationModal{{ event.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ event.id }}" aria-hidden="true">
@@ -291,7 +291,96 @@
         </div>
     </div>
 </div>
+{% endfor %} #}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Reservation Modal -->
+{% for event in events %}
+<div class="modal fade" id="reservationModal{{ event.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ event.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reservationModalLabel{{ event.id }}">Ajouter une réservation pour {{ event.getNom() }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Reservation form -->
+                <form action="{{ path('reservation_new') }}" method="post">
+                    <!-- Hidden input for event ID -->
+                    <input type="hidden" name="id_evenement" value="{{ event.id }}">
+                    <!-- Name field -->
+                    <div class="mb-3">
+                        <label for="inputNom{{ event.id }}">Nom</label>
+                        <input type="text" class="form-control" id="inputNom{{ event.id }}" name="nom">
+                    </div>
+                    <!-- Number of people field -->
+                    <div class="mb-3">
+                        <label for="inputNombre{{ event.id }}">Nombre de personnes</label>
+                        <input type="number" class="form-control" id="inputNombre{{ event.id }}" name="nbr_personne">
+                    </div>
+                    <!-- Email field -->
+                    <div class="mb-3">
+                        <label for="inputEmail{{ event.id }}">E-mail</label>
+                        <input type="email" class="form-control" id="inputEmail{{ event.id }}" name="email">
+                    </div>
+                    <!-- QR code image -->
+                    <div class="mb-3">
+                        <img src="{{ asset('images/reservation_qr_code.png') }}" alt="QR Code" class="img-fluid">
+                    </div>
+                    <!-- Submission button -->
+                    <button type="submit" class="btn btn-primary">Confirmer la réservation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  {# <script>
     // Fonction pour traduire le nom de l'événement

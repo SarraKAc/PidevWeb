@@ -9,6 +9,7 @@
     "build": "encore production"
   },
   "dependencies": {
+    "chart.js": "^4.4.2",
     "jquery": "^3.7.1"
   },
   "devDependencies": {

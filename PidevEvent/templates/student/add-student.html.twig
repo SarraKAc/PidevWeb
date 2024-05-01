@@ -482,82 +482,43 @@
 
 
 
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>description</th>
+            <th>categorie</th>
+            <th>date</th>
+            <th>prix</th>
+            <th>CheminImage</th>
+            <!-- Ajoutez la colonne pour le bouton de suppression -->
+            <th>Action</th>
+        </tr>
+    </thead>
 
-                             
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom</th>
-                                            <th>description</th>
-                                            <th>categorie</th>
-                                            <th>date</th>
-                                            <th>prix</th>
-                                            <th>CheminImage</th>
-                                             <!-- Ajoutez la colonne pour le bouton de suppression -->
-                                             <th>Action</th>
-                                        </tr>
-                                    </thead>
-
-
-                                    <tbody>
-    {% for evenement in evenements %}
-    <tr id="evenement-{{ evenement.id }}">
-        <td>{{ evenement.nom }}</td>
-        <td>{{ evenement.description }}</td>
-        <td>{{ evenement.categorie }}</td>
-        <td>{{ evenement.date|date('Y-m-d') }}</td>
-        <td>{{ evenement.prix }}</td>
-        <td>{{ evenement.cheminImage }}</td>
-        <td><img src="{{ evenement.cheminImage }}" alt="Image de l'événement" style="max-width: 1000px;"></td>
-        <td>
-           <button class="btn btn-danger btn-sm delete-event-btn" data-event-id="{{ evenement.id }}">Supprimer</button>
-          <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}" class="btn btn-primary">Modifier</a>
-          
-
-
-        
-        
-
-<!-- Modal de réservation pour cet événement -->
-<div class="modal fade" id="reservationModal{{ evenement.id }}" tabindex="-1" aria-labelledby="reservationModalLabel{{ evenement.id }}" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reservationModalLabel{{ evenement.id }}">Réserver cet événement</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulaire de réservation -->
-                <form>
-                    <div class="mb-3">
-                        <label for="nom">Nom</label>
-                        <input type="text" class="form-control" id="nom">
-                    </div>
-                    <div class="mb-3">
-                        <label for="nbrPersonnes">Nombre de personnes</label>
-                        <input type="number" class="form-control" id="nbrPersonnes">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-          
-        </td>
-    </tr>{% endfor %}
-   
-<!-- Modal -->
-
-    
-</tbody></table>
-
+    <tbody>
+        {% for evenement in evenements %}
+        <tr id="evenement-{{ evenement.id }}">
+            <td>{{ evenement.nom }}</td>
+            <td>{{ evenement.description }}</td>
+            <td>{{ evenement.categorie }}</td>
+            <td>{{ evenement.date|date('Y-m-d') }}</td>
+            <td>{{ evenement.prix }}</td>
+            <td>{{ evenement.cheminImage }}</td>
+            <td><img src="{{ evenement.cheminImage }}" alt="Image de l'événement" style="max-width: 1000px;"></td>
+            <td>
+                <button class="btn btn-danger btn-sm delete-event-btn" data-event-id="{{ evenement.id }}">Supprimer</button>
+                <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}" class="btn btn-primary">Modifier</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
+<!-- Ajoutez un canvas pour le graphique -->
+<canvas id="myChart" width="400" height="400"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#searchInput').on('keyup', function() {
@@ -572,8 +533,58 @@
             });
         });
     });
-</script>
 
+<!-- Ajoutez un canvas pour le graphique -->
+{# <canvas id="myChart" width="400" height="400"></canvas> #}
+<canvas id="myChart" width="300" height="300"></canvas>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script>
+    // Récupérer les statistiques depuis le modèle Twig
+    var statistiques = {{ statistiques|json_encode|raw }};
+    
+    // Extraire les catégories et les nombres d'événements
+    var categories = Object.keys(statistiques);
+    var nbEvenements = Object.values(statistiques);
+
+    // Dessiner le graphique
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: categories,
+            datasets: [{
+                label: 'Nombre d\'événements par catégorie',
+                data: nbEvenements,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 
 

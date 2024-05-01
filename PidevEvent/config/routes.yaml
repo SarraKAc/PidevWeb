@@ -21,3 +21,12 @@ translate_event:
     path: /translate-event # Assurez-vous que cette clé est unique
     controller: 'App\Controller\EvenementController::translateEvent'
     methods: ['POST']
+# config/routes.yaml
+reservation_new:
+    path: /reserver/event/reservations/new
+    controller: App\Controller\ReserverEventController::create
+    methods: ['GET', 'POST']
+app_evenement_statistiques:
+    path: /evenement/statistiques
+    controller: 'App\Controller\EvenementController::statistiques'
+    methods: ['GET']

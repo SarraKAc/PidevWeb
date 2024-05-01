@@ -65,4 +65,39 @@ public function findByPrice(): array
         ->getResult();
 }
 
+public function countEventsByCategory($category): int
+{
+    return $this->createQueryBuilder('e')
+        ->select('COUNT(e)')
+        ->where('e.categorie = :category')
+        ->setParameter('category', $category)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+// Nouvelle méthode pour compter le nombre d'événements par catégorie
+public function countCategorie($category): int
+{
+    return $this->createQueryBuilder('e')
+        ->select('COUNT(e)')
+        ->where('e.categorie = :category')
+        ->setParameter('category', $category)
+        ->getQuery()
+        ->getSingleScalarResult();
+}
+
+
+
+
+
+public function getStatistiques()
+{
+    return $this->createQueryBuilder('e')
+        ->select('e.categorie, COUNT(e.id) AS nbEvenements')
+        ->groupBy('e.categorie')
+        ->getQuery()
+        ->getResult();
+}
+
+
 }
