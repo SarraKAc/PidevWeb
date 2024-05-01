@@ -2,88 +2,55 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentaireRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: CommentaireRepository::class)]
+/**
+ * Commentaire
+ *
+ * @ORM\Table(name="commentaire", indexes={@ORM\Index(name="fki", columns={"id_topic"})})
+ * @ORM\Entity
+ */
 class Commentaire
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id_com = null;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_com", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idCom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text", type="text", length=65535, nullable=false)
+     */
+    private $text;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id_user", type="integer", nullable=false)
+     */
+    private $idUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_com", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $dateCom = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \Topic
+     *
+     * @ORM\ManyToOne(targetEntity="Topic")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_topic", referencedColumnName="id_topic")
+     * })
+     */
+    private $idTopic;
 
 
-    #[Assert\Length(
-        max: 40,
-        maxMessage: "La longueur maximale doit être de {{ limit }} caractères"
-    )]
-    #[ORM\Column(length: 255)]
-    private ?string $text = null;
-
-    #[ORM\Column]
-    private ?int $id_user = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_com = null;
-
-    #[ORM\ManyToOne(inversedBy: 'commentaires')]
-    #[ORM\JoinColumn(name: "id_topic", referencedColumnName: "id_topic", nullable: false)]
-    private ?Topic $id_topic = null;
-
-
-    public function getIdCom(): ?int
-    {
-        return $this->id_com;
-    }
-
-    public function getText(): ?string
-    {
-        return $this->text;
-    }
-
-    public function setText(string $text): static
-    {
-        $this->text = $text;
-
-        return $this;
-    }
-
-    public function getIdUser(): ?int
-    {
-        return $this->id_user;
-    }
-
-    public function setIdUser(int $id_user): static
-    {
-        $this->id_user = $id_user;
-
-        return $this;
-    }
-
-    public function getDateCom(): ?\DateTimeInterface
-    {
-        return $this->date_com;
-    }
-
-    public function setDateCom(\DateTimeInterface $date_com): static
-    {
-        $this->date_com = $date_com;
-
-        return $this;
-    }
-
-    public function getIdTopic(): ?Topic
-    {
-        return $this->id_topic;
-    }
-
-    public function setIdTopic(?Topic $id_topic): static
-    {
-        $this->id_topic = $id_topic;
-
-        return $this;
-    }
 }
