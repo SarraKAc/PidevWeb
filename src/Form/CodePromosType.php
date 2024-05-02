@@ -13,9 +13,8 @@ class CodePromosType extends AbstractType
     {
         $builder
             ->add('dateExpiration')
-            ->add('active')
-            ->add('value')
-            ->add('id_cp')
+            ->add('utilisateurs.id')
+            ->add('code')
         ;
     }
 

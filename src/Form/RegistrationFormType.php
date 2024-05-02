@@ -6,9 +6,11 @@ use App\Entity\Utilisateurs;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -28,6 +30,11 @@ class RegistrationFormType extends AbstractType
                 ],
                 'placeholder' => 'Choose your gender', // Optional placeholder
                 'label' => 'Gender', // Optional label
+            ])
+            ->add('birthDay',DateType::class,[
+            'widget' => 'single_text',
+                // Optional HTML attributes
+                'attr' => ['class' => 'datepicker'],
             ])
             ->add('email')
             ->add('profession')

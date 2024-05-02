@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CodePromos;
-use App\Form\CodePromosType;
+use App\Form\CodePromos1Type;
 use App\Repository\CodePromosRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ class CodePromosController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $codePromo = new CodePromos();
-        $form = $this->createForm(CodePromosType::class, $codePromo);
+        $form = $this->createForm(CodePromos1Type::class, $codePromo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ class CodePromosController extends AbstractController
     #[Route('/{id}/edit', name: 'app_code_promos_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, CodePromos $codePromo, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CodePromosType::class, $codePromo);
+        $form = $this->createForm(CodePromos1Type::class, $codePromo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

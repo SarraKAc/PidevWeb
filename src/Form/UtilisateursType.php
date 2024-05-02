@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Utilisateurs;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,6 +26,11 @@ class UtilisateursType extends AbstractType
                 ],
                 'placeholder' => 'Choose your gender', // Optional placeholder
                 'label' => 'Gender', // Optional label
+            ])
+            ->add('birthDay',DateType::class,[
+                'widget' => 'single_text',
+                // Optional HTML attributes
+                'attr' => ['class' => 'datepicker'],
             ])
             ->add('email')
             ->add('profession')

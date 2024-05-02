@@ -39,6 +39,24 @@ class UtilisateursRepository extends ServiceEntityRepository implements Password
         $this->getEntityManager()->flush();
     }
 
+    public function findByBirthDay(\DateTimeInterface $date): array
+    {
+        $month = $date->format('m');
+        $day = $date->format('d');
+
+        $results = $this->createQueryBuilder('u')
+            ->getQuery()
+            ->getResult();
+
+        // Filter results based on day and month
+        $filteredResults = array_filter($results, function($user) use ($month, $day) {
+            $userMonth = $user->getBirthDay()->format('m');
+            $userDay = $user->getBirthDay()->format('d');
+            return $userMonth == $month && $userDay == $day;
+        });
+
+        return $filteredResults;
+    }
 //    /**
 //     * @return Utilisateurs[] Returns an array of Utilisateurs objects
 //     */

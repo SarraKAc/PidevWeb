@@ -3,6 +3,34 @@
 {% block title %}Utilisateurs index{% endblock %}
 
 {% block body %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById('searchInput');
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+
+                tableRows.forEach(function (row) {
+                    const cells = row.querySelectorAll('td');
+                    let matchFound = false;
+
+                    cells.forEach(function (cell) {
+                        const cellText = cell.textContent.trim().toLowerCase();
+                        if (cellText.includes(searchTerm)) {
+                            matchFound = true;
+                        }
+                    });
+
+                    if (matchFound) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
     <h1>Listes Utilisateurs</h1>
 
     <table class="table table-bordered">
@@ -35,7 +63,7 @@
                 <td>{{ utilisateur.solde }}</td>
                 <td>{{ utilisateur.enLigne ? 'Online' : 'Offline' }}</td>
                 <td>
-                    <a href="{{ path('app_utilisateurs_show', {'id': utilisateur.id}) }}">show</a>
+                    <a href="{{ path('app_utilisateurs_showmyprofile', {'id': utilisateur.id}) }}">show</a>
                     <br>
                     {{ include('utilisateurs/edit_role.html.twig') }}
                     <br>

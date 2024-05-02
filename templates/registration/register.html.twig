@@ -31,6 +31,13 @@
                 <div class="error-message">{{ error.message }}</div>
             {% endfor %}
         </div>
+        <!--Is this one down here ok knowing that you have my form-->
+        <div class="form-group">
+            {{ form_row(registrationForm.birthDay) }}
+            {% for error in registrationForm.birthDay.vars.errors %}
+                <div class="error-message">{{ error.message }}</div>
+            {% endfor %}
+        </div>
         <div class="form-group">
             {{ form_row(registrationForm.email) }}
             {% for error in registrationForm.email.vars.errors %}

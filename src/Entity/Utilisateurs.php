@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UtilisateursRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -64,6 +65,10 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
+
+    #[Assert\NotNull]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $birthDay = null;
 
     public function __construct()
     {
@@ -274,4 +279,17 @@ class Utilisateurs implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getBirthDay(): ?\DateTimeInterface
+    {
+        return $this->birthDay;
+    }
+
+    public function setBirthDay(?\DateTimeInterface $birthDay): static
+    {
+        $this->birthDay = $birthDay;
+
+        return $this;
+    }
+
 }

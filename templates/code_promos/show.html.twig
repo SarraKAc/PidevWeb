@@ -1,4 +1,4 @@
-{% extends 'Admin.html.twig' %}
+{% extends 'TableUtilisateurs.html.twig' %}
 
 {% block title %}CodePromos{% endblock %}
 
@@ -16,12 +16,8 @@
                 <td>{{ code_promo.dateExpiration ? code_promo.dateExpiration|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Active</th>
-                <td>{{ code_promo.active ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Value</th>
-                <td>{{ code_promo.value }}</td>
+                <th>Code</th>
+                <td>{{ code_promo.code }}</td>
             </tr>
         </tbody>
     </table>
