@@ -10,6 +10,7 @@ use App\Form\AvisType;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,12 +38,18 @@ class PreviewController extends AbstractController
         ]);
     }
     #[Route('/services', name: 'app_services')]
-    public function services(): Response
+    public function services(PaginatorInterface $paginator, Request $request): Response
     {
         // Récupérer les données des événements depuis la base de données
-        $services = $this->getDoctrine()->getRepository(Service::class)->findAll();
+        $servicesQuery = $this->getDoctrine()->getRepository(Service::class)->findAll();
         $avi = $this->getDoctrine()->getRepository(Avis::class)->findAll();
         // Rendre le template Twig en passant les données des services
+        // Paginer les résultats
+        $services = $paginator->paginate(
+            $servicesQuery, // Requête à paginer
+            $request->query->getInt('page', 1), // Numéro de page par défaut
+            6 // Nombre d'éléments par page
+        );
         return $this->render('service.html.twig', [
             'services' => $services,'aviss'=>$avi,
         ]);
