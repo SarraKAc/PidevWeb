@@ -434,41 +434,6 @@
                     <!-- Élément canvas pour afficher le graphique -->
                     <canvas id="myPieChart" width="400" height="400"></canvas>
 
-                    <script>
-                        // Définition de la fonction pour créer un Donut Chart
-                        function createDonutChart(labels, data) {
-                            // Données pour le Donut Chart
-                            var donutChartData = {
-                                labels: labels,
-                                datasets: [{
-                                    data: data,
-                                    backgroundColor: ['#e74a3b', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', '#ff5733'],
-                                }]
-                            };
-
-                            // Configuration du Donut Chart
-                            var donutChartOptions = {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                            };
-
-                            // Sélection de l'élément canvas
-                            var ctx = document.getElementById('myPieChart').getContext('2d');
-
-                            // Création du Donut Chart
-                            var myDonutChart = new Chart(ctx, {
-                                type: 'doughnut',
-                                data: donutChartData,
-                                options: donutChartOptions
-                            });
-                        }
-
-                        // Exemple d'utilisation de la fonction avec des données prédéfinies
-                        var labels = ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'];
-                        var data = [10, 20, 30, 40, 50];
-                        createDonutChart(labels, data);
-                    </script>
-
                 </div>
 
             </div>
