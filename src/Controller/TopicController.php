@@ -11,15 +11,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/topic')]
 class TopicController extends AbstractController
 {
-    #[Route('/', name: 'app_topic_index', methods: ['GET'])]
-    public function index(TopicRepository $topicRepository): Response
+
+
+    #[Route('/sorted', name: 'app_topic_sorted_by_comments', methods: ['GET'])]
+    public function sorted(TopicRepository $topicRepository): Response
     {
+        $topics = $topicRepository->findTopicsSortedByCommentCount();
+
+        return $this->render('topic/sorted_by_comments.html.twig', [
+            'topics' => $topics,
+        ]);
+    }
+    #[Route('/', name: 'app_topic_index', methods: ['GET'])]
+    public function index(TopicRepository $topicRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $queryBuilder = $topicRepository->createQueryBuilder('t');
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1), /* numéro de la page*/
+            6 /* limite par page */
+        );
+
         return $this->render('topic/index.html.twig', [
-            'topics' => $topicRepository->findAll(),
+            'pagination' => $pagination
         ]);
     }
 
@@ -87,6 +107,10 @@ $topic->setIdUser(12);
 
         return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
     }
-    
+
+
+
+
+
 
 }

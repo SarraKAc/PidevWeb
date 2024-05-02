@@ -20,6 +20,21 @@ class TopicRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Topic::class);
     }
+    // TopicRepository.php
+
+    // TopicRepository.php
+
+    public function findTopicsSortedByCommentCount()
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.commentaires', 'c')
+            ->groupBy('t.id_topic')
+            ->orderBy('COUNT(c.id_com)', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 
 //    /**

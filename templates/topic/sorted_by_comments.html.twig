@@ -1,15 +1,36 @@
-{# templates/topic/sorted_by_comments.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Topics triés par nombre de commentaires{% endblock %}
 
 {% block body %}
-    <h1>Topics triés par nombre de commentaires</h1>
-    <ul>
-        {% for topic in topics %}
-            <li>{{ topic.title }} - Nombre de commentaires : {{ topic.commentsCount }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{{ path('app_topic_index') }}" class="btn btn-primary">Retour à la liste des topics</a>
+    <div class="page-title aos-init aos-animate" data-aos="fade">
+        <div class="heading">
+            <div class="container">
+                <div class="row d-flex justify-content-center text-center">
+                    <div class="col-lg-8">
+                        <h1>Topics les PLUS TRENDY</h1>
+                        <p class="mb-0">Liste des topics triés selon le nombre de commentaires associés.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="courses-list" class="section courses-list">
+        <div class="container">
+            <div class="row">
+                {% for topic in topics %}
+                    <div class="col-lg-4 col-md-6 d-flex align-items-stretch aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="course-item">
+                            <img src="{{ asset('uploads/images/'~ topic.image) }}" class="img-fluid" alt="">
+                            <div class="course-content">
+                                <h3><a href="{{ path('app_topic_show', {'id_topic': topic.id_topic}) }}">{{ topic.titreTopic }}</a></h3>
+                                <p class="description">{{ topic.contenu }}</p>
+                            </div>
+                        </div>
+                    </div> <!-- End Course Item-->
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
