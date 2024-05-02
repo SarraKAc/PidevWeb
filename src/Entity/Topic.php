@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -58,6 +59,71 @@ class Topic
      * })
      */
     private $idUser;
+
+    public function getIdTopic(): ?int
+    {
+        return $this->idTopic;
+    }
+
+    public function getTitreTopic(): ?string
+    {
+        return $this->titreTopic;
+    }
+
+    public function setTitreTopic(string $titreTopic): static
+    {
+        $this->titreTopic = $titreTopic;
+
+        return $this;
+    }
+
+    public function getContenu(): ?string
+    {
+        return $this->contenu;
+    }
+
+    public function setContenu(string $contenu): static
+    {
+        $this->contenu = $contenu;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?Utilisateur
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?Utilisateur $idUser): static
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
 
 
 }
