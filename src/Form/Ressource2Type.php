@@ -22,7 +22,7 @@ class Ressource2Type extends AbstractType
             ->add('img', FileType::class, [
                 'label' => 'Image (JPEG, PNG, GIF)',
                 'mapped' => false,
-                'required' => false, // Allow the field to be empty
+                'required' => false,
             ])
             ->add('filepath')
             ->add('utilisateur')
