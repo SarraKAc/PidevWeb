@@ -204,6 +204,4 @@ class Ressource
         return $this;
     }
 
-
-
 }
