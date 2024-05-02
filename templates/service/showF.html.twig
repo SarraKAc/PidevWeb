@@ -1,0 +1,55 @@
+<div class="container">
+    <div>
+        <div style="text-align: center;">
+            <h1 style="color: #007bff; font-weight: bold;">Détail Service</h1>
+        </div>
+
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <td colspan="2"><img src="{{ asset('images/' ~ service.img) }}" alt="Image" style="max-width: 500px;"></td>
+            </tr>
+
+            <tr>
+                <th style="color: #007bff; text-align: left;">Nom du service :</th>
+                <td style="font-weight: bold;">{{ service.nomService }}</td>
+            </tr>
+            <tr>
+                <th style="color: #007bff; text-align: left;">Titre Service :</th>
+                <td style="font-weight: bold;">{{ service.titreService }}</td>
+            </tr>
+            <tr>
+                <th style="color: #007bff; text-align: left;">Durée :</th>
+                <td style="font-weight: bold;">{{ service.tmpservice }}</td>
+            </tr>
+            <tr>
+                <th style="color: #007bff; text-align: left;">Domaine :</th>
+                <td style="font-weight: bold;">{{ service.domaine }}</td>
+            </tr>
+            <tr>
+                <th style="color: #007bff; text-align: left;">Prix :</th>
+                <td style="font-weight: bold;">{{ service.prix }} Tokens</td>
+
+            </tr>
+            <tr>
+                <th style="color: #007bff; text-align: left;">Prix Soldé :</th>
+                <td style="font-weight: bold;">
+                    {% if service.prixsolde == 0 %}
+                        Pas de remise
+                    {% else %}
+                        {{ service.prixsolde }} Tokens
+                    {% endif %}
+                </td>
+            </tr>
+
+            {#<tr>#}
+            {#    <th style="color: #007bff; text-align: left;">Prix Soldé :</th>#}
+            {#    <td style="font-weight: bold;">{{ service.prixsolde }} Tokens</td>#}
+            {#</tr>#}
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

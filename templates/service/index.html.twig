@@ -59,7 +59,15 @@
                 <td>{{ service.tmpservice }}</td>
                 <td>{{ service.domaine }}</td>
                 <td>{{ service.prix }} Tokens</td>
-                <td>{{ service.prixSolde }} Tokens</td>
+                <td>
+                    {% if service.prixSolde == 0 %}
+                        Pas de remise
+                    {% else %}
+                        {{ service.prixSolde }} Tokens
+                    {% endif %}
+                </td>
+
+
 
 
                 <td>

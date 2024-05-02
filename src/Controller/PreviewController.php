@@ -8,6 +8,7 @@ use App\Entity\Evenement;
 use App\Entity\Service;
 use App\Form\AvisType;
 use App\Form\ServiceType;
+use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\AvisRepository;
-use App\Repository\ServiceRepository;
 
 class PreviewController extends AbstractController
 {
@@ -53,9 +53,17 @@ class PreviewController extends AbstractController
         return $this->render('back-office.html.twig');
     }
     #[Route('/stat', name: 'app_service_Statistique', methods: ['GET'])]
-    public function statique(): Response
+    public function statique(ServiceRepository $sr): Response
+    {$services = new Service();
+        return $this->render('statistique.html.twig',
+        ['sr' =>$sr, 'services' =>$services ]);
+    }
+    #[Route('services/{idService}', name: 'app_serviceF_show', methods: ['GET'])]
+    public function showF(Service $service): Response
     {
-        return $this->render('statistique.html.twig');
+        return $this->render('service/showF.html.twig', [
+            'service' => $service,
+        ]);
     }
     #[Route('/newAF', name: 'app_avisF_new', methods: ['GET', 'POST'])]
     public function newAF(Request $request, EntityManagerInterface $entityManager): Response
@@ -104,6 +112,73 @@ class PreviewController extends AbstractController
             'form' => $form,
         ]);
     }
+    /**
+     * @Route("/services-avis", name="services_avis")
+     */
+    public function servicesAvis()
+    {
+        $services = $this->getDoctrine()->getRepository(Service::class)->findAll();
+        $data = [];
+
+        foreach ($services as $service) {
+            $nombreAvis = count($service->getAvis());
+            $totalEtoiles = 0;
+
+            foreach ($service->getAvis() as $avis) {
+                $totalEtoiles += $avis->getNbrEtoile();
+            }
+
+            $moyenneEtoiles = $nombreAvis > 0 ? $totalEtoiles / $nombreAvis : 0;
+
+            $data[] = [
+                'nom' => $service->getNomService(),
+                'moyenne' => $moyenneEtoiles
+            ];
+        }
+
+        return new JsonResponse($data);
+    }
+
+    /**
+     * @Route("/services", name="liste_service")
+     */
+    public function ListeService(): Response
+    {
+        // Récupérer tous les services depuis la base de données
+        $entityManager = $this->getDoctrine()->getManager();
+        $services = $entityManager->getRepository(Service::class)->findAll();
+
+        // Calculer les moyennes des avis et trier les services par moyenne
+        $servicesTriees = $this->trierServicesParMoyenne($services);
+
+        // Rendre la vue Twig avec les services triés
+        return $this->render('/service.html.twig', [
+            'servicesTriees' => $servicesTriees,
+        ]);
+    }
+
+
+    // Méthode pour trier les services par moyenne des avis
+    private function trierServicesParMoyenne($services)
+    {
+        // Fonction de comparaison pour trier les services par moyenne des avis
+        $comparer = function ($serviceA, $serviceB) {
+            $moyenneA = $serviceA->getMoyenneAvis();
+            $moyenneB = $serviceB->getMoyenneAvis();
+
+            if ($moyenneA == $moyenneB) {
+                return 0;
+            }
+            return ($moyenneA < $moyenneB) ? 1 : -1;
+        };
+
+        // Tri des services en utilisant la fonction de comparaison
+        usort($services, $comparer);
+
+        // Retourner les services triés
+        return $services;
+    }
+
 
 //    #[Route('services/newFront', name: 'app_serviceF_new', methods: ['GET', 'POST'])]
 //    public function newFront(Request $request, EntityManagerInterface $entityManager): Response

@@ -7,6 +7,7 @@ use App\Entity\Service;
 use App\Form\ServiceType;
 
 use App\Repository\ServiceRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,7 +28,7 @@ class ServiceController extends AbstractController
 
 
     #[Route('/', name: 'app_service_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager,ServiceRepository $sr): Response
+    public function index(EntityManagerInterface $entityManager, ServiceRepository $sr): Response
     {
         $services = $entityManager
             ->getRepository(Service::class)
@@ -175,6 +176,7 @@ class ServiceController extends AbstractController
 
         return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
     }
+
 
 
 

@@ -68,7 +68,19 @@
                 <tr>
                     <th style="color: #007bff; text-align: left;">Prix :</th>
                     <td style="font-weight: bold;">{{ service.prix }} Tokens</td>
+
                 </tr>
+                <tr>
+                    <th style="color: #007bff; text-align: left;">Prix Soldé :</th>
+                    <td style="font-weight: bold;">
+                        {% if service.prixsolde == 0 %}
+                            Pas de remise
+                        {% else %}
+                            {{ service.prixsolde }} Tokens
+                        {% endif %}
+                    </td>
+                </tr>
+
                 {#<tr>#}
                 {#    <th style="color: #007bff; text-align: left;">Prix Soldé :</th>#}
                 {#    <td style="font-weight: bold;">{{ service.prixsolde }} Tokens</td>#}
