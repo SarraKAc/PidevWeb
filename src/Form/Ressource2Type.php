@@ -21,7 +21,7 @@ class Ressource2Type extends AbstractType
             ->add('datemodif')
             ->add('img', FileType::class, [
                 'label' => 'Image (JPEG, PNG, GIF)',
-                'mapped' => false, // Don't map this field to any property of the entity
+                'mapped' => false,
                 'required' => false, // Allow the field to be empty
             ])
             ->add('filepath')
