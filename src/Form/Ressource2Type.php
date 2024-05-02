@@ -28,7 +28,6 @@ class Ressource2Type extends AbstractType
             ->add('utilisateur')
             ->add('categorie')
             ->add('utilisateur')
-
         ;
     }
 
