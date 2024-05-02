@@ -62,7 +62,7 @@ class Ressource
      *
      * @ORM\Column(name="img", type="string", length=500, nullable=false, options={"default"="D:\jjlamm-test2\src\main\resources\RessourceFX\\info.png"})
      */
-    private $img = 'D:\\jjlamm-test2\\src\\main\\resources\\RessourceFX\\\\info.png';
+    private $img = 'C:\\Users\\yassi\\Downloads\\jjlamm-testWeb20\\jjlamm-testWeb2\\public\\images\\2.png';
 
     /**
      * @var string|null

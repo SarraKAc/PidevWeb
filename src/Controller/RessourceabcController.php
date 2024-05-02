@@ -38,7 +38,15 @@ class RessourceabcController extends AbstractController
             $utilisateur = $entityManager->getRepository(Utilisateur::class)->find($utilisateurId);
 
             $ressource->setUtilisateur($utilisateur);
-
+            $file = $form->get('img')->getData();
+            if ($file) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                $file->move(
+                    $this->getParameter('upload_directory'),
+                    $fileName
+                );
+                $ressource->setImg($fileName);
+            }
             $entityManager->persist($ressource);
             $entityManager->flush();
 

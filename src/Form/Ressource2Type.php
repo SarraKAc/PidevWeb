@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Ressource;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -18,7 +19,11 @@ class Ressource2Type extends AbstractType
             ->add('prix')
             ->add('sumrate')
             ->add('datemodif')
-            ->add('img')
+            ->add('img', FileType::class, [
+                'label' => 'Image (JPEG, PNG, GIF)',
+                'mapped' => false, // Don't map this field to any property of the entity
+                'required' => false, // Allow the field to be empty
+            ])
             ->add('filepath')
             ->add('utilisateur')
             ->add('categorie')

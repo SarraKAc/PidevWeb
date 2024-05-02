@@ -1,47 +1,132 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ressource index{% endblock %}
+{% block title %}Ressources{% endblock %}
 
 {% block body %}
-    <h1>Ressource index</h1>
+    <h1>Ressources</h1>
+    <style>
+        .container-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Prix</th>
-                <th>Sumrate</th>
-                <th>Datemodif</th>
-                <th>Img</th>
-                <th>Filepath</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px; /* Reduced padding */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px; /* Reduced margin */
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Reduced margin */
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px; /* Reduced padding */
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #66afe9;
+        }
+
+        .form-group .radio-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group .radio-group label {
+            margin-right: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .footer {
+            margin-top: 15px; /* Reduced margin */
+            text-align: center;
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .text-danger {
+            color: red;
+        }
+
+    </style>
+
+    <div class="resource-container">
         {% for ressource in ressources %}
-            <tr>
-                <td>{{ ressource.id }}</td>
-                <td>{{ ressource.nom }}</td>
-                <td>{{ ressource.description }}</td>
-                <td>{{ ressource.prix }}</td>
-                <td>{{ ressource.sumrate }}</td>
-                <td>{{ ressource.datemodif ? ressource.datemodif|date('Y-m-d') : '' }}</td>
-                <td>{{ ressource.img }}</td>
-                <td>{{ ressource.filepath }}</td>
-                <td>
+            <div class="resource-box">
+                <h2>{{ ressource.nom }}</h2>
+                <p>Description: {{ ressource.description }}</p>
+                <p>Prix: {{ ressource.prix }}</p>
+                <p>Sumrate: {{ ressource.sumrate }}</p>
+                <p>Datemodif: {{ ressource.datemodif ? ressource.datemodif|date('Y-m-d') : '' }}</p>
+                <img src="{{ asset(ressource.img) }}" alt="Resource Image">
+                <p>Filepath: {{ ressource.filepath }}</p>
+                <div class="resource-actions">
                     <a href="{{ path('app_ressourceabc_show', {'id': ressource.id}) }}">show</a>
                     <a href="{{ path('app_ressourceabc_edit', {'id': ressource.id}) }}">edit</a>
-                </td>
-            </tr>
+                </div>
+            </div>
         {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
+            <p>No records found</p>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
     <a href="{{ path('app_ressourceabc_new') }}">Create new</a>
 {% endblock %}
