@@ -100,7 +100,7 @@ $topic->setIdUser(12);
     #[Route('/{id_topic}', name: 'app_topic_delete', methods: ['POST'])]
     public function delete(Request $request, Topic $topic, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$topic->getId_topic(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$topic->getIdTopic(), $request->request->get('_token'))) {
             $entityManager->remove($topic);
             $entityManager->flush();
         }
