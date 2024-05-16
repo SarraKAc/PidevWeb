@@ -33,6 +33,15 @@ class TopicRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findTopicsByUserId($id_user)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.id_user = :id_user')
+            ->setParameter('id_user', $id_user)
+            ->getQuery()
+            ->getResult();
+    }
+
 
 
 

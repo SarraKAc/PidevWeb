@@ -107,6 +107,17 @@ $topic->setIdUser(12);
 
         return $this->redirectToRoute('app_topic_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/topics/user', name: 'app_topics_by_user')]
+    public function topicsByUser(TopicRepository $topicRepository): Response
+    {
+        $id_user = 89; // on la replace par session
+        $topics = $topicRepository->findTopicsByUserId($id_user);
+
+        return $this->render('topic/topics_by_user.html.twig', [
+            'topics' => $topics,
+        ]);
+    }
+
 
 
 
